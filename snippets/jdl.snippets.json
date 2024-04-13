@@ -1,0 +1,511 @@
+{
+    "Application Configuration": {
+        "prefix": "add application",
+        "body": [
+            "/**",
+            " * 应用配置",
+            " */",
+            "application {",
+            "\tconfig {",
+            "\t\t$1",
+	        "\t}",
+            "}"
+        ],
+        "description": "创建应用配置"
+    },
+    "Deployment Configuration": {
+        "prefix": "add deployment",
+        "body": [
+            "/**",
+            " * The deployment configuration.",
+            " * @author ${author:A true hipster}",
+            " */",
+            "deployment {",
+            "\t$1",
+            "}"
+        ],
+        "description": "创建部署配置"
+    },
+    "New Entity": {
+        "prefix": "add entity",
+        "body": [
+            "/**",
+            " * ${1}",
+            " */",
+            "entity ${2:Entity} {",
+            "\t${3:fieldName} ${4|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${0} */",
+            "}"
+        ],
+        "description": "创建实体"
+    },
+    "New Field": {
+        "prefix": "add field",
+        "body": [
+            "${1:fieldName} ${2|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${0:fieldName} */"
+       	],
+        "description": "创建字段"
+    },
+    "OneToOne Relationship": {
+        "prefix": "relationship OneToOne",
+        "body": [
+            "/**",
+            " * 一对一关联 ",
+            " */",
+            "relationship OneToOne {",
+	            "\t${1:Entity1} to ${2:Entity2}",
+            "}"
+        ],
+        "description": "一对一关联关系"
+    },
+    "OneToMany Relationship": {
+        "prefix": "relationship OneToMany",
+        "body": [
+            "/**",
+            " * 一对多关联 ",
+            " */",
+            "relationship OneToMany {",
+	            "\t${1:Entity1} to ${2:Entity2}",
+            "}"
+        ],
+        "description": "一对多关联关系"
+    },
+    "ManyToOne relationship": {
+        "prefix": "relationship ManyToOne",
+        "body": [
+            "/**",
+            " * 多对一关联 ",
+            " */",
+            "relationship ManyToOne {",
+	            "\t${1:Entity1} to ${2:Entity2}",
+            "}"
+        ],
+        "description": "多对一关联关系"
+    },
+    "ManyToMany relationship": {
+        "prefix": "relationship ManyToMany",
+        "body": [
+            "/**",
+            " * 多对多关联 ",
+            " */",
+            "relationship ManyToMany {",
+	            "\t${1:Entity1} to ${2:Entity2}",
+            "}"
+        ],
+        "description": "多对多关联关系"
+    },
+    "Paginate entities with standard pagination": {
+        "prefix": "add paginate-with-pagination",
+        "body": [
+            "paginate ${0:*} with pagination"
+        ]
+    },
+    "Paginate entities with a pager": {
+        "prefix": "add paginate-with-pager",
+        "body": [
+            "paginate ${0:*} with pager"
+        ]
+    },
+    "Paginate entities with an infinite scroll": {
+        "prefix": "add paginate-with-infinite-scroll",
+        "body": [
+            "paginate ${0:*} with infinite-scroll"
+        ]
+    },
+    "DTOs to Entities": {
+        "prefix": "add dto-entities",
+        "body": [
+            "dto ${0:*} with mapstruct"
+        ]
+    },
+    "Use serviceClass": {
+        "prefix": "add service-serviceClass",
+        "body": [
+            "service ${0:*} with serviceClass"
+        ]
+    },
+    "Use serviceImpl": {
+        "prefix": "add service-serviceImpl",
+        "body": [
+            "service ${0:*} with serviceImpl"
+        ]
+    },
+    "Search Entities": {
+        "prefix": "add search-entities",
+        "body": [
+            "search ${0:*} with elasticsearch"
+        ]
+    },
+    "Microservice with Entities": {
+        "prefix": "add microservice-entities",
+        "body": [
+            "microservice ${1:*} with ${0:microserviceName}"
+        ]
+    },
+    "AngularJS with Entities": {
+        "prefix": "add angularSuffix-entities",
+        "body": [
+            "angularSuffix ${1:*} with ${2:suffix}"
+        ]
+    },
+    "Skip Client for Entities": {
+        "prefix": "add skipClient-entities",
+        "body": [
+            "skipClient for ${0:*}"
+        ]
+    },
+    "Skip Server for Entities": {
+        "prefix": "add skipServer-entities",
+        "body": [
+            "skipServer for ${0:*}"
+        ]
+    },
+    "noFluentMethod in Entities": {
+        "prefix": "add noFluentMethod-entities",
+        "body": [
+            "noFluentMethod for ${0:*}"
+        ]
+    },
+    "Extends AbstractAuditingEntity": {
+        "prefix": "@ExtendAbstractAuditingEntity",
+        "body": [
+            "@ExtendAbstractAuditingEntity"
+        ],
+        "description": "继承AbstractAuditingEntity,添加审计字段"
+    },
+    "Skip FakeData": {
+        "prefix": "@SkipFakeData",
+        "body": [
+            "@SkipFakeData"
+        ],
+        "description": "取消生成假数据"
+    },
+    "Add EntityPackage": {
+        "prefix": "@EntityPackage",
+        "body": [
+            "@EntityPackage(${1})${0}"
+        ],
+        "description": "指定实体包名"
+    },
+    "Add ModuleName": {
+        "prefix": "@ModuleName",
+        "body": [
+            "@ModuleName(${1})${0}"
+        ],
+        "description": "指定模块名称"
+    },
+    "Config WebComponent": {
+        "prefix": "@EndUsed",
+        "body": [
+            "@EndUsed(${1:fileUrl|iconPicker|imageUrl|videoUrl|audioUrl|editor|codeEditor|select|modalSelect|checkbox|radio|radioButton|rate|slider|switch|textArea|avatar})${0}"
+        ],
+        "description": "指定Web组件"
+    },
+    "Add ImportData": {
+        "prefix": "@ImportData",
+        "body": [
+            "@ImportData"
+        ],
+        "description": "导入实体数据"
+    },
+    "Skip Component": {
+        "prefix": "@SkipComponent",
+        "body": [
+            "@SkipComponent(${1:listPage|editPage|detailPage|clientService|clientRoute|domain|mapper|controllerTest|serviceClass|restController|repository|queryService|})${0}"
+        ],
+        "description": "忽略部分文件生成"
+    },
+    "Field Config": {
+        "prefix": "@FieldConfig",
+        "body": [
+            "@FieldConfig(${1:hideInForm|hideInList|editInList|searchForm|hideInDetail|filter|sortable})${0}"
+        ],
+        "description": "增加字段配置"
+    },
+    "Show in Form": {
+        "prefix": "@ShowBy",
+        "body": [
+            "@ShowBy(${1})${0}"
+        ],
+        "description": "表单增加显示条件"
+    },
+    "Skip MultiTenant": {
+        "prefix": "@SkipMultiTenant",
+        "body": [
+            "@SkipMultiTenant"
+        ],
+        "description": "忽略多租户"
+    },
+    "Skip Website": {
+        "prefix": "@SkipWebsite",
+        "body": [
+            "@SkipWebsite"
+        ],
+        "description": "忽略生成网站文件(html)"
+    },
+    "Skip RestApi": {
+        "prefix": "@SkipRestApi",
+        "body": [
+            "@SkipRestApi(${1:dataExport|dataImport|create})${0}"
+        ],
+        "description": "取消指定API接口生成"
+    },
+    "Skip WebButton": {
+        "prefix": "@SkipWebButton",
+        "body": [
+            "@SkipWebButton(${1:listAdd|listModalEdit|listEdit|listDelete|listDetail})${0}"
+        ],
+        "description": "取消前端部分按钮生成"
+    },
+    "List Style": {
+        "prefix": "@ListBy",
+        "body": [
+            "@ListBy(${1:table|list})${0}"
+        ],
+        "description": "指定列表样式"
+    },
+    "Add CustomMethod": {
+        "prefix": "@AddCustomMethod",
+        "body": [
+            "@AddCustomMethod(${1})${0}"
+        ],
+        "description": "指定的组件增加自定义方法"
+    },
+    "Add AnnotationOnSource": {
+        "prefix": "@AnnotationOnSource",
+        "body": [
+            "@AnnotationOnSource(${1})${0}"
+        ],
+        "description": "关联关系左侧注解"
+    },
+    "Add AnnotationOnDestination": {
+        "prefix": "@AnnotationOnDestination",
+        "body": [
+            "@AnnotationOnDestination(${1})${0}"
+        ],
+        "description": "关联关系右侧注解"
+    },
+    "Default Value for Field": {
+        "prefix": "@DefaultValue",
+        "body": [
+            "@DefaultValue(${1})${0}"
+        ],
+        "description": "字段默认值"
+    },
+    "Readonly for Entity": {
+        "prefix": "@Readonly",
+        "body": [
+            "@Readonly"
+        ],
+        "description": "只读实体"
+    },
+    "Dto for Entity": {
+        "prefix": "@Dto",
+        "body": [
+            "@Dto(${1:mapstruct|no})${0}"
+        ],
+        "description": "设置DTO"
+    },
+    "SkipClient for Entity": {
+        "prefix": "@SkipClient",
+        "body": [
+            "@SkipClient"
+        ],
+        "description": "取消前端生成"
+    },
+    "SkipServer for Entity": {
+        "prefix": "@SkipServer",
+        "body": [
+            "@SkipServer"
+        ],
+        "description": "取消后端生成"
+    },
+    "Filter for Entity": {
+        "prefix": "@Filter",
+        "body": [
+            "@Filter"
+        ],
+        "description": "使用过滤器"
+    },
+    "Service for Entity": {
+        "prefix": "@Service",
+        "body": [
+            "@Service(${1:serviceClass|serviceImpl})${0}"
+        ],
+        "description": "选择服务类"
+    },
+    "Paginate for Entity": {
+        "prefix": "@Paginate",
+        "body": [
+            "@Paginate(${1:pagination|servinfinite-scroll|no})${0}"
+        ],
+        "description": "选择分页方式"
+    },
+    "Search for Entity": {
+        "prefix": "@Search",
+        "body": [
+            "@Search(${1:elasticsearch|no})${0}"
+        ],
+        "description": "使用全文检索"
+    },
+    "Microservice with Entity": {
+        "prefix": "@Microservice",
+        "body": [
+            "@Microservice(${1})${0}"
+        ],
+        "description": "微服务名称"
+    },
+    "OnUpdate with Relationship To": {
+        "prefix": "@OnUpdate",
+        "body": [
+            "@OnUpdate(\"${1:NO ACTION|RESTRICT|CASCADE|SET NULL|SET DEFAULT}\")${0}"
+        ],
+        "description": "级联更新处理方式"
+    },
+    "OnDelete with Relationship To": {
+        "prefix": "@OnDelete",
+        "body": [
+            "@OnDelete(\"${1:NO ACTION|RESTRICT|CASCADE|SET NULL|SET DEFAULT}\")${0}"
+        ],
+        "description": "级联删除处理方式"
+    },
+    "CollectId From": {
+        "prefix": "@CollectIdByRelationFrom",
+        "body": [
+            "@OnDelete(${1})${0}"
+        ],
+        "description": "关联关系ID收集"
+    },
+    "Sortable Field": {
+        "prefix": "@SortField",
+        "body": [
+            "@SortField(${1:asc|desc})${0}"
+        ],
+        "description": "排序字段"
+    },
+    "Table Column Width for Web": {
+        "prefix": "@ColumnWidth",
+        "body": [
+            "@ColumnWidth(${1})${0}"
+        ],
+        "description": "表格列宽"
+    },
+    "Table Column Name for DB": {
+        "prefix": "@FieldColumnName",
+        "body": [
+            "@FieldColumnName(${1})${0}"
+        ],
+        "description": "数据表列名"
+    },
+    "Skip Field in DTO": {
+        "prefix": "@SkipDto",
+        "body": [
+            "@SkipDto"
+        ],
+        "description": "DTO忽略"
+    },
+    "Skip Field in Criteria": {
+        "prefix": "@SkipCriteria",
+        "body": [
+            "@SkipCriteria"
+        ],
+        "description": "Criteria条件类中忽略"
+    },
+    "Import Field in Liquibase": {
+        "prefix": "@ImportDataField",
+        "body": [
+            "@ImportDataField"
+        ],
+        "description": "Liqiudbase导入字段"
+    },
+    "Edit Form Container": {
+        "prefix": "@EditInContainer",
+        "body": [
+            "@EditInContainer(${1:modal|page|drawer})${0}"
+        ],
+        "description": "编辑表单容器drawer|modal|page"
+    },
+    "Public Api with Condition": {
+        "prefix": "@PublicApiBy",
+        "body": [
+            "@PublicApiBy(\"${1}\")${0}"
+        ],
+        "description": "公开API及条件"
+    },
+    "Skip DbChangelog": {
+        "prefix": "@SkipDbChangelog",
+        "body": [
+            "@SkipDbChangelog"
+        ],
+        "description": "忽略Liquidbase的变更"
+    },
+    "Entity has Image Field": {
+        "prefix": "@HasImageField",
+        "body": [
+            "@HasImageField"
+        ],
+        "description": "实体中有图片字段, 仅用在User实体"
+    },
+    "Skip SoftDelete": {
+        "prefix": "@SkipSoftDelete",
+        "body": [
+            "@SkipSoftDelete"
+        ],
+        "description": "忽略逻辑删除, 仅在使用逻辑删除时使用"
+    },
+    "Import DataFile": {
+        "prefix": "@ImportDataFile",
+        "body": [
+            "@ImportDataFile(${1})${0}"
+        ],
+        "description": "导入数据的文件"
+    },
+    "Add Custom Method": {
+        "prefix": "@AddCustomMethod",
+        "body": [
+            "@AddCustomMethod(${1:repository|service|rest|clientService|queryService|updateComponent|listComponent|clientRoute|editComponent|dto|listRelation|detailTemplate})${0}"
+        ],
+        "description": "为生成后的代码增加自定义方法，仅在制作蓝图时增加业务功能使用"
+    },
+    "Generate SearchLayer": {
+        "prefix": "@EntitySearchLayer",
+        "body": [
+            "@EntitySearchLayer(${1:true|false})${0}"
+        ],
+        "description": "生成全文检索层文件(JHipster原生支持)"
+    },
+    "Add ReadPreAuthorize with Entity": {
+        "prefix": "@EntitySpringReadPreAuthorize",
+        "body": [
+            "@EntitySpringReadPreAuthorize(\"${1}\")${0}"
+        ],
+        "description": "增加Read权限注解(JHipster原生支持)"
+    },
+    "Add PreAuthorize with Entity": {
+        "prefix": "@EntitySpringPreAuthorize",
+        "body": [
+            "@EntitySpringPreAuthorize(\"${1}\")${0}"
+        ],
+        "description": "增加权限注解(JHipster原生支持)"
+    },
+    "Generate RestLayer": {
+        "prefix": "@EntityRestLayer",
+        "body": [
+            "@EntityRestLayer(${1:true|false})${0}"
+        ],
+        "description": "生成Rest层文件(JHipster原生支持)"
+    },
+    "Generate PersistenceLayer": {
+        "prefix": "@EntityPersistenceLayer",
+        "body": [
+            "@EntityPersistenceLayer(${1:true|false})${0}"
+        ],
+        "description": "生成Persistence层文件(JHipster原生支持)"
+    },
+    "Generate DomainLayer": {
+        "prefix": "@EntityDomainLayer",
+        "body": [
+            "@EntityDomainLayer(${1:true|false})${0}"
+        ],
+        "description": "生成Demain层文件(JHipster原生支持)"
+    }
+}
