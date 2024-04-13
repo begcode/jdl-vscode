@@ -196,7 +196,7 @@
     "Config WebComponent": {
         "prefix": "@EndUsed",
         "body": [
-            "@EndUsed(${1:fileUrl|iconPicker|imageUrl|videoUrl|audioUrl|editor|codeEditor|select|modalSelect|checkbox|radio|radioButton|rate|slider|switch|textArea|avatar})${0}"
+            "@EndUsed(${1|fileUrl, iconPicker, imageUrl, videoUrl, audioUrl, editor, codeEditor, select, modalSelect, checkbox, radio, radioButton, rate, slider, switch, textArea, avatar |})${0}"
         ],
         "description": "指定Web组件"
     },
@@ -210,14 +210,14 @@
     "Skip Component": {
         "prefix": "@SkipComponent",
         "body": [
-            "@SkipComponent(${1:listPage|editPage|detailPage|clientService|clientRoute|domain|mapper|controllerTest|serviceClass|restController|repository|queryService|})${0}"
+            "@SkipComponent(${1|listPage, editPage, detailPage, clientService, clientRoute, domain, mapper, controllerTest, serviceClass, restController, repository, queryService|})${0}"
         ],
         "description": "忽略部分文件生成"
     },
     "Field Config": {
         "prefix": "@FieldConfig",
         "body": [
-            "@FieldConfig(${1:hideInForm|hideInList|editInList|searchForm|hideInDetail|filter|sortable})${0}"
+            "@FieldConfig(${1|hideInForm, hideInList, editInList, searchForm, hideInDetail, filter, sortable |})${0}"
         ],
         "description": "增加字段配置"
     },
@@ -245,30 +245,23 @@
     "Skip RestApi": {
         "prefix": "@SkipRestApi",
         "body": [
-            "@SkipRestApi(${1:dataExport|dataImport|create})${0}"
+            "@SkipRestApi(${1|dataExport, dataImport, create |})${0}"
         ],
         "description": "取消指定API接口生成"
     },
     "Skip WebButton": {
         "prefix": "@SkipWebButton",
         "body": [
-            "@SkipWebButton(${1:listAdd|listModalEdit|listEdit|listDelete|listDetail})${0}"
+            "@SkipWebButton(${1|listAdd, listModalEdit, listEdit, listDelete, listDetail |})${0}"
         ],
         "description": "取消前端部分按钮生成"
     },
     "List Style": {
         "prefix": "@ListBy",
         "body": [
-            "@ListBy(${1:table|list})${0}"
+            "@ListBy(${1|table, list |})${0}"
         ],
         "description": "指定列表样式"
-    },
-    "Add CustomMethod": {
-        "prefix": "@AddCustomMethod",
-        "body": [
-            "@AddCustomMethod(${1})${0}"
-        ],
-        "description": "指定的组件增加自定义方法"
     },
     "Add AnnotationOnSource": {
         "prefix": "@AnnotationOnSource",
@@ -301,7 +294,7 @@
     "Dto for Entity": {
         "prefix": "@Dto",
         "body": [
-            "@Dto(${1:mapstruct|no})${0}"
+            "@Dto(${1|mapstruct, no |})${0}"
         ],
         "description": "设置DTO"
     },
@@ -329,21 +322,21 @@
     "Service for Entity": {
         "prefix": "@Service",
         "body": [
-            "@Service(${1:serviceClass|serviceImpl})${0}"
+            "@Service(${1|serviceClass, serviceImpl |})${0}"
         ],
         "description": "选择服务类"
     },
     "Paginate for Entity": {
         "prefix": "@Paginate",
         "body": [
-            "@Paginate(${1:pagination|servinfinite-scroll|no})${0}"
+            "@Paginate(${1|pagination, servinfinite-scroll, no |})${0}"
         ],
         "description": "选择分页方式"
     },
     "Search for Entity": {
         "prefix": "@Search",
         "body": [
-            "@Search(${1:elasticsearch|no})${0}"
+            "@Search(${1|elasticsearch, no |})${0}"
         ],
         "description": "使用全文检索"
     },
@@ -357,14 +350,14 @@
     "OnUpdate with Relationship To": {
         "prefix": "@OnUpdate",
         "body": [
-            "@OnUpdate(\"${1:NO ACTION|RESTRICT|CASCADE|SET NULL|SET DEFAULT}\")${0}"
+            "@OnUpdate(\"${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |}\")${0}"
         ],
         "description": "级联更新处理方式"
     },
     "OnDelete with Relationship To": {
         "prefix": "@OnDelete",
         "body": [
-            "@OnDelete(\"${1:NO ACTION|RESTRICT|CASCADE|SET NULL|SET DEFAULT}\")${0}"
+            "@OnDelete(\"${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |}\")${0}"
         ],
         "description": "级联删除处理方式"
     },
@@ -378,7 +371,7 @@
     "Sortable Field": {
         "prefix": "@SortField",
         "body": [
-            "@SortField(${1:asc|desc})${0}"
+            "@SortField(${1|asc, desc |})${0}"
         ],
         "description": "排序字段"
     },
@@ -420,7 +413,7 @@
     "Edit Form Container": {
         "prefix": "@EditInContainer",
         "body": [
-            "@EditInContainer(${1:modal|page|drawer})${0}"
+            "@EditInContainer(${1|modal, page, drawer |})${0}"
         ],
         "description": "编辑表单容器drawer|modal|page"
     },
@@ -462,14 +455,14 @@
     "Add Custom Method": {
         "prefix": "@AddCustomMethod",
         "body": [
-            "@AddCustomMethod(${1:repository|service|rest|clientService|queryService|updateComponent|listComponent|clientRoute|editComponent|dto|listRelation|detailTemplate})${0}"
+            "@AddCustomMethod(${1|repository, service, rest, clientService, queryService, updateComponent, listComponent, clientRoute, editComponent, dto, listRelation, detailTemplate |})${0}"
         ],
         "description": "为生成后的代码增加自定义方法，仅在制作蓝图时增加业务功能使用"
     },
     "Generate SearchLayer": {
         "prefix": "@EntitySearchLayer",
         "body": [
-            "@EntitySearchLayer(${1:true|false})${0}"
+            "@EntitySearchLayer(${1|true, false |})${0}"
         ],
         "description": "生成全文检索层文件(JHipster原生支持)"
     },
@@ -497,14 +490,14 @@
     "Generate PersistenceLayer": {
         "prefix": "@EntityPersistenceLayer",
         "body": [
-            "@EntityPersistenceLayer(${1:true|false})${0}"
+            "@EntityPersistenceLayer(${1|true, false |})${0}"
         ],
         "description": "生成Persistence层文件(JHipster原生支持)"
     },
     "Generate DomainLayer": {
         "prefix": "@EntityDomainLayer",
         "body": [
-            "@EntityDomainLayer(${1:true|false})${0}"
+            "@EntityDomainLayer(${1|true, false |})${0}"
         ],
         "description": "生成Demain层文件(JHipster原生支持)"
     }
