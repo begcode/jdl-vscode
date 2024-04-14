@@ -500,5 +500,33 @@
             "@EntityDomainLayer(${1|true, false |})${0}"
         ],
         "description": "生成Demain层文件(JHipster原生支持)"
+    },
+    "Add updateByIdWithXXX Method": {
+        "prefix": "@UpdateByIdWith",
+        "body": [
+            "@UpdateByIdWith${1}(${2})${0}"
+        ],
+        "description": "增加updateByIdWithXXX方法,参数为相应的字段"
+    },
+    "Add updateByXXX Method": {
+        "prefix": "@UpdateBy",
+        "body": [
+            "@UpdateByIdWith${1}(${2},${3})${0}"
+        ],
+        "description": "增加updateByXXX方法,前部分参数为更新条件，后部分参数为更新字段"
+    },
+    "Add removeByXXX Method": {
+        "prefix": "@UpdateBy",
+        "body": [
+            "@UpdateByIdWith${1}(${2})${0}"
+        ],
+        "description": "增加removeByXXX方法,参数为条件字段"
+    },
+    "Add saveWithXXX Method": {
+        "prefix": "@saveWith",
+        "body": [
+            "@saveWith${1}(${2})${0}"
+        ],
+        "description": "增加saveWithXXX方法,参数为保存数据的字段"
     }
 }
