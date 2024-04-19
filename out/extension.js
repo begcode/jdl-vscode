@@ -4,6 +4,7 @@
  *--------------------------------------------------------*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = void 0;
+const completeItems_1 = require("./completeItems");
 function activate(context) {
     // context.subscriptions.push(
     // 	vscode.languages.registerHoverProvider('jdl', {
@@ -16,6 +17,7 @@ function activate(context) {
     // 		},
     // 	}),
     // );
+    context.subscriptions.push(...completeItems_1.completeItems);
 }
 exports.activate = activate;
 //# sourceMappingURL=extension.js.map

@@ -4,6 +4,7 @@
 
 import { log } from 'console';
 import * as vscode from 'vscode';
+import { completeItems } from './completeItems';
 
 export function activate(context: vscode.ExtensionContext) {
 	// context.subscriptions.push(
@@ -17,4 +18,5 @@ export function activate(context: vscode.ExtensionContext) {
 	// 		},
 	// 	}),
 	// );
+	context.subscriptions.push(...completeItems);
 }
