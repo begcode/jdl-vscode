@@ -41,7 +41,7 @@
     "New Field": {
         "prefix": "add field",
         "body": [
-            "${1:fieldName} ${2|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${0:fieldName} */"
+            "${1:fieldName} ${2|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${3} */${0}"
        	],
         "description": "创建字段"
     },
@@ -165,364 +165,364 @@
             "noFluentMethod for ${0:*}"
         ]
     },
-    "Extends AbstractAuditingEntity": {
+    "Extends AbstractAuditingEntity(BegCode)": {
         "prefix": "@ExtendAbstractAuditingEntity",
         "body": [
             "@ExtendAbstractAuditingEntity"
         ],
         "description": "继承AbstractAuditingEntity,添加审计字段"
     },
-    "Skip FakeData": {
+    "Skip FakeData(BegCode)": {
         "prefix": "@SkipFakeData",
         "body": [
             "@SkipFakeData"
         ],
         "description": "取消生成假数据"
     },
-    "Add EntityPackage": {
+    "Add EntityPackage(JHipster)": {
         "prefix": "@EntityPackage",
         "body": [
             "@EntityPackage(${1})${0}"
         ],
         "description": "指定实体包名"
     },
-    "Add ModuleName": {
+    "Add ModuleName(BegCode)": {
         "prefix": "@ModuleName",
         "body": [
             "@ModuleName(${1})${0}"
         ],
         "description": "指定模块名称"
     },
-    "Config WebComponent": {
+    "Config WebComponent(BegCode)": {
         "prefix": "@EndUsed",
         "body": [
             "@EndUsed(${1|fileUrl, iconPicker, imageUrl, videoUrl, audioUrl, editor, codeEditor, select, modalSelect, checkbox, radio, radioButton, rate, slider, switch, textArea, avatar |})${0}"
         ],
         "description": "指定Web组件"
     },
-    "Add ImportData": {
+    "Add ImportData(BegCode)": {
         "prefix": "@ImportData",
         "body": [
             "@ImportData"
         ],
         "description": "导入实体数据"
     },
-    "Skip Component": {
+    "Skip Component(BegCode)": {
         "prefix": "@SkipComponent",
         "body": [
             "@SkipComponent(${1|listPage, editPage, detailPage, clientService, clientRoute, domain, mapper, controllerTest, serviceClass, restController, repository, queryService|})${0}"
         ],
-        "description": "忽略部分文件生成"
+        "description": "忽略部分文件生成, 多个使用-分隔"
     },
-    "Field Config": {
+    "Field Config(BegCode)": {
         "prefix": "@FieldConfig",
         "body": [
             "@FieldConfig(${1|hideInForm, hideInList, editInList, searchForm, hideInDetail, filter, sortable |})${0}"
         ],
-        "description": "增加字段配置"
+        "description": "增加字段配置, 多个使用-分隔"
     },
-    "Show in Form": {
+    "Show in Form(BegCode)": {
         "prefix": "@ShowBy",
         "body": [
             "@ShowBy(${1})${0}"
         ],
         "description": "表单增加显示条件"
     },
-    "Skip MultiTenant": {
+    "Skip MultiTenant(BegCode)": {
         "prefix": "@SkipMultiTenant",
         "body": [
             "@SkipMultiTenant"
         ],
         "description": "忽略多租户"
     },
-    "Skip Website": {
+    "Skip Website(BegCode)": {
         "prefix": "@SkipWebsite",
         "body": [
             "@SkipWebsite"
         ],
         "description": "忽略生成网站文件(html)"
     },
-    "Skip RestApi": {
+    "Skip RestApi(BegCode)": {
         "prefix": "@SkipRestApi",
         "body": [
             "@SkipRestApi(${1|dataExport, dataImport, create |})${0}"
         ],
-        "description": "取消指定API接口生成"
+        "description": "取消指定API接口生成, 多个使用-分隔"
     },
-    "Skip WebButton": {
+    "Skip WebButton(BegCode)": {
         "prefix": "@SkipWebButton",
         "body": [
             "@SkipWebButton(${1|listAdd, listModalEdit, listEdit, listDelete, listDetail |})${0}"
         ],
-        "description": "取消前端部分按钮生成"
+        "description": "取消前端部分按钮生成, 多个使用-分隔"
     },
-    "List Style": {
+    "List Style(BegCode)": {
         "prefix": "@ListBy",
         "body": [
             "@ListBy(${1|table, list |})${0}"
         ],
         "description": "指定列表样式"
     },
-    "Add AnnotationOnSource": {
+    "Add AnnotationOnSource(BegCode)": {
         "prefix": "@AnnotationOnSource",
         "body": [
             "@AnnotationOnSource(${1})${0}"
         ],
-        "description": "关联关系左侧注解"
+        "description": "关联关系左侧注解, 多个使用-分隔"
     },
-    "Add AnnotationOnDestination": {
+    "Add AnnotationOnDestination(BegCode)": {
         "prefix": "@AnnotationOnDestination",
         "body": [
             "@AnnotationOnDestination(${1})${0}"
         ],
-        "description": "关联关系右侧注解"
+        "description": "关联关系右侧注解, 多个使用-分隔"
     },
-    "Default Value for Field": {
+    "Default Value for Field(BegCode)": {
         "prefix": "@DefaultValue",
         "body": [
             "@DefaultValue(${1})${0}"
         ],
         "description": "字段默认值"
     },
-    "Readonly for Entity": {
+    "Readonly for Entity(JHipster)": {
         "prefix": "@Readonly",
         "body": [
             "@Readonly"
         ],
         "description": "只读实体"
     },
-    "Dto for Entity": {
+    "Dto for Entity(JHipster)": {
         "prefix": "@Dto",
         "body": [
             "@Dto(${1|mapstruct, no |})${0}"
         ],
         "description": "设置DTO"
     },
-    "SkipClient for Entity": {
+    "SkipClient for Entity(JHipster)": {
         "prefix": "@SkipClient",
         "body": [
             "@SkipClient"
         ],
         "description": "取消前端生成"
     },
-    "SkipServer for Entity": {
+    "SkipServer for Entity(JHipster)": {
         "prefix": "@SkipServer",
         "body": [
             "@SkipServer"
         ],
         "description": "取消后端生成"
     },
-    "Filter for Entity": {
+    "Filter for Entity(JHipster)": {
         "prefix": "@Filter",
         "body": [
             "@Filter"
         ],
         "description": "使用过滤器"
     },
-    "Service for Entity": {
+    "Service for Entity(JHipster)": {
         "prefix": "@Service",
         "body": [
             "@Service(${1|serviceClass, serviceImpl |})${0}"
         ],
         "description": "选择服务类"
     },
-    "Paginate for Entity": {
+    "Paginate for Entity(JHipster)": {
         "prefix": "@Paginate",
         "body": [
             "@Paginate(${1|pagination, servinfinite-scroll, no |})${0}"
         ],
         "description": "选择分页方式"
     },
-    "Search for Entity": {
+    "Search for Entity(JHipster)": {
         "prefix": "@Search",
         "body": [
             "@Search(${1|elasticsearch, no |})${0}"
         ],
         "description": "使用全文检索"
     },
-    "Microservice with Entity": {
+    "Microservice with Entity(JHipster)": {
         "prefix": "@Microservice",
         "body": [
             "@Microservice(${1})${0}"
         ],
-        "description": "微服务名称"
+        "description": "所属微服务名称"
     },
-    "OnUpdate with Relationship To": {
+    "OnUpdate with Relationship To(JHipster)": {
         "prefix": "@OnUpdate",
         "body": [
             "@OnUpdate(\"${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |}\")${0}"
         ],
         "description": "级联更新处理方式"
     },
-    "OnDelete with Relationship To": {
+    "OnDelete with Relationship To(JHipster)": {
         "prefix": "@OnDelete",
         "body": [
             "@OnDelete(\"${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |}\")${0}"
         ],
         "description": "级联删除处理方式"
     },
-    "CollectId From": {
+    "CollectId From(BegCode)": {
         "prefix": "@CollectIdByRelationFrom",
         "body": [
-            "@OnDelete(${1})${0}"
+            "@CollectIdByRelationFrom(${1})${0}"
         ],
         "description": "关联关系ID收集"
     },
-    "Sortable Field": {
+    "Sortable Field(BegCode)": {
         "prefix": "@SortField",
         "body": [
             "@SortField(${1|asc, desc |})${0}"
         ],
         "description": "排序字段"
     },
-    "Table Column Width for Web": {
+    "Table Column Width for Web(BegCode)": {
         "prefix": "@ColumnWidth",
         "body": [
             "@ColumnWidth(${1})${0}"
         ],
         "description": "表格列宽"
     },
-    "Table Column Name for DB": {
+    "Table Column Name for DB(BegCode)": {
         "prefix": "@FieldColumnName",
         "body": [
             "@FieldColumnName(${1})${0}"
         ],
         "description": "数据表列名"
     },
-    "Skip Field in DTO": {
+    "Skip Field in DTO(BegCode)": {
         "prefix": "@SkipDto",
         "body": [
             "@SkipDto"
         ],
         "description": "DTO忽略"
     },
-    "Skip Field in Criteria": {
+    "Skip Field in Criteria(BegCode)": {
         "prefix": "@SkipCriteria",
         "body": [
             "@SkipCriteria"
         ],
         "description": "Criteria条件类中忽略"
     },
-    "Import Field in Liquibase": {
+    "Import Field in Liquibase(BegCode)": {
         "prefix": "@ImportDataField",
         "body": [
             "@ImportDataField"
         ],
         "description": "Liqiudbase导入字段"
     },
-    "Edit Form Container": {
+    "Edit Form Container(BegCode)": {
         "prefix": "@EditInContainer",
         "body": [
             "@EditInContainer(${1|modal, page, drawer |})${0}"
         ],
         "description": "编辑表单容器drawer|modal|page"
     },
-    "Public Api with Condition": {
+    "Public Api with Condition(BegCode)": {
         "prefix": "@PublicApiBy",
         "body": [
             "@PublicApiBy(\"${1}\")${0}"
         ],
         "description": "公开API及条件"
     },
-    "Skip DbChangelog": {
+    "Skip DbChangelog(BegCode)": {
         "prefix": "@SkipDbChangelog",
         "body": [
             "@SkipDbChangelog"
         ],
         "description": "忽略Liquidbase的变更"
     },
-    "Entity has Image Field": {
+    "Entity has Image Field(BegCode)": {
         "prefix": "@HasImageField",
         "body": [
             "@HasImageField"
         ],
         "description": "实体中有图片字段, 仅用在User实体"
     },
-    "Skip SoftDelete": {
+    "Skip SoftDelete(BegCode)": {
         "prefix": "@SkipSoftDelete",
         "body": [
             "@SkipSoftDelete"
         ],
         "description": "忽略逻辑删除, 仅在使用逻辑删除时使用"
     },
-    "Import DataFile": {
+    "Import DataFile(BegCode)": {
         "prefix": "@ImportDataFile",
         "body": [
             "@ImportDataFile(${1})${0}"
         ],
         "description": "导入数据的文件"
     },
-    "Add Custom Method": {
+    "Add Custom Method(BegCode)": {
         "prefix": "@AddCustomMethod",
         "body": [
             "@AddCustomMethod(${1|repository, service, rest, clientService, queryService, updateComponent, listComponent, clientRoute, editComponent, dto, listRelation, detailTemplate |})${0}"
         ],
-        "description": "为生成后的代码增加自定义方法，仅在制作蓝图时增加业务功能使用"
+        "description": "为生成后的代码增加自定义方法，蓝图使用, -分隔"
     },
-    "Generate SearchLayer": {
+    "Generate SearchLayer(JHipster)": {
         "prefix": "@EntitySearchLayer",
         "body": [
             "@EntitySearchLayer(${1|true, false |})${0}"
         ],
         "description": "生成全文检索层文件(JHipster原生支持)"
     },
-    "Add ReadPreAuthorize with Entity": {
+    "Add ReadPreAuthorize with Entity(JHipster)": {
         "prefix": "@EntitySpringReadPreAuthorize",
         "body": [
             "@EntitySpringReadPreAuthorize(\"${1}\")${0}"
         ],
-        "description": "增加Read权限注解(JHipster原生支持)"
+        "description": "增加Read权限注解"
     },
-    "Add PreAuthorize with Entity": {
+    "Add PreAuthorize with Entity(JHipster)": {
         "prefix": "@EntitySpringPreAuthorize",
         "body": [
             "@EntitySpringPreAuthorize(\"${1}\")${0}"
         ],
-        "description": "增加权限注解(JHipster原生支持)"
+        "description": "增加权限注解"
     },
-    "Generate RestLayer": {
+    "Generate RestLayer(JHipster)": {
         "prefix": "@EntityRestLayer",
         "body": [
             "@EntityRestLayer(${1:true|false})${0}"
         ],
-        "description": "生成Rest层文件(JHipster原生支持)"
+        "description": "生成Rest层文件"
     },
-    "Generate PersistenceLayer": {
+    "Generate PersistenceLayer(JHipster)": {
         "prefix": "@EntityPersistenceLayer",
         "body": [
             "@EntityPersistenceLayer(${1|true, false |})${0}"
         ],
-        "description": "生成Persistence层文件(JHipster原生支持)"
+        "description": "生成Persistence层文件"
     },
-    "Generate DomainLayer": {
+    "Generate DomainLayer(JHipster)": {
         "prefix": "@EntityDomainLayer",
         "body": [
             "@EntityDomainLayer(${1|true, false |})${0}"
         ],
-        "description": "生成Demain层文件(JHipster原生支持)"
+        "description": "生成Demain层文件"
     },
-    "Add updateByIdWithXXX Method": {
+    "Add updateByIdWithXXX Method(BegCode)": {
         "prefix": "@UpdateByIdWith",
         "body": [
             "@UpdateByIdWith${1}(${2})${0}"
         ],
         "description": "增加updateByIdWithXXX方法,参数为相应的字段"
     },
-    "Add updateByXXX Method": {
+    "Add updateByXXX Method(BegCode)": {
         "prefix": "@UpdateBy",
         "body": [
             "@UpdateByIdWith${1}(${2},${3})${0}"
         ],
         "description": "增加updateByXXX方法,前部分参数为更新条件，后部分参数为更新字段"
     },
-    "Add removeByXXX Method": {
-        "prefix": "@UpdateBy",
+    "Add removeByXXX Method(BegCode)": {
+        "prefix": "@RemoveBy",
         "body": [
-            "@UpdateByIdWith${1}(${2})${0}"
+            "@RemoveBy${1}(${2})${0}"
         ],
         "description": "增加removeByXXX方法,参数为条件字段"
     },
-    "Add saveWithXXX Method": {
+    "Add saveWithXXX Method(BegCode)": {
         "prefix": "@saveWith",
         "body": [
             "@saveWith${1}(${2})${0}"

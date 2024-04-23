@@ -144,7 +144,7 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 			'description': '在列表中显示详情'
 		},
 	},
-	annotationOnDestination: {
+	AnnotationOnDestination: {
 		editInList: {
 			'detail': '',
 			'description': '在列表中编辑'
@@ -154,7 +154,7 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 			'description': '在弹窗中编辑'
 		},
 	},
-	fieldConfig: {
+	FieldConfig: {
 		editInList: {
 			'detail': '',
 			'description': '在表格中编辑'
@@ -176,7 +176,7 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 			'description': '支持列表中过滤'
 		},
 	},
-	skipRestApi: {
+	SkipRestApi: {
 		dataExport: {
 			'detail': '',
 			'description': '取消导出API接口'
@@ -188,6 +188,56 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 		create: {
 			'detail': '',
 			'description': '取消新建API接口'
+		}
+	},
+	SkipComponent: {
+		listPage: {
+			'detail': '',
+			'description': '忽略前端列表页面'
+		},
+		editPage: {
+			'detail': '',
+			'description': '忽略前端编辑页面'
+		},
+		detailPage: {
+			'detail': '',
+			'description': '忽略前端详情页面'
+		},
+		clientService: {
+			'detail': '',
+			'description': '忽略前端API接口'
+		},
+		clientRoute: {
+			'detail': '',
+			'description': '忽略前端路由'
+		},
+		domain: {
+			'detail': '',
+			'description': '忽略后端Domain文件'
+		},
+		mapper: {
+			'detail': '',
+			'description': '忽略后端DtoMapper文件'
+		},
+		controllerTest: {
+			'detail': '',
+			'description': '忽略后端ResourceIT测试文件'
+		},
+		serviceClass: {
+			'detail': '',
+			'description': '忽略后端Service文件'
+		},
+		restController: {
+			'detail': '',
+			'description': '忽略后端RestApi文件'
+		},
+		repository: {
+			'detail': '',
+			'description': '忽略后端DAO文件'
+		},
+		queryService: {
+			'detail': '',
+			'description': '忽略后端QueryService文件'
 		}
 	}
 };
@@ -206,13 +256,13 @@ const annotation = vscode.languages.registerCompletionItemProvider(
 			// and if so then complete if `log`, `warn`, and `error`
 			log('annotation: ');
 			const linePrefix = document.lineAt(position).text.slice(0, position.character);
-			const regex = new RegExp('@(?<annotationName>[a-z|A-Z]+)(\\((?<annotationValue>[a-z|A-Z|\\-]*)?\\)?)?');
-			if (regex.test(linePrefix)) {
-				const match = linePrefix.match(regex);
+			// 获得当前注解信息的Regex
+			const annotationRegex = new RegExp('@(?<annotationName>[a-z|A-Z]+)(\\((?<annotationValue>[a-z|A-Z|\\-]*)?\\)?)?');
+			// 获得后
+			if (annotationRegex.test(linePrefix)) {
+				const match = linePrefix.match(annotationRegex);
 				const annotationName = match?.groups?.annotationName;
 				const annotationValueData = match?.groups?.annotationValue;
-				log('annotationName: ', annotationName);
-				log('match?.groups: ', match);
 				const annotationValues = !annotationValueData ? [] : annotationValueData?.split('-');
 				if (annotationName && annotationData[annotationName]) {
 					return annotationData[annotationName].filter(value => !annotationValues?.includes(value)).map((item) => {
