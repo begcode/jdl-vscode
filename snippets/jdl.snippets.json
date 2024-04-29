@@ -226,7 +226,7 @@
         "body": [
             "@ShowBy(${1})${0}"
         ],
-        "description": "表单增加显示条件"
+        "description": "字段在表单显示的条件"
     },
     "Skip MultiTenant(BegCode)": {
         "prefix": "@SkipMultiTenant",
@@ -324,7 +324,7 @@
         "body": [
             "@Service(${1|serviceClass, serviceImpl |})${0}"
         ],
-        "description": "选择服务类"
+        "description": "设置Service类实现方式"
     },
     "Paginate for Entity(JHipster)": {
         "prefix": "@Paginate",
