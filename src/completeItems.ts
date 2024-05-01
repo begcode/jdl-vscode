@@ -254,7 +254,6 @@ const annotation = vscode.languages.registerCompletionItemProvider(
 
 			// get all text until the `position` and check if it reads `console.`
 			// and if so then complete if `log`, `warn`, and `error`
-			log('annotation: ');
 			const linePrefix = document.lineAt(position).text.slice(0, position.character);
 			// 获得当前注解信息的Regex
 			const annotationRegex = new RegExp('@(?<annotationName>[a-z|A-Z]+)(\\((?<annotationValue>[a-z|A-Z|\\-]*)?\\)?)?');

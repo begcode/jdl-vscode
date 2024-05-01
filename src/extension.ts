@@ -7,9 +7,15 @@ import * as vscode from 'vscode';
 import { completeItems } from './completeItems';
 import { tokenLableHover } from './hoverHelper';
 import { upperFirst } from 'lodash';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
 let jdl: any;
+
+async function getJdl() {
+  if (!jdl) {
+	jdl = await import('generator-begcode/jdl');
+  }
+}
+
+getJdl();
 
 const jdlKeywordTokenTypes: Record<string, string> = {
 	ENTITY: 'JDL定义实体关键字',
@@ -47,21 +53,10 @@ export function activate(context: vscode.ExtensionContext) {
 					return cstToken.image === word && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
 				});
 				if (cstToken) {
-					log('find cstToken:', cstToken);
-					log('find tokenLableHover:', tokenLableHover(cstToken.label));
 					return {
 						contents: tokenLableHover(cstToken.label)
 					};
-				} else {
-					log('word:', word);
-					log('line:', line);
-					log('character:', character);
-					log('cstTokens:', cstTokens);
 				}
-				log('token: ', token);
-				log('position: ', position);
-				log('jdlobject: ', jdlObject);
-				log('jdlCst: ', jdlCst);
 				return {
 					contents: []
 				};
@@ -90,7 +85,6 @@ export function activate(context: vscode.ExtensionContext) {
 					});
 					collection.set(document.uri, errors);
 				} else {
-					log('lexResult:', lexResult);
 					try {
 						const parseResult = jdl.parse(document.getText());
 						if (parseResult) {
@@ -182,6 +176,7 @@ export function activate(context: vscode.ExtensionContext) {
 									const enumName = enumItem.children.NAME[0].image;
 									const enumLabel = 'enum:' + enumName;
 									const enumData: any = {...enumItem.children.NAME[0], label: enumLabel};
+									cstTokens.push(enumData);
 									enumItem.children.enumPropList?.forEach((enumProp: any) => {
 										enumProp.children?.enumProp?.forEach((prop: any) => {
 											const propLabel = enumLabel + '=>' + 'prop:' + prop.children.enumPropKey[0].image;
@@ -254,19 +249,21 @@ export function activate(context: vscode.ExtensionContext) {
 			collection.clear();
 		}
 	}
-	const collection = vscode.languages.createDiagnosticCollection('jdl');
-	import('generator-begcode/jdl').then(res => {
-		jdl = res;
-		if (vscode.window.activeTextEditor) {
-			updateDiagnostics(vscode.window.activeTextEditor.document, collection);
+	const diagnosticCollection = vscode.languages.createDiagnosticCollection('jdl');
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeTextDocument(e => updateDiagnostics(e.document, diagnosticCollection))
+	);
+
+	context.subscriptions.push(
+		vscode.workspace.onDidCloseTextDocument(doc => diagnosticCollection.delete(doc.uri))
+	);
+	if (vscode.window.activeTextEditor) {
+		updateDiagnostics(vscode.window.activeTextEditor.document, diagnosticCollection);
+	}
+	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
+		if (editor) {
+			updateDiagnostics(editor.document, diagnosticCollection);
 		}
-		context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
-			log('DidChange');
-			if (editor) {
-				log('DidChange-editor');
-				updateDiagnostics(editor.document, collection);
-			}
-		}));
-	});
+	}));
 	context.subscriptions.push(...completeItems);
 }
