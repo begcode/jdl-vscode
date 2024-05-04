@@ -1,5 +1,9 @@
 import { log } from 'console';
 import * as vscode from 'vscode';
+import { cstTokens } from './extension';
+import { hoverData, tokenLableComplete } from './hoverHelper';
+import { parseJdl } from './parseJdl';
+import { get } from 'lodash';
 
 const annotationValueDetail: Record<string, Record<string, Record<string, string>>> = {
 	AddCustomMethod: {
@@ -242,40 +246,397 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 	}
 };
 
+const fieldTypeDetail: any[] = [
+	{
+		label: {
+			label: 'String',
+			detail: '',
+			description: '字符串'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Integer',
+			'detail': '',
+			'description': '整数'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Long',
+			detail: '',
+			description: '长整'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'BigDecimal',
+			'detail': '',
+			'description': '大浮点数'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Float',
+			'detail': '',
+			'description': '单精度'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Double',
+			'detail': '',
+			'description': '双精度'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Boolean',
+			'detail': '',
+			'description': '布尔'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'LocalDate',
+			'detail': '',
+			'description': '本地化日期'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'ZonedDateTime',
+			'detail': '',
+			'description': '带时区和时间'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Instant',
+			'detail': '',
+			'description': '时间戳类型'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Duration',
+			'detail': '',
+			'description': '持续时间'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'UUID',
+			'detail': '',
+			'description': 'UUID'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'Blob',
+			'detail': '',
+			'description': '二进制'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'AnyBlob',
+			'detail': '',
+			'description': '任意二进制'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'ImageBlob',
+			'detail': '',
+			'description': '图片二进制'
+		},
+		kind: vscode.CompletionItemKind.Class
+	},
+	{
+		label: {
+			label: 'TextBlob',
+			'detail': '',
+			'description': '长文本'
+		},
+		kind: vscode.CompletionItemKind.Class
+	}
+];
+
+
+
 const annotationData: Record<string, string[]> = Object.keys(annotationValueDetail).reduce((acc, key) => {
 	acc[key] = Object.keys(annotationValueDetail[key]);
 	return acc;
 }, {} as Record<string, string[]>);
 
-const annotation = vscode.languages.registerCompletionItemProvider(
-	{language: 'jdl'},
-	{
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-
-			// get all text until the `position` and check if it reads `console.`
-			// and if so then complete if `log`, `warn`, and `error`
-			const linePrefix = document.lineAt(position).text.slice(0, position.character);
-			// 获得当前注解信息的Regex
-			const annotationRegex = new RegExp('@(?<annotationName>[a-z|A-Z]+)(\\((?<annotationValue>[a-z|A-Z|\\-]*)?\\)?)?');
-			// 获得后
-			if (annotationRegex.test(linePrefix)) {
-				const match = linePrefix.match(annotationRegex);
-				const annotationName = match?.groups?.annotationName;
-				const annotationValueData = match?.groups?.annotationValue;
-				const annotationValues = !annotationValueData ? [] : annotationValueData?.split('-');
-				if (annotationName && annotationData[annotationName]) {
-					return annotationData[annotationName].filter(value => !annotationValues?.includes(value)).map((item) => {
-						const completionItem = new vscode.CompletionItem({label: item, ...annotationValueDetail[annotationName][item]});
-						completionItem.kind = vscode.CompletionItemKind.Text;
-						return completionItem;
-					});
+export function getCompleteItems(errors: any[], jdlObject?: any) {
+	const annotation = vscode.languages.registerCompletionItemProvider(
+		{language: 'jdl'},
+		{
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+	
+				// get all text until the `position` and check if it reads `console.`
+				// and if so then complete if `log`, `warn`, and `error`
+				const linePrefix = document.lineAt(position).text.slice(0, position.character);
+				// 获得当前注解信息的Regex
+				const annotationRegex = new RegExp('@(?<annotationName>[a-z|A-Z]+)(\\((?<annotationValue>[a-z|A-Z|\\-]*)?\\)?)?');
+				// 获得后
+				if (annotationRegex.test(linePrefix)) {
+					const match = linePrefix.match(annotationRegex);
+					const annotationName = match?.groups?.annotationName;
+					const annotationValueData = match?.groups?.annotationValue;
+					const annotationValues = !annotationValueData ? [] : annotationValueData?.split('-');
+					if (annotationName && annotationData[annotationName]) {
+						return annotationData[annotationName].filter(value => !annotationValues?.includes(value)).map((item) => {
+							const completionItem = new vscode.CompletionItem({label: item, ...annotationValueDetail[annotationName][item]});
+							completionItem.kind = vscode.CompletionItemKind.Text;
+							return completionItem;
+						});
+					}
 				}
+				return undefined;
 			}
-			return undefined;
-		}
-	},
-	'-',
-	'('
-);
-
-export const completeItems = [annotation];
+		},
+		'-',
+		'('
+	);
+	const fieldType = vscode.languages.registerCompletionItemProvider(
+		{language: 'jdl'},
+		{
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+	
+				// get all text until the `position` and check if it reads `console.`
+				// and if so then complete if `log`, `warn`, and `error`
+				const linePrefix = document.lineAt(position).text.slice(0, position.character);
+				log('linePrefix:', `'${linePrefix}'`);
+				const cutNumber = linePrefix.length - linePrefix.trimEnd().length;
+				const beforePosition = new vscode.Position(position.line, position.character - cutNumber - 1);
+				const word = document.getText(document.getWordRangeAtPosition(beforePosition));
+				log('word:', `'${word}'`);
+				log('beforePosition:', beforePosition);
+				const cstToken = cstTokens.find((cstToken: any) => {
+					return cstToken.image === word && cstToken.startLine <= beforePosition.line + 1 && cstToken.endLine >= beforePosition.line + 1 && cstToken.startColumn <= beforePosition.character + 1 && cstToken.endColumn >= beforePosition.character + 1;
+				});
+				if (cstToken) {
+					// entity:TestEntity=>field:abc=>type:String
+					log('cstToken:', cstToken);
+					return tokenLableComplete(cstToken.label, jdlObject);
+				} else {
+					log('errors:', errors);
+					if (errors && errors.length) {
+						const error = errors.find(error => {
+							return error.name === 'MismatchedTokenException' && error.previousToken?.startLine === beforePosition.line + 1 && error.previousToken?.endColumn <= beforePosition.character + 1;
+						});
+						log('error:', error);
+						if (error) {
+							if (error.context?.ruleStack) {
+								const ruleStackStr = error.context?.ruleStack.join('->');
+								if (ruleStackStr === ['prog', 'entityDeclaration', 'entityBody', 'fieldDeclaration', 'type'].join('->')) {
+									return fieldTypeDetail;
+								}
+							}
+						}
+					}
+					log('cstTokens:', cstTokens);
+				}
+				return undefined;
+			}
+		},
+		' ',
+	);
+	const annotationType = vscode.languages.registerCompletionItemProvider(
+		{language: 'jdl'},
+		{
+			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+				// 单独分析
+				// 找到前一个token
+				let beforeLineToken: any = null;
+				let afterLineToken: any = null;
+				let entity = null;
+				let entityName = '';
+				let fieldName = '';
+				let entities: any[] = jdlObject.entities || [];
+				if (errors?.length > 0) {
+					const lineText = document.lineAt(position).text;
+					if (lineText.trim() === '@') {
+						const offset = document.offsetAt(position);
+						const allText = document.getText();
+						log('offset', offset);
+						log('charAt', allText.charAt(offset - 1));
+						const replaceByIndex = (str: string, start: number, newContent: string) => {
+							// 使用substring方法从字符串中提取开始到替换点的部分
+							const part1 = str.substring(0, start);
+							// 提取替换点之后的部分
+							const part2 = str.substring(start + newContent.length);
+							// 返回拼接后的新字符串
+							return part1 + newContent + part2;
+						};
+						const okText = replaceByIndex(allText,offset - 1,' ');
+						const parseResult = parseJdl(okText);
+						log('okText:::', okText);
+						log('parseResult:::', parseResult);
+						entities = parseResult.jdlObject?.entities || [];
+						if (position.line > 0) {
+							beforeLineToken = parseResult.cstTokens.find(token => token.startLine === position.line);
+						}
+						if (position.line < document.lineCount - 1) {
+							afterLineToken = parseResult.cstTokens.find(token => token.startLine === position.line + 2);
+						}
+					}
+				} else {
+					if (position.line > 0) {
+						beforeLineToken = cstTokens.find(token => token.startLine === position.line);
+					}
+					if (position.line < document.lineCount - 1) {
+						afterLineToken = cstTokens.find(token => token.startLine === position.line + 2);
+					}
+				}
+				let annotationTypeChain = '';
+				let existAnnotations: any[] = [];
+				if (beforeLineToken) {
+					// entity:TestEntity=>anno:EntityPackage
+					// entity:TestEntity=>field:name=>anno:FieldConfig
+					// keyword:entity=>entity:TestEntity
+					log('beforeLineToken:', beforeLineToken);
+					const beforeLabels: string[] = beforeLineToken.label.split('=>');
+					const beforeTypeChain = beforeLabels.map(label => label.split(':')[0]).join('.');
+					if (beforeTypeChain === 'entity.anno') {
+						entityName = beforeLabels[0].split(':')[1];
+						entity = entities.find((entity: any) => entity.name === entityName);
+						existAnnotations = entity.annotations?.map((annotation: any) => annotation.optionName) || [];
+						annotationTypeChain = 'entity.anno';
+					}
+					if (beforeTypeChain === 'entity.field.anno') {
+						entityName = beforeLabels[0].split(':')[1];
+						fieldName = beforeLabels[1].split(':')[1];
+						entity = entities.find((entity: any) => entity.name === entityName);
+						const field = entity.body.find((field: any) => field.name === fieldName);
+						existAnnotations = field?.annotations?.map((annotation: any) => annotation.optionName) || [];
+						annotationTypeChain = 'entity.field.anno';
+					}
+					if (beforeTypeChain === 'keyword.entity') {
+						entityName = beforeLabels[1].split(':')[1];
+						entity = entities.find((entity: any) => entity.name === entityName);
+						annotationTypeChain = 'entity.field.anno';
+					}
+					if (afterLineToken) {
+						// keyword:entity
+						// entity:TestEntity=>field:name
+						log('afterLineToken:', afterLineToken);
+						const afterLineLabels: string[] = afterLineToken.label.split('=>');
+						const afterLineTypeChain = afterLineLabels.map(label => label.split(':')[0]).join('.');
+						if (beforeTypeChain === 'entity.anno') {
+							annotationTypeChain = 'entity.anno';
+							if (['keyword.entity', 'entity.anno'].includes(afterLineTypeChain)) {
+								annotationTypeChain = 'entity.anno';
+								if (afterLineTypeChain === 'keyword.entity') {
+									entityName = afterLineLabels[1].split(':')[1];
+									entity = entities.find((entity: any) => entity.name === entityName);
+									existAnnotations = entity.annotations?.map((annotation: any) => annotation.optionName) || [];
+								}
+								if (afterLineTypeChain === 'entity.anno') {
+									entityName = afterLineLabels[0].split(':')[1];
+									entity = entities.find((entity: any) => entity.name === entityName);
+									existAnnotations = entity.annotations?.map((annotation: any) => annotation.optionName) || [];
+								}
+							}
+						}
+						if (['entity.field.anno', 'entity.field'].includes(beforeTypeChain)) {
+							if (['entity.field.anno', 'entity.field'].includes(afterLineTypeChain)) {
+								entityName = afterLineLabels[0].split(':')[1];
+								fieldName = afterLineLabels[1].split(':')[1];
+								entity = entities.find((entity: any) => entity.name === entityName);
+								const field = entity.body.find((field: any) => field.name === fieldName);
+								existAnnotations = field?.annotations?.map((annotation: any) => annotation.optionName) || [];
+								annotationTypeChain = 'entity.field.anno';
+							}
+						}
+						if (['keyword.entity'].includes(beforeTypeChain)) {
+							if (['entity.field.anno', 'entity.field'].includes(afterLineTypeChain)) {
+								entityName = afterLineLabels[0].split(':')[1];
+								fieldName = afterLineLabels[1].split(':')[1];
+								entity = entities.find((entity: any) => entity.name === entityName);
+								const field = entity.body.find((field: any) => field.name === fieldName);
+								existAnnotations = field?.annotations?.map((annotation: any) => annotation.optionName) || [];
+								annotationTypeChain = 'entity.field.anno';
+							}
+						}
+					}
+					if (annotationTypeChain) {
+						const annotationObject = get(hoverData, annotationTypeChain, {});
+						const completeItems: any[] = [];
+						Object.keys(annotationObject)
+							.filter(key => !existAnnotations.includes(key))
+							.forEach(key => {
+								completeItems.push(annotationObject[key].completeItem);
+							});
+						return completeItems;
+					}
+				} else if (afterLineToken) {
+					log('afterLineToken:', afterLineToken);
+					const afterLineLabels: string[] = afterLineToken.label.split('=>');
+					const afterLineTypeChain = afterLineLabels.map(label => label.split(':')[0]).join('.');
+					if (['keyword.entity', 'entity.anno'].includes(afterLineTypeChain)) {
+						annotationTypeChain = 'entity.anno';
+						if (afterLineTypeChain === 'keyword.entity') {
+							entityName = afterLineLabels[1].split(':')[1];
+							entity = entities.find((entity: any) => entity.name === entityName);
+							existAnnotations = entity.annotations?.map((annotation: any) => annotation.optionName) || [];
+						}
+						if (afterLineTypeChain === 'entity.anno') {
+							entityName = afterLineLabels[0].split(':')[1];
+							entity = entities.find((entity: any) => entity.name === entityName);
+							existAnnotations = entity.annotations?.map((annotation: any) => annotation.optionName) || [];
+						}
+						if (annotationTypeChain) {
+							const annotationObject = get(hoverData, annotationTypeChain, {});
+							const completeItems: any[] = [];
+							Object.keys(annotationObject)
+								.filter(key => !existAnnotations.includes(key))
+								.forEach(key => {
+									completeItems.push(annotationObject[key].completeItem);
+								});
+							return completeItems;
+						}
+					}
+					if (['entity.field.anno', 'entity.field'].includes(afterLineTypeChain)) {
+						entityName = afterLineLabels[0].split(':')[1];
+						fieldName = afterLineLabels[1].split(':')[1];
+						entity = entities.find((entity: any) => entity.name === entityName);
+						const field = entity.body.find((field: any) => field.name === fieldName);
+						existAnnotations = field?.annotations?.map((annotation: any) => annotation.optionName) || [];
+						annotationTypeChain = 'entity.field.anno';
+						if (annotationTypeChain) {
+							const annotationObject = get(hoverData, annotationTypeChain, {});
+							const completeItems: any[] = [];
+							Object.keys(annotationObject)
+								.filter(key => !existAnnotations.includes(key))
+								.forEach(key => {
+									completeItems.push(annotationObject[key].completeItem);
+								});
+							return completeItems;
+						}
+					}
+				}
+				return undefined;
+			}
+		},
+		'@',
+	);
+	return [annotation, fieldType, annotationType];
+}

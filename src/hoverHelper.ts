@@ -1,11 +1,20 @@
+import { log } from 'console';
 import { get } from 'lodash';
 import * as vscode from 'vscode';
 
 const hoverData: any = {
-	'entity': {
-		'anno': {
-			'ExtendAbstractAuditingEntity': {
-				'contents': [
+	entity: {
+		anno: {
+			ExtendAbstractAuditingEntity: {
+				completeItem: {
+					label: {
+						label: 'ExtendAbstractAuditingEntity',
+						detail: '',
+						description: '实体继承基础审计类'
+					},
+					kind: vscode.CompletionItemKind.Class,
+				},
+				contents: [
 					'实体继承基础审计类注解',
 					[
 						'#### 使用方法:',
@@ -26,8 +35,17 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
-			'EntityPackage': {
-				'contents': [
+			EntityPackage: {
+				completeItem: {
+					label: {
+						label: 'EntityPackage',
+						detail: '',
+						description: '实体指定包名'
+					},
+					insertText: new vscode.SnippetString('EntityPackage(${1})${0}'),
+					kind: vscode.CompletionItemKind.Module,
+				},
+				contents: [
 					'实体指定包名注解',
 					[
 						'#### 使用方法:',
@@ -42,8 +60,16 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
-			'SkipFakeData': {
-				'contents': [
+			SkipFakeData: {
+				completeItem: {
+					label: {
+						label: 'SkipFakeData',
+						detail: '',
+						description: '取消生成假数据'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'取消生成假数据',
 					[
 						'#### 使用方法:',
@@ -57,8 +83,16 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
-			'ImportData': {
-				'contents': [
+			ImportData: {
+				completeItem: {
+					label: {
+						label: 'ImportData',
+						detail: '',
+						description: '导入实体数据'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'导入实体数据',
 					[
 						'#### 使用方法:',
@@ -73,8 +107,17 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
-			'SkipComponent': {
-				'contents': [
+			SkipComponent: {
+				completeItem: {
+					label: {
+						label: 'SkipComponent',
+						detail: '',
+						description: '忽略部分文件生成'
+					},
+					insertText: new vscode.SnippetString('SkipComponent(${1}|listPage, editPage, detailPage, clientService, clientRoute, domain, mapper, controllerTest, serviceClass, restController, repository, queryService|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略部分文件生成',
 					[
 						'#### 使用方法:',
@@ -90,7 +133,15 @@ const hoverData: any = {
 				]
 			},
 			SkipMultiTenant: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipMultiTenant',
+						detail: '',
+						description: '忽略多租户'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略多租户',
 					[
 						'#### 使用方法:',
@@ -107,7 +158,16 @@ const hoverData: any = {
 				]
 			},
 			SkipRestApi: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipRestApi',
+						detail: '',
+						description: '忽略指定API接口'
+					},
+					insertText: new vscode.SnippetString('SkipRestApi(${1}|dataExport, dataImport, create|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略指定API接口生成',
 					[
 						'#### 使用方法:',
@@ -130,7 +190,16 @@ const hoverData: any = {
 				]
 			},
 			SkipWebButton: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipWebButton',
+						detail: '',
+						description: '忽略前端部分按钮'
+					},
+					insertText: new vscode.SnippetString('SkipWebButton(${1}|listAdd, listModalEdit, listEdit, listDelete, listDetail|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略前端部分按钮生成',
 					[
 						'#### 使用方法:',
@@ -155,7 +224,16 @@ const hoverData: any = {
 				]
 			},
 			ListBy: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'ListBy',
+						detail: '',
+						description: '指定列表样式'
+					},
+					insertText: new vscode.SnippetString('ListBy(${1}|table, list|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'指定列表样式',
 					[
 						'#### 使用方法:',
@@ -176,7 +254,15 @@ const hoverData: any = {
 				]
 			},
 			Readonly: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Readonly',
+						detail: '',
+						description: '只读实体'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'只读实体',
 					[
 						'#### 使用方法:',
@@ -193,7 +279,16 @@ const hoverData: any = {
 				]
 			},
 			Dto: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Dto',
+						detail: '',
+						description: '设置DTO'
+					},
+					insertText: new vscode.SnippetString('Dto(${1|mapstruct, no |})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'设置DTO',
 					[
 						'#### 使用方法:',
@@ -215,7 +310,15 @@ const hoverData: any = {
 				]
 			},
 			SkipClient: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipClient',
+						detail: '',
+						description: '取消前端生成'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'取消前端生成',
 					[
 						'#### 使用方法:',
@@ -232,7 +335,15 @@ const hoverData: any = {
 				]
 			},
 			SkipServer: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipServer',
+						detail: '',
+						description: '取消后端生成'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'取消后端生成',
 					[
 						'#### 使用方法:',
@@ -249,7 +360,15 @@ const hoverData: any = {
 				]
 			},
 			Filter: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Filter',
+						detail: '',
+						description: '使用过滤器'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'使用过滤器',
 					[
 						'#### 使用方法:',
@@ -267,7 +386,16 @@ const hoverData: any = {
 				]
 			},
 			Service: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Service',
+						detail: '',
+						description: 'Service实现方式'
+					},
+					insertText: new vscode.SnippetString('Service(${1|serviceClass, serviceImpl|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'设置Service类实现方式',
 					[
 						'#### 使用方法:',
@@ -290,7 +418,16 @@ const hoverData: any = {
 				]
 			},
 			Paginate: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Paginate',
+						detail: '',
+						description: '设置分页方式'
+					},
+					insertText: new vscode.SnippetString('Paginate(${1|pagination, servinfinite-scroll, no|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'设置分页方式',
 					[
 						'#### 使用方法:',
@@ -313,7 +450,16 @@ const hoverData: any = {
 				]
 			},
 			Search: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Search',
+						detail: '',
+						description: '使用全文检索'
+					},
+					insertText: new vscode.SnippetString('Search(${1|elasticsearch, no |})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'使用全文检索',
 					[
 						'#### 使用方法:',
@@ -335,7 +481,16 @@ const hoverData: any = {
 				]
 			},
 			Microservice: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'Microservice',
+						detail: '',
+						description: '所属微服务名称'
+					},
+					insertText: new vscode.SnippetString('Microservice(${1})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'所属微服务名称',
 					[
 						'#### 使用方法:',
@@ -352,7 +507,16 @@ const hoverData: any = {
 				]
 			},
 			PublicApiBy: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'PublicApiBy',
+						detail: '',
+						description: '公开访问API及条件'
+					},
+					insertText: new vscode.SnippetString('PublicApiBy(${1})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'公开访问API及条件',
 					[
 						'#### 使用方法:',
@@ -370,7 +534,15 @@ const hoverData: any = {
 				]
 			},
 			SkipDbChangelog: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipDbChangelog',
+						detail: '',
+						description: '忽略Liquidbase的Changlog'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略Liquidbase的Changlog文件',
 					[
 						'#### 使用方法:',
@@ -387,7 +559,15 @@ const hoverData: any = {
 				]
 			},
 			HasImageField: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'HasImageField',
+						detail: '',
+						description: '实体中有图片字段'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'实体中有图片字段',
 					[
 						'#### 使用方法:',
@@ -404,7 +584,15 @@ const hoverData: any = {
 				]
 			},
 			SkipSoftDelete: {
-				'contents': [
+				completeItem: {
+					label: {
+						label: 'SkipSoftDelete',
+						detail: '',
+						description: '忽略逻辑删除'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
 					'忽略逻辑删除',
 					[
 						'#### 使用方法:',
@@ -421,6 +609,15 @@ const hoverData: any = {
 				]
 			},
 			ImportDataFile: {
+				completeItem: {
+					label: {
+						label: 'ImportDataFile',
+						detail: '',
+						description: '导入数据的文件'
+					},
+					insertText: new vscode.SnippetString('ImportDataFile(${1})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
 				'contents': [
 					'导入数据的文件',
 					[
@@ -437,8 +634,17 @@ const hoverData: any = {
 				]
 			},
 			AddCustomMethod: {
-				'contents': [
-					'为生成后的代码增加自定义方法',
+				completeItem: {
+					label: {
+						label: 'AddCustomMethod',
+						detail: '',
+						description: '在指定代码中增加自定义方法'
+					},
+					insertText: new vscode.SnippetString('AddCustomMethod(${1|repository, service, rest, clientService, queryService, updateComponent, listComponent, clientRoute, editComponent, dto, listRelation, detailTemplate|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'在指定代码中增加自定义方法',
 					[
 						'#### 使用方法:',
 						'```java',
@@ -470,7 +676,16 @@ const hoverData: any = {
 		field: {
 			anno: {
 				EndUsed: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'EndUsed',
+							detail: '',
+							description: '设置字段的前端组件'
+						},
+						insertText: new vscode.SnippetString('EndUsed(${1|fileUrl, iconPicker, imageUrl, videoUrl, audioUrl, editor, codeEditor, select, modalSelect, checkbox, radio, radioButton, rate, slider, switch, textArea, avatar |})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'设置字段的前端组件',
 						[
 							'#### 使用方法:',
@@ -496,7 +711,16 @@ const hoverData: any = {
 					]
 				},
 				FieldConfig: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'FieldConfig',
+							detail: '',
+							description: '增加字段配置'
+						},
+						insertText: new vscode.SnippetString('FieldConfig(${1}|hideInForm, hideInList, editInList, searchForm, hideInDetail, filter, sortable |)${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'增加字段配置',
 						[
 							'#### 使用方法:',
@@ -520,10 +744,37 @@ const hoverData: any = {
 							'#### 适用范围：',
 							'- BegCode',
 						].join('\n'),
-					]
+					],
+					value: {
+						hideInForm: {
+							'contents': [
+								'在表单中隐藏',
+								[
+									'#### 使用方法:',
+									'```java',
+									' @FieldConfig(hideInForm)',
+									' name String',
+									'```'
+								].join('\n'),
+								[
+									'#### 适用范围：',
+									'- BegCode',
+								].join('\n'),
+							]
+						}
+					}
 				},
 				ShowBy: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'ShowBy',
+							detail: '',
+							description: '字段在表单显示的条件'
+						},
+						insertText: new vscode.SnippetString('ShowBy(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'字段在表单显示的条件',
 						[
 							'#### 使用方法:',
@@ -541,7 +792,16 @@ const hoverData: any = {
 					]
 				},
 				DefaultValue: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'DefaultValue',
+							detail: '',
+							description: '字段默认值'
+						},
+						insertText: new vscode.SnippetString('DefaultValue(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'字段默认值',
 						[
 							'#### 使用方法:',
@@ -559,7 +819,16 @@ const hoverData: any = {
 					]
 				},
 				SortField: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'SortField',
+							detail: '',
+							description: '排序字段'
+						},
+						insertText: new vscode.SnippetString('SortField(${1|asc, desc|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'排序字段',
 						[
 							'#### 使用方法:',
@@ -580,7 +849,16 @@ const hoverData: any = {
 					]
 				},
 				ColumnWidth: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'ColumnWidth',
+							detail: '',
+							description: '表格列宽'
+						},
+						insertText: new vscode.SnippetString('ColumnWidth(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'表格列宽',
 						[
 							'#### 使用方法:',
@@ -596,7 +874,16 @@ const hoverData: any = {
 					]
 				},
 				FieldColumnName: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'FieldColumnName',
+							detail: '',
+							description: '数据表列名'
+						},
+						insertText: new vscode.SnippetString('FieldColumnName(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'数据表列名',
 						[
 							'#### 使用方法:',
@@ -612,7 +899,15 @@ const hoverData: any = {
 					]
 				},
 				SkipDto: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'SkipDto',
+							detail: '',
+							description: 'DTO中忽略该字段'
+						},
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'DTO中忽略该字段',
 						[
 							'#### 使用方法:',
@@ -628,7 +923,15 @@ const hoverData: any = {
 					]
 				},
 				SkipCriteria: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'SkipCriteria',
+							detail: '',
+							description: 'Criteria条件类中忽略该字段'
+						},
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'Criteria条件类中忽略该字段',
 						[
 							'#### 使用方法:',
@@ -644,7 +947,15 @@ const hoverData: any = {
 					]
 				},
 				ImportDataField: {
-					'contents': [
+					completeItem: {
+						label: {
+							label: 'ImportDataField',
+							detail: '',
+							description: 'Liqiudbase导入字段'
+						},
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
 						'Liqiudbase导入字段',
 						[
 							'#### 使用方法:',
@@ -660,6 +971,15 @@ const hoverData: any = {
 					]
 				},
 				EditInContainer: {
+					completeItem: {
+						label: {
+							label: 'EditInContainer',
+							detail: '',
+							description: '编辑表单容器'
+						},
+						insertText: new vscode.SnippetString('EditInContainer(${1|modal, page, drawer|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
 					'contents': [
 						'编辑表单容器',
 						[
@@ -682,8 +1002,275 @@ const hoverData: any = {
 					]
 				},
 			},
+			type: {
+				Integer: {
+					contents: [
+						'整数类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' age Integer',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				String: {
+					contents: [
+						'字符串类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Long: {
+					contents: [
+						'长整数类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' age Long',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Boolean: {
+					contents: [
+						'布尔类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' deleted Boolean',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Float: {
+					contents: [
+						'浮点类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' price Float',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Double: {
+					contents: [
+						'双精度类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' price Double',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				LocalDate: {
+					contents: [
+						'日期类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' birthday LocalDate',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				BigDecimal: {
+					contents: [
+						'大数字类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' price BigDecimal',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				ZonedDateTime: {
+					contents: [
+						'日期时间类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' createTime ZonedDateTime',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Instant: {
+					contents: [
+						'时间戳类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' createTime Instant',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Duration: {
+					contents: [
+						'持续时间类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' duration Duration',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				UUID: {
+					contents: [
+						'UUID类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' uuid UUID',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				Blob: {
+					contents: [
+						'二进制类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' image Blob',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				AnyBlob: {
+					contents: [
+						'任意二进制类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' image AnyBlob',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				ImageBlob: {
+					contents: [
+						'图片二进制类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' image ImageBlob',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				TextBlob: {
+					contents: [
+						'长文本类型',
+						[
+							'#### 使用方法:',
+							'```java',
+							' content TextBlob',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				}
+			},
 			validation: {
 				required: {
+					completeItem: {
+						label: {
+							label: 'required',
+							'detail': '',
+							'description': '非空'
+						},
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['String', 'Integer', 'Long', 'BigDecimal', 'Float', 'Double', 'Enum', 'Boolean', 'LocalDate', 'ZonedDateTime', 'Instant', 'Duration', 'UUID', 'Blob', 'AnyBlob', 'ImageBlob', 'TextBlob'],
+					},
 					contents: [
 						'字段非空校验',
 						[
@@ -698,18 +1285,268 @@ const hoverData: any = {
 							'- JHipster',
 						].join('\n'),
 					]
+				},
+				minlength: {
+					completeItem: {
+						label: {
+							label: 'minlength',
+							'detail': '',
+							'description': '最小长度'
+						},
+						insertText: new vscode.SnippetString('minlength(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['String'],
+					},
+					contents: [
+						'最小长度校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String minlength(5)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				maxlength: {
+					completeItem: {
+						label: {
+							label: 'maxlength',
+							'detail': '',
+							'description': '最大长度'
+						},
+						insertText: new vscode.SnippetString('maxlength(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['String'],
+					},
+					contents: [
+						'最大长度校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String maxlength(10)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				pattern: {
+					completeItem: {
+						label: {
+							label: 'pattern',
+							'detail': '',
+							'description': '正则表达式校验'
+						},
+						insertText: new vscode.SnippetString('pattern(/${1}/)${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['String'],
+					},
+					contents: [
+						'正则表达式校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String pattern("[a-zA-Z]+")',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				unique: {
+					completeItem: {
+						label: {
+							label: 'unique',
+							'detail': '',
+							'description': '唯一性'
+						},
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['String', 'Integer', 'Long', 'BigDecimal', 'Float', 'Double', 'Enum', 'Boolean', 'LocalDate', 'ZonedDateTime', 'Instant', 'Duration', 'UUID', 'Blob', 'AnyBlob', 'ImageBlob', 'TextBlob'],
+					},
+					contents: [
+						'唯一性校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String unique',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				min: {
+					completeItem: {
+						label: {
+							label: 'min',
+							'detail': '',
+							'description': '最小值'
+						},
+						insertText: new vscode.SnippetString('min(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['Integer', 'Long', 'BigDecimal', 'Float', 'Double'],
+					},
+					contents: [
+						'最小值校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' age Integer min(18)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				max: {
+					completeItem: {
+						label: {
+							label: 'max',
+							'detail': '',
+							'description': '最大值'
+						},
+						insertText: new vscode.SnippetString('max(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['Integer', 'Long', 'BigDecimal', 'Float', 'Double'],
+					},
+					contents: [
+						'最大值校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' age Integer max(100)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				minbytes: {
+					completeItem: {
+						label: {
+							label: 'minbytes',
+							'detail': '',
+							'description': '最小字节长度'
+						},
+						insertText: new vscode.SnippetString('minbytes(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['Blob', 'AnyBlob', 'ImageBlob'],
+					},
+					contents: [
+						'最小字节长度校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String minbytes(5)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				maxbytes: {
+					completeItem: {
+						label: {
+							label: 'maxbytes',
+							'detail': '',
+							'description': '最大字节长度'
+						},
+						insertText: new vscode.SnippetString('maxbytes(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+						scope: ['Blob', 'AnyBlob', 'ImageBlob'],
+					},
+					contents: [
+						'最大字节长度校验',
+						[
+							'#### 使用方法:',
+							'```java',
+							' name String maxbytes(10)',
+							'```'
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
 				}
 			}
 		}
 	}
 };
 
-function tokenLableHover(tokenLabel: any): vscode.MarkdownString[] {
+function tokenLableHover(tokenLabel: any, jdlObject?: any): vscode.MarkdownString[]| string[] {
 	if (tokenLabel) {
 		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
 		const labels = tokenLabel.split('=>');
+		if (tokenLabel.startsWith('relationship:')) {
+			log('tokenLabel.relationship', tokenLabel);
+			if (labels.length === 4 && labels[labels.length - 1].startsWith('injectedFieldParam:')) {
+				const entity = labels[2].split(':')[1];
+				const field = labels[3].split(':')[1];
+				if (jdlObject && jdlObject.entities) {
+					// 查找字段的名称
+					const entityObj = jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+					if (entityObj && entityObj.body) {
+						const fieldObj = entityObj.body.find((fieldObj: any) => fieldObj.name === field);
+						if (fieldObj && fieldObj.documentation) {
+							return [
+								`${entity}.${field}`,
+								[`类型：${fieldObj.type}`,`备注：${fieldObj.documentation || ''}`].join('\n'),
+							];
+						} else {
+							return [];
+						}
+					} else {
+						return [];
+					}
+				} else {
+					return [];
+				}
+
+			} else if (labels.length === 2 && (labels[labels.length - 1].startsWith('to:') || labels[labels.length - 1].startsWith('from:'))){
+				const entity = labels[1].split(':')[1];
+				if (jdlObject && jdlObject.entities) {
+					// 查找实体的名称
+					const entityObj = jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+					if (entityObj.documentation) {
+						return [
+							entityObj.documentation,
+						];
+					}
+				}
+				return [];
+			} else {
+				return [];
+			}
+		}
 		const labelPath = labels.reduce((prev: any, current: any, index: number, arr: any[]) => {
 			if (index === arr.length - 1 && index > 0) {
+				return prev + '.' + current.replace(':', '.');
+			} else if (index === arr.length - 2 && index > 0 && current.startsWith('anno:')) {
 				return prev + '.' + current.replace(':', '.');
 			} else {
 				return (prev ? (prev + '.') : '') + current.split(':')[0];
@@ -721,4 +1558,86 @@ function tokenLableHover(tokenLabel: any): vscode.MarkdownString[] {
 	return [];
 }
 
-export { hoverData, tokenLableHover };
+function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownString[] {
+	if (tokenLabel) {
+		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
+		// relationship:ManyToOne=>to:TestEntity2=>injectedFieldParam:name
+
+		// entity:TestEntity=>field:abc=>type:String
+		// entity:TestEntity=>field:abc=>validation:required
+		log('tokenLabel', tokenLabel);
+		const labels: string[] = tokenLabel.split('=>');
+		const typeChain = labels.map(label => label.split(':')[0]).join('.');
+		if (typeChain === 'entity.field.type') {
+			const validationPath = 'entity.field.validation';
+			const typeName = [...labels].pop()?.split(':')[1];
+			const validationObject = get(hoverData, validationPath, {});
+			const completeItems: any[] = [];
+			Object.keys(validationObject).forEach(key => {
+				if (validationObject[key]?.completeItem?.scope?.includes(typeName)) {
+					completeItems.push(validationObject[key].completeItem);
+				}
+			});
+			return completeItems;
+		}
+		if (typeChain === 'entity.field.validation') {
+			const validationPath = 'entity.field.validation';
+			if (jdlObject?.entities) {
+				log('jdlObject?.entities:::', jdlObject?.entities);
+				const entityName = labels[0].split(':')[1];
+				const fieldName = labels[1].split(':')[1];
+				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
+				log('jdlObject?.entity:::', entity);
+				if (entity?.body) {
+					const field = entity?.body?.find((field: any) => field.name === fieldName);
+					if (field) {
+						const existValidations = field.validations?.map((valid: any) => valid.key) || [];
+						const fieldType = field.type;
+						const validationObject = get(hoverData, validationPath, {});
+						log('validationObject:::', validationObject);
+						const completeItems: any[] = [];
+						Object.keys(validationObject)
+							.filter(key => !existValidations.includes(key))
+							.forEach(key => {
+								if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
+									completeItems.push(validationObject[key].completeItem);
+								}
+							});
+						return completeItems;
+					}
+				}
+			}
+		}
+		if (typeChain === 'entity.field.validation.value') {
+			const validationPath = 'entity.field.validation';
+			if (jdlObject?.entities) {
+				log('jdlObject?.entities:::', jdlObject?.entities);
+				const entityName = labels[0].split(':')[1];
+				const fieldName = labels[1].split(':')[1];
+				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
+				log('jdlObject?.entity:::', entity);
+				if (entity?.body) {
+					const field = entity?.body?.find((field: any) => field.name === fieldName);
+					if (field) {
+						const existValidations = field.validations?.map((valid: any) => valid.key) || [];
+						const fieldType = field.type;
+						const validationObject = get(hoverData, validationPath, {});
+						log('validationObject:::', validationObject);
+						const completeItems: any[] = [];
+						Object.keys(validationObject)
+							.filter(key => !existValidations.includes(key))
+							.forEach(key => {
+								if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
+									completeItems.push(validationObject[key].completeItem);
+								}
+							});
+						return completeItems;
+					}
+				}
+			}
+		}
+	}
+	return [];
+}
+
+export { hoverData, tokenLableHover, tokenLableComplete };

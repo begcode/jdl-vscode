@@ -4,7 +4,7 @@
 
 import { log } from 'console';
 import * as vscode from 'vscode';
-import { completeItems } from './completeItems';
+import { getCompleteItems } from './completeItems';
 import { tokenLableHover } from './hoverHelper';
 import { upperFirst } from 'lodash';
 let jdl: any;
@@ -29,9 +29,12 @@ const jdlKeywordTokenTypes: Record<string, string> = {
 
 const cstTokens: any[] = [];
 
+export { cstTokens };
+
 export function activate(context: vscode.ExtensionContext) {
 	let jdlObject: any = {};
 	let jdlCst: any = {};
+	const errors: any[] = [];
 
 	context.subscriptions.push(
 		vscode.languages.registerHoverProvider('jdl', {
@@ -48,15 +51,23 @@ export function activate(context: vscode.ExtensionContext) {
 						};
 					}
 				}
+				if (document.getText(new vscode.Range(new vscode.Position(line, character - 1), new vscode.Position(line, character))) === ' ') {
+					return {
+						contents: []
+					};
+				}
 				const word = document.getText(document.getWordRangeAtPosition(position));
 				const cstToken = cstTokens.find((cstToken: any) => {
 					return cstToken.image === word && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
 				});
 				if (cstToken) {
 					return {
-						contents: tokenLableHover(cstToken.label)
+						contents: tokenLableHover(cstToken.label, jdlObject)
 					};
 				}
+				log('hover.cstToken', cstToken);
+				log('hover.word', word);
+				log('cstTokens', cstTokens);
 				return {
 					contents: []
 				};
@@ -66,34 +77,24 @@ export function activate(context: vscode.ExtensionContext) {
 	function updateDiagnostics(document: vscode.TextDocument, collection: vscode.DiagnosticCollection): void {
 		if (document) {
 			try {
+				errors.length = 0;
 				const lexResult = jdl.getLexResult(document.getText());
-				if (lexResult.errors?.length > 0) {
-					const errors = lexResult.errors.map((error: any) => {
-						const diagnostic: any = {
-							code: '',
-							message: error.message,
-							range: new vscode.Range(new vscode.Position(error.token.startLine, error.token.startColumn), new vscode.Position(error.token.endLine, error.token.endColumn)),
-							severity: vscode.DiagnosticSeverity.Error,
-							source: '',
-						};
-						if (error.previousToken) {
-							diagnostic.relatedInformation = [
-								new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(error.previousToken.startLine, error.previousToken.startColumn), new vscode.Position(error.previousToken.endLine, error.previousToken.endColumn))), '相关信息')
-							];
-						}
-						return diagnostic;
-					});
-					collection.set(document.uri, errors);
-				} else {
-					try {
-						const parseResult = jdl.parse(document.getText());
+				jdlCst = lexResult;
+				try {
+					if (!lexResult.errors || lexResult.errors?.length === 0) {
+						const parseResult = jdl.grammarParse(document.getText());
 						if (parseResult) {
 							jdlObject = parseResult;
+							log('parseResult:', parseResult);
 						}	
-					} catch (error) {
-						log('error:', error);
+					} else {
+						errors.push(...lexResult.errors || []);
 					}
-					jdlCst = lexResult;
+				} catch (error) {
+					log('error:', error);
+				}
+				if (jdlCst.children) {
+					cstTokens.length = 0;
 					Object.keys(jdlCst.children).forEach((key: string) => {
 						if (key === 'binaryOptionDeclaration') {
 							const binaryOptions = jdlCst.children.binaryOptionDeclaration;
@@ -126,6 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
 						}
 						if (key === 'entityDeclaration') {
 							const entities = jdlCst.children.entityDeclaration;
+							log('entities::', entities);
 							entities.forEach((entity: any) => {
 								const label = 'entity:' + entity.children.NAME[0].image;
 								entity.children?.annotationDeclaration?.forEach((annotation: any) => {
@@ -161,6 +163,28 @@ export function activate(context: vscode.ExtensionContext) {
 												const validationLabel = fieldLabel + '=>' + 'validation:' + validation.children?.REQUIRED[0].image;
 												const validationData: any = {...validation.children?.REQUIRED[0], label: validationLabel};
 												cstTokens.push(validationData);
+											}
+											if (validation.children?.UNIQUE) {
+												const validationLabel = fieldLabel + '=>' + 'validation:' + validation.children?.UNIQUE[0].image;
+												const validationData: any = {...validation.children?.UNIQUE[0], label: validationLabel};
+												cstTokens.push(validationData);
+											}
+											if (validation.children?.pattern) {
+												const validationLabel = fieldLabel + '=>' + 'validation:' + validation.children?.pattern[0].children.PATTERN[0].image;
+												const validationData: any = {...validation.children?.pattern[0].children.PATTERN[0], label: validationLabel};
+												cstTokens.push(validationData);
+												const validationValueLabel = validationLabel + '=>' + 'value:' + validation.children?.pattern[0].children?.REGEX[0].image;
+												const validationValueData = { ...validation.children?.pattern[0].children?.REGEX[0], label: validationValueLabel};
+												cstTokens.push(validationValueData);
+											}
+											// minMaxValidation
+											if (validation.children?.minMaxValidation) {
+												const validationLabel = fieldLabel + '=>' + 'validation:' + validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0].image;
+												const validationData = { ...validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0], label: validationLabel};
+												cstTokens.push(validationData);
+												const validationValueLabel = validationLabel + '=>' + 'value:' + validation.children?.minMaxValidation[0].children?.INTEGER[0].image;
+												const validationValueData = { ...validation.children?.minMaxValidation[0].children?.INTEGER[0], label: validationValueLabel};
+												cstTokens.push(validationValueData);
 											}
 											// todo: 其他验证规则
 										});
@@ -205,15 +229,35 @@ export function activate(context: vscode.ExtensionContext) {
 									const relationshipData: any = {...relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0], label: relationshipLabel};
 									cstTokens.push(relationshipData);
 									relationship.children?.relationshipBody?.forEach((relationshipBody: any) => {
-										if (relationshipBody.from && relationshipBody.from[0]?.children?.NAME) {
-											const fromLabel = relationshipLabel + '=>' + 'from:' + relationshipBody.from[0].children.NAME[0].image;
-											const fromData: any = {...relationshipBody.from[0].children.NAME[0], label: fromLabel};
+										if (relationshipBody.children && relationshipBody.children.from[0]?.children?.NAME && relationshipBody.children.to[0]?.children?.NAME) {
+											const fromLabelOnly = 'from:' + relationshipBody.children.from[0].children.NAME[0].image;
+											const fromLabel = relationshipLabel + '=>' + fromLabelOnly;
+											const fromData: any = {...relationshipBody.children.from[0].children.NAME[0], label: fromLabel};
 											cstTokens.push(fromData);
-										}
-										if (relationshipBody.to && relationshipBody.to[0]?.children?.NAME) {
-											const fromLabel = relationshipLabel + '=>' + 'to:' + relationshipBody.to[0].children.NAME[0].image;
-											const fromData: any = {...relationshipBody.to[0].children.NAME[0], label: fromLabel};
-											cstTokens.push(fromData);
+											const toLabelOnly = 'to:' + relationshipBody.children.to[0].children.NAME[0].image;
+											const toLabel = relationshipLabel + '=>' + toLabelOnly;
+											const toData: any = {...relationshipBody.children.to[0].children.NAME[0], label: toLabel};
+											cstTokens.push(toData);
+											if (relationshipBody.children.from[0]?.children?.injectedField) {
+												const fromInjectedFieldLabel = fromLabel + '=>' + toLabelOnly + '=>' + 'injectedField:' + relationshipBody.children.from[0].children.injectedField[0].image;
+												const fromInjectedFieldData: any = {...relationshipBody.children.from[0].children.injectedField[0], label: fromInjectedFieldLabel};
+												cstTokens.push(fromInjectedFieldData);
+											}
+											if (relationshipBody.children.from[0]?.children?.injectedFieldParam) {
+												const fromInjectedFieldParamLabel = fromLabel + '=>' + toLabelOnly + '=>' + 'injectedFieldParam:' + relationshipBody.children.from[0].children.injectedFieldParam[0].image;
+												const fromInjectedFieldParamData: any = {...relationshipBody.children.from[0].children.injectedFieldParam[0], label: fromInjectedFieldParamLabel};
+												cstTokens.push(fromInjectedFieldParamData);
+											}
+											if (relationshipBody.children.to[0]?.children?.injectedField) {
+												const toInjectedFieldLabel = toLabel + '=>' + fromLabelOnly + '=>' + 'injectedField:' + relationshipBody.children.to[0].children.injectedField[0].image;
+												const toInjectedFieldData: any = {...relationshipBody.children.to[0].children.injectedField[0], label: toInjectedFieldLabel};
+												cstTokens.push(toInjectedFieldData);
+											}
+											if (relationshipBody.children.to[0]?.children?.injectedFieldParam) {
+												const toInjectedFieldParamLabel = toLabel + '=>' + fromLabelOnly +  '=>' + 'injectedFieldParam:' + relationshipBody.children.to[0].children.injectedFieldParam[0].image;
+												const toInjectedFieldParamData: any = {...relationshipBody.children.to[0].children.injectedFieldParam[0], label: toInjectedFieldParamLabel};
+												cstTokens.push(toInjectedFieldParamData);
+											}
 										}
 									});
 								}
@@ -239,6 +283,26 @@ export function activate(context: vscode.ExtensionContext) {
 							});
 						}
 					});
+				}
+				log('lexResult:', lexResult);
+				if (lexResult.errors?.length > 0) {
+					const errors = lexResult.errors.map((error: any) => {
+						const diagnostic: any = {
+							code: '',
+							message: error.message,
+							range: new vscode.Range(new vscode.Position(error.token.startLine - 1, error.token.startColumn - 1), new vscode.Position(error.token.endLine - 1, error.token.endColumn - 1)),
+							severity: vscode.DiagnosticSeverity.Error,
+							source: '',
+						};
+						// if (error.previousToken) {
+						// 	diagnostic.relatedInformation = [
+						// 		new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(error.previousToken.startLine, error.previousToken.startColumn), new vscode.Position(error.previousToken.endLine, error.previousToken.endColumn))), '相关信息')
+						// 	];
+						// }
+						return diagnostic;
+					});
+					collection.set(document.uri, errors);
+				} else {
 					collection.clear();
 				}
 			}
@@ -265,5 +329,5 @@ export function activate(context: vscode.ExtensionContext) {
 			updateDiagnostics(editor.document, diagnosticCollection);
 		}
 	}));
-	context.subscriptions.push(...completeItems);
+	context.subscriptions.push(...getCompleteItems(errors, jdlObject));
 }
