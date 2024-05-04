@@ -65,9 +65,6 @@ export function activate(context: vscode.ExtensionContext) {
 						contents: tokenLableHover(cstToken.label, jdlObject)
 					};
 				}
-				log('hover.cstToken', cstToken);
-				log('hover.word', word);
-				log('cstTokens', cstTokens);
 				return {
 					contents: []
 				};
@@ -85,7 +82,6 @@ export function activate(context: vscode.ExtensionContext) {
 						const parseResult = jdl.grammarParse(document.getText());
 						if (parseResult) {
 							jdlObject = parseResult;
-							log('parseResult:', parseResult);
 						}	
 					} else {
 						errors.push(...lexResult.errors || []);
@@ -284,7 +280,6 @@ export function activate(context: vscode.ExtensionContext) {
 						}
 					});
 				}
-				log('lexResult:', lexResult);
 				if (lexResult.errors?.length > 0) {
 					const errors = lexResult.errors.map((error: any) => {
 						const diagnostic: any = {

@@ -62,7 +62,6 @@ export function parseJdl(text: string) {
 			}
 			if (key === 'entityDeclaration') {
 				const entities = lexResult.children.entityDeclaration;
-				log('entities::', entities);
 				entities.forEach((entity: any) => {
 					const keywordLabel = 'keyword:entity=>' + 'entity:' + entity.children.NAME[0].image;
 					const keywordData = {...entity.children.ENTITY[0], label: keywordLabel};
@@ -176,6 +175,10 @@ export function parseJdl(text: string) {
 								const toLabel = relationshipLabel + '=>' + toLabelOnly;
 								const toData: any = {...relationshipBody.children.to[0].children.NAME[0], label: toLabel};
 								cstTokens.push(toData);
+								const toKeywordOnly = 'keyword:' + relationshipBody.children.TO[0].image;
+								const toKeywordLabel = relationshipLabel + '=>' + toKeywordOnly;
+								const toKeywordData: any = {...relationshipBody.children.TO[0], label: toKeywordLabel};
+								cstTokens.push(toKeywordData);
 								if (relationshipBody.children.from[0]?.children?.injectedField) {
 									const fromInjectedFieldLabel = fromLabel + '=>' + toLabelOnly + '=>' + 'injectedField:' + relationshipBody.children.from[0].children.injectedField[0].image;
 									const fromInjectedFieldData: any = {...relationshipBody.children.from[0].children.injectedField[0], label: fromInjectedFieldLabel};

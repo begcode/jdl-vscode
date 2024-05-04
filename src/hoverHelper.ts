@@ -671,6 +671,266 @@ const hoverData: any = {
 						'- BegCode',
 					].join('\n'),
 				]
+			},
+			UpdateById: {
+				completeItem: {
+					label: {
+						label: 'UpdateById',
+						detail: '',
+						description: '增加updateXXXById方法'
+					},
+					insertText: new vscode.SnippetString('@Update${1}ById(${2})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加updateXXXById方法',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @UpdateAgeById(age)',
+						' entity SysConfig {}',
+						'```',
+						'**注意：**: 内容为更新的字段列表，使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			UpdateBy: {
+				completeItem: {
+					label: {
+						label: 'UpdateBy',
+						detail: '',
+						description: '增加updateXXXByYYY方法'
+					},
+					insertText: new vscode.SnippetString('@Update${1}By${2}("${3},${4}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加updateByXXX方法',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @UpdateAgeByName("name, age")',
+						' entity SysConfig {}',
+						'```',
+						'**注意：**: 前部分参数为更新条件，后部分参数为更新字段，多个字段使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			RemoveBy: {
+				completeItem: {
+					label: {
+						label: 'RemoveBy',
+						detail: '',
+						description: '增加removeByXXX方法'
+					},
+					insertText: new vscode.SnippetString('@RemoveBy${1}(${2})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加removeByXXX方法',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @RemoveByName(name-disabled)',
+						' entity SysConfig {}',
+						'```',
+						'**注意：**: 多个字段使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			SaveWith: {
+				completeItem: {
+					label: {
+						label: 'SaveWith',
+						detail: '',
+						description: '增加saveWithXXX方法'
+					},
+					insertText: new vscode.SnippetString('@SaveWith${1}(${2})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加saveWithXXX方法',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @SaveWithName(name-disabled-label)',
+						' entity SysConfig {}',
+						'```',
+						'**注意：**: 多个字段使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			EntityDomainLayer: {
+				completeItem: {
+					label: {
+						label: 'EntityDomainLayer',
+						detail: '',
+						description: '生成Demain层文件'
+					},
+					insertText: new vscode.SnippetString('@EntityDomainLayer(${1|true, false|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'生成Demain层文件',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EntityDomainLayer(false)',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
+			},
+			EntityPersistenceLayer: {
+				completeItem: {
+					label: {
+						label: 'EntityPersistenceLayer',
+						detail: '',
+						description: '生成Persistence层文件'
+					},
+					insertText: new vscode.SnippetString('@EntityPersistenceLayer(${1|true, false|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'生成Persistence层文件',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EntityPersistenceLayer(false)',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
+			},
+			RestLayer: {
+				completeItem: {
+					label: {
+						label: 'RestLayer',
+						detail: '',
+						description: '生成Rest层文件'
+					},
+					insertText: new vscode.SnippetString('@RestLayer(${1|true, false|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'生成Rest层文件',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @RestLayer(false)',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
+			},
+			EntitySpringPreAuthorize: {
+				completeItem: {
+					label: {
+						label: 'RestLayer',
+						detail: '',
+						description: '增加权限注解'
+					},
+					insertText: new vscode.SnippetString('@EntitySpringPreAuthorize("${1}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加权限注解',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EntitySpringPreAuthorize("hasAuthority(\'ROLE_CUSTOM\')")',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
+			},
+			EntitySpringReadPreAuthorize: {
+				completeItem: {
+					label: {
+						label: 'EntitySpringReadPreAuthorize',
+						detail: '',
+						description: '增加Read权限注解'
+					},
+					insertText: new vscode.SnippetString('@EntitySpringReadPreAuthorize("${1}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加Read权限注解',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EntitySpringReadPreAuthorize("hasAuthority(\'ROLE_CUSTOM_READ\')")',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
+			},
+			EntitySearchLayer: {
+				completeItem: {
+					label: {
+						label: 'EntitySearchLayer',
+						detail: '',
+						description: '生成全文检索层文件'
+					},
+					insertText: new vscode.SnippetString('@EntitySearchLayer("${1|true, false|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'生成全文检索层文件',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EntitySearchLayer(true)',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+						'- JHipster',
+					].join('\n'),
+				]
 			}
 		},
 		field: {
@@ -1495,6 +1755,148 @@ const hoverData: any = {
 				}
 			}
 		}
+	},
+	relationship: {
+		from: {
+			anno: {
+				AnnotationOnSource: {
+					completeItem: {
+						label: {
+							label: 'AnnotationOnSource',
+							detail: '',
+							description: '关联关系左侧注解'
+						},
+						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity, unidirectional, editInForm, editBySelect, editByFormList, editByList, editInList, detailInList, editByTable, countByPrimaryKey, editBySelectModal, editBySelectDrawer, editByTableModal, editByTableDrawer, importData, hideInList|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'关联关系左侧注解',
+						[
+							'#### 使用方法:',
+							'```java',
+							' @AnnotationOnSource(hideInList)',
+							' SysConfig{user}',
+							' to',
+							' User',
+							'```',
+							'**注意：**: 多个使用-分隔',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				},
+			}
+		},
+		to: {
+			anno: {
+				AnnotationOnDestination: {
+					completeItem: {
+						label: {
+							label: 'AnnotationOnDestination',
+							detail: '',
+							description: '关联关系右侧注解'
+						},
+						insertText: new vscode.SnippetString('AnnotationOnDestination(${1|hideInList, editByTableDrawer, editByTableModal, editBySelectDrawer, editBySelectModal, detailInList, editInList|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'关联关系右侧注解',
+						[
+							'#### 使用方法:',
+							'```java',
+							' SysConfig{user}',
+							' to',
+							' @AnnotationOnDestination(hideInList)',
+							' User',
+							'```',
+							'**注意：**: 多个使用-分隔',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				},
+				OnDelete: {
+					completeItem: {
+						label: {
+							label: 'OnDelete',
+							detail: '',
+							description: '级联删除处理方式'
+						},
+						insertText: new vscode.SnippetString('OnDelete(${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'级联删除处理方式',
+						[
+							'#### 使用方法:',
+							'```java',
+							' SysConfig{user}',
+							' to',
+							' @OnDelete("SET NULL")',
+							' User',
+							'```',
+							'**注意：**: 多个使用-分隔',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				},
+				OnUpdate: {
+					completeItem: {
+						label: {
+							label: 'OnUpdate',
+							detail: '',
+							description: '级联更新处理方式'
+						},
+						insertText: new vscode.SnippetString('OnUpdate(${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'级联更新处理方式',
+						[
+							'#### 使用方法:',
+							'```java',
+							' SysConfig{user}',
+							' to',
+							' @OnUpdate("SET NULL")',
+							' User',
+							'```',
+							'**注意：**: 多个使用-分隔',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				},
+			}
+		},
+		ManyToOne: {
+			contents: [
+				'多对一关联',
+			]
+		},
+		OneToMany: {
+			contents: [
+				'一对多关联',
+			]
+		},
+		ManyToMany: {
+			contents: [
+				'多对多关联',
+			]
+		},
+		OneToOne: {
+			contents: [
+				'一对一关联',
+			]
+		}
 	}
 };
 
@@ -1565,7 +1967,6 @@ function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownSt
 
 		// entity:TestEntity=>field:abc=>type:String
 		// entity:TestEntity=>field:abc=>validation:required
-		log('tokenLabel', tokenLabel);
 		const labels: string[] = tokenLabel.split('=>');
 		const typeChain = labels.map(label => label.split(':')[0]).join('.');
 		if (typeChain === 'entity.field.type') {
@@ -1583,18 +1984,15 @@ function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownSt
 		if (typeChain === 'entity.field.validation') {
 			const validationPath = 'entity.field.validation';
 			if (jdlObject?.entities) {
-				log('jdlObject?.entities:::', jdlObject?.entities);
 				const entityName = labels[0].split(':')[1];
 				const fieldName = labels[1].split(':')[1];
 				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
-				log('jdlObject?.entity:::', entity);
 				if (entity?.body) {
 					const field = entity?.body?.find((field: any) => field.name === fieldName);
 					if (field) {
 						const existValidations = field.validations?.map((valid: any) => valid.key) || [];
 						const fieldType = field.type;
 						const validationObject = get(hoverData, validationPath, {});
-						log('validationObject:::', validationObject);
 						const completeItems: any[] = [];
 						Object.keys(validationObject)
 							.filter(key => !existValidations.includes(key))
@@ -1611,18 +2009,15 @@ function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownSt
 		if (typeChain === 'entity.field.validation.value') {
 			const validationPath = 'entity.field.validation';
 			if (jdlObject?.entities) {
-				log('jdlObject?.entities:::', jdlObject?.entities);
 				const entityName = labels[0].split(':')[1];
 				const fieldName = labels[1].split(':')[1];
 				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
-				log('jdlObject?.entity:::', entity);
 				if (entity?.body) {
 					const field = entity?.body?.find((field: any) => field.name === fieldName);
 					if (field) {
 						const existValidations = field.validations?.map((valid: any) => valid.key) || [];
 						const fieldType = field.type;
 						const validationObject = get(hoverData, validationPath, {});
-						log('validationObject:::', validationObject);
 						const completeItems: any[] = [];
 						Object.keys(validationObject)
 							.filter(key => !existValidations.includes(key))

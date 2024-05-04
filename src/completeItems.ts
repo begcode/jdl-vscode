@@ -423,26 +423,26 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 				// get all text until the `position` and check if it reads `console.`
 				// and if so then complete if `log`, `warn`, and `error`
 				const linePrefix = document.lineAt(position).text.slice(0, position.character);
-				log('linePrefix:', `'${linePrefix}'`);
 				const cutNumber = linePrefix.length - linePrefix.trimEnd().length;
 				const beforePosition = new vscode.Position(position.line, position.character - cutNumber - 1);
-				const word = document.getText(document.getWordRangeAtPosition(beforePosition));
-				log('word:', `'${word}'`);
-				log('beforePosition:', beforePosition);
+				const range = document.getWordRangeAtPosition(beforePosition);
+				const word = document.getText(range);
 				const cstToken = cstTokens.find((cstToken: any) => {
-					return cstToken.image === word && cstToken.startLine <= beforePosition.line + 1 && cstToken.endLine >= beforePosition.line + 1 && cstToken.startColumn <= beforePosition.character + 1 && cstToken.endColumn >= beforePosition.character + 1;
+					return cstToken.image === word && cstToken.startLine <= range!.start.line + 1 && cstToken.endLine >= range!.end.line + 1 && cstToken.startColumn <= range!.start.character + 1 && cstToken.endColumn === range!.end.character;
 				});
 				if (cstToken) {
 					// entity:TestEntity=>field:abc=>type:String
-					log('cstToken:', cstToken);
+					const labels: string[] = cstToken.label.split('=>');
+					const typeChain = labels.map(label => label.split(':')[0]).join('.');
+					if (typeChain === 'entity.field') {
+						return fieldTypeDetail;
+					}
 					return tokenLableComplete(cstToken.label, jdlObject);
 				} else {
-					log('errors:', errors);
 					if (errors && errors.length) {
 						const error = errors.find(error => {
 							return error.name === 'MismatchedTokenException' && error.previousToken?.startLine === beforePosition.line + 1 && error.previousToken?.endColumn <= beforePosition.character + 1;
 						});
-						log('error:', error);
 						if (error) {
 							if (error.context?.ruleStack) {
 								const ruleStackStr = error.context?.ruleStack.join('->');
@@ -452,7 +452,6 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 							}
 						}
 					}
-					log('cstTokens:', cstTokens);
 				}
 				return undefined;
 			}
@@ -476,8 +475,6 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 					if (lineText.trim() === '@') {
 						const offset = document.offsetAt(position);
 						const allText = document.getText();
-						log('offset', offset);
-						log('charAt', allText.charAt(offset - 1));
 						const replaceByIndex = (str: string, start: number, newContent: string) => {
 							// 使用substring方法从字符串中提取开始到替换点的部分
 							const part1 = str.substring(0, start);
@@ -488,8 +485,6 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 						};
 						const okText = replaceByIndex(allText,offset - 1,' ');
 						const parseResult = parseJdl(okText);
-						log('okText:::', okText);
-						log('parseResult:::', parseResult);
 						entities = parseResult.jdlObject?.entities || [];
 						if (position.line > 0) {
 							beforeLineToken = parseResult.cstTokens.find(token => token.startLine === position.line);
@@ -512,7 +507,6 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 					// entity:TestEntity=>anno:EntityPackage
 					// entity:TestEntity=>field:name=>anno:FieldConfig
 					// keyword:entity=>entity:TestEntity
-					log('beforeLineToken:', beforeLineToken);
 					const beforeLabels: string[] = beforeLineToken.label.split('=>');
 					const beforeTypeChain = beforeLabels.map(label => label.split(':')[0]).join('.');
 					if (beforeTypeChain === 'entity.anno') {
@@ -534,10 +528,15 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 						entity = entities.find((entity: any) => entity.name === entityName);
 						annotationTypeChain = 'entity.field.anno';
 					}
+					if (beforeTypeChain === 'relationship') {
+						annotationTypeChain = 'relationship.from.anno';
+					}
+					if (beforeTypeChain === 'relationship.keyword') {
+						annotationTypeChain = 'relationship.to.anno';
+					}
 					if (afterLineToken) {
 						// keyword:entity
 						// entity:TestEntity=>field:name
-						log('afterLineToken:', afterLineToken);
 						const afterLineLabels: string[] = afterLineToken.label.split('=>');
 						const afterLineTypeChain = afterLineLabels.map(label => label.split(':')[0]).join('.');
 						if (beforeTypeChain === 'entity.anno') {
@@ -576,6 +575,17 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 								annotationTypeChain = 'entity.field.anno';
 							}
 						}
+						if (beforeTypeChain === 'relationship') {
+							if (afterLineTypeChain === 'relationship.from') {
+								annotationTypeChain = 'relationship.from.anno';
+							}
+						}
+						if (beforeTypeChain === 'relationship.keyword') {
+							// relationship:ManyToOne=>to:TestEntity2
+							if (afterLineTypeChain === 'relationship.to') {
+								annotationTypeChain = 'relationship.to.anno';
+							}
+						}
 					}
 					if (annotationTypeChain) {
 						const annotationObject = get(hoverData, annotationTypeChain, {});
@@ -588,7 +598,6 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 						return completeItems;
 					}
 				} else if (afterLineToken) {
-					log('afterLineToken:', afterLineToken);
 					const afterLineLabels: string[] = afterLineToken.label.split('=>');
 					const afterLineTypeChain = afterLineLabels.map(label => label.split(':')[0]).join('.');
 					if (['keyword.entity', 'entity.anno'].includes(afterLineTypeChain)) {
