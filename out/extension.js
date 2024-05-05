@@ -21569,9 +21569,9 @@ var require_file = __commonJS({
         });
         function add(buff2, attempt) {
           try {
-            const log5 = JSON.parse(buff2);
-            if (check(log5)) {
-              push(log5);
+            const log4 = JSON.parse(buff2);
+            if (check(log4)) {
+              push(log4);
             }
           } catch (e) {
             if (!attempt) {
@@ -21579,7 +21579,7 @@ var require_file = __commonJS({
             }
           }
         }
-        function push(log5) {
+        function push(log4) {
           if (options.rows && results.length >= options.rows && options.order !== "desc") {
             if (stream.readable) {
               stream.destroy();
@@ -21587,8 +21587,8 @@ var require_file = __commonJS({
             return;
           }
           if (options.fields) {
-            log5 = options.fields.reduce((obj, key) => {
-              obj[key] = log5[key];
+            log4 = options.fields.reduce((obj, key) => {
+              obj[key] = log4[key];
               return obj;
             }, {});
           }
@@ -21597,17 +21597,17 @@ var require_file = __commonJS({
               results.shift();
             }
           }
-          results.push(log5);
+          results.push(log4);
         }
-        function check(log5) {
-          if (!log5) {
+        function check(log4) {
+          if (!log4) {
             return;
           }
-          if (typeof log5 !== "object") {
+          if (typeof log4 !== "object") {
             return;
           }
-          const time = new Date(log5.timestamp);
-          if (options.from && time < options.from || options.until && time > options.until || options.level && options.level !== log5.level) {
+          const time = new Date(log4.timestamp);
+          if (options.from && time < options.from || options.until && time > options.until || options.level && options.level !== log4.level) {
             return;
           }
           return true;
@@ -23453,10 +23453,10 @@ var require_logger = __commonJS({
             return;
           }
           streams.push(str);
-          str.on("log", (log5) => {
-            log5.transport = log5.transport || [];
-            log5.transport.push(transport.name);
-            out.emit("log", log5);
+          str.on("log", (log4) => {
+            log4.transport = log4.transport || [];
+            log4.transport.push(transport.name);
+            out.emit("log", log4);
           });
           str.on("error", (err) => {
             err.transport = err.transport || [];
@@ -41103,11 +41103,10 @@ __export(extension_exports, {
   cstTokens: () => cstTokens
 });
 module.exports = __toCommonJS(extension_exports);
-var import_console4 = require("console");
+var import_console3 = require("console");
 var vscode3 = __toESM(require("vscode"));
 
 // src/completeItems.ts
-var import_console3 = require("console");
 var vscode2 = __toESM(require("vscode"));
 
 // src/hoverHelper.ts
@@ -43067,7 +43066,6 @@ function tokenLableHover(tokenLabel3, jdlObject4) {
 }
 function tokenLableComplete(tokenLabel3, jdlObject4) {
   if (tokenLabel3) {
-    (0, import_console.log)("tokenLabel", tokenLabel3);
     const labels = tokenLabel3.split("=>");
     const typeChain = labels.map((label) => label.split(":")[0]).join(".");
     if (typeChain === "entity.field.type") {
@@ -43085,18 +43083,15 @@ function tokenLableComplete(tokenLabel3, jdlObject4) {
     if (typeChain === "entity.field.validation") {
       const validationPath = "entity.field.validation";
       if (jdlObject4?.entities) {
-        (0, import_console.log)("jdlObject?.entities:::", jdlObject4?.entities);
         const entityName = labels[0].split(":")[1];
         const fieldName = labels[1].split(":")[1];
         const entity = jdlObject4?.entities.find((entity2) => entity2.name === entityName);
-        (0, import_console.log)("jdlObject?.entity:::", entity);
         if (entity?.body) {
           const field = entity?.body?.find((field2) => field2.name === fieldName);
           if (field) {
             const existValidations = field.validations?.map((valid) => valid.key) || [];
             const fieldType = field.type;
             const validationObject = (0, import_lodash.get)(hoverData, validationPath, {});
-            (0, import_console.log)("validationObject:::", validationObject);
             const completeItems = [];
             Object.keys(validationObject).filter((key) => !existValidations.includes(key)).forEach((key) => {
               if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
@@ -43111,18 +43106,15 @@ function tokenLableComplete(tokenLabel3, jdlObject4) {
     if (typeChain === "entity.field.validation.value") {
       const validationPath = "entity.field.validation";
       if (jdlObject4?.entities) {
-        (0, import_console.log)("jdlObject?.entities:::", jdlObject4?.entities);
         const entityName = labels[0].split(":")[1];
         const fieldName = labels[1].split(":")[1];
         const entity = jdlObject4?.entities.find((entity2) => entity2.name === entityName);
-        (0, import_console.log)("jdlObject?.entity:::", entity);
         if (entity?.body) {
           const field = entity?.body?.find((field2) => field2.name === fieldName);
           if (field) {
             const existValidations = field.validations?.map((valid) => valid.key) || [];
             const fieldType = field.type;
             const validationObject = (0, import_lodash.get)(hoverData, validationPath, {});
-            (0, import_console.log)("validationObject:::", validationObject);
             const completeItems = [];
             Object.keys(validationObject).filter((key) => !existValidations.includes(key)).forEach((key) => {
               if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
@@ -43199,7 +43191,6 @@ function parseJdl(text) {
       }
       if (key === "entityDeclaration") {
         const entities3 = lexResult.children.entityDeclaration;
-        (0, import_console2.log)("entities::", entities3);
         entities3.forEach((entity) => {
           const keywordLabel = "keyword:entity=>entity:" + entity.children.NAME[0].image;
           const keywordData = { ...entity.children.ENTITY[0], label: keywordLabel };
@@ -43775,34 +43766,25 @@ function getCompleteItems(errors, jdlObject4) {
     {
       provideCompletionItems(document, position) {
         const linePrefix = document.lineAt(position).text.slice(0, position.character);
-        (0, import_console3.log)("linePrefix:", `'${linePrefix}'`);
         const cutNumber = linePrefix.length - linePrefix.trimEnd().length;
         const beforePosition = new vscode2.Position(position.line, position.character - cutNumber - 1);
         const range = document.getWordRangeAtPosition(beforePosition);
         const word = document.getText(range);
-        (0, import_console3.log)("word:", `'${word}'`);
-        (0, import_console3.log)("beforePosition:", beforePosition);
-        (0, import_console3.log)("range:", range);
         const cstToken = cstTokens.find((cstToken2) => {
           return cstToken2.image === word && cstToken2.startLine <= range.start.line + 1 && cstToken2.endLine >= range.end.line + 1 && cstToken2.startColumn <= range.start.character + 1 && cstToken2.endColumn === range.end.character;
         });
         if (cstToken) {
-          (0, import_console3.log)("cstToken1:", cstToken);
           const labels = cstToken.label.split("=>");
           const typeChain = labels.map((label) => label.split(":")[0]).join(".");
-          (0, import_console3.log)("typeChain:", typeChain);
           if (typeChain === "entity.field") {
             return fieldTypeDetail;
           }
-          (0, import_console3.log)("tokenLableComplete:jdlObject:", jdlObject4);
           return tokenLableComplete(cstToken.label, jdlObject4);
         } else {
-          (0, import_console3.log)("errors:", errors);
           if (errors && errors.length) {
             const error = errors.find((error2) => {
               return error2.name === "MismatchedTokenException" && error2.previousToken?.startLine === beforePosition.line + 1 && error2.previousToken?.endColumn <= beforePosition.character + 1;
             });
-            (0, import_console3.log)("error:", error);
             if (error) {
               if (error.context?.ruleStack) {
                 const ruleStackStr = error.context?.ruleStack.join("->");
@@ -43812,7 +43794,6 @@ function getCompleteItems(errors, jdlObject4) {
               }
             }
           }
-          (0, import_console3.log)("cstTokens:", cstTokens);
         }
         return void 0;
       }
@@ -43834,8 +43815,6 @@ function getCompleteItems(errors, jdlObject4) {
           if (lineText.trim() === "@") {
             const offset = document.offsetAt(position);
             const allText = document.getText();
-            (0, import_console3.log)("offset", offset);
-            (0, import_console3.log)("charAt", allText.charAt(offset - 1));
             const replaceByIndex = (str, start, newContent) => {
               const part1 = str.substring(0, start);
               const part2 = str.substring(start + newContent.length);
@@ -43843,8 +43822,6 @@ function getCompleteItems(errors, jdlObject4) {
             };
             const okText = replaceByIndex(allText, offset - 1, " ");
             const parseResult = parseJdl(okText);
-            (0, import_console3.log)("okText:::", okText);
-            (0, import_console3.log)("parseResult:::", parseResult);
             entities3 = parseResult.jdlObject?.entities || [];
             if (position.line > 0) {
               beforeLineToken = parseResult.cstTokens.find((token) => token.startLine === position.line);
@@ -43864,7 +43841,6 @@ function getCompleteItems(errors, jdlObject4) {
         let annotationTypeChain = "";
         let existAnnotations = [];
         if (beforeLineToken) {
-          (0, import_console3.log)("beforeLineToken:", beforeLineToken);
           const beforeLabels = beforeLineToken.label.split("=>");
           const beforeTypeChain = beforeLabels.map((label) => label.split(":")[0]).join(".");
           if (beforeTypeChain === "entity.anno") {
@@ -43893,7 +43869,6 @@ function getCompleteItems(errors, jdlObject4) {
             annotationTypeChain = "relationship.to.anno";
           }
           if (afterLineToken) {
-            (0, import_console3.log)("afterLineToken:", afterLineToken);
             const afterLineLabels = afterLineToken.label.split("=>");
             const afterLineTypeChain = afterLineLabels.map((label) => label.split(":")[0]).join(".");
             if (beforeTypeChain === "entity.anno") {
@@ -43952,7 +43927,6 @@ function getCompleteItems(errors, jdlObject4) {
             return completeItems;
           }
         } else if (afterLineToken) {
-          (0, import_console3.log)("afterLineToken:", afterLineToken);
           const afterLineLabels = afterLineToken.label.split("=>");
           const afterLineTypeChain = afterLineLabels.map((label) => label.split(":")[0]).join(".");
           if (["keyword.entity", "entity.anno"].includes(afterLineTypeChain)) {
@@ -44053,9 +44027,6 @@ function activate(context) {
             contents: tokenLableHover(cstToken.label, jdlObject4)
           };
         }
-        (0, import_console4.log)("hover.cstToken", cstToken);
-        (0, import_console4.log)("hover.word", word);
-        (0, import_console4.log)("cstTokens", cstTokens);
         return {
           contents: []
         };
@@ -44073,13 +44044,12 @@ function activate(context) {
             const parseResult = jdl2.grammarParse(document.getText());
             if (parseResult) {
               jdlObject4 = parseResult;
-              (0, import_console4.log)("parseResult:", parseResult);
             }
           } else {
             errors.push(...lexResult.errors || []);
           }
         } catch (error) {
-          (0, import_console4.log)("error:", error);
+          (0, import_console3.log)("error:", error);
         }
         if (jdlCst.children) {
           cstTokens.length = 0;
@@ -44115,7 +44085,7 @@ function activate(context) {
             }
             if (key === "entityDeclaration") {
               const entities3 = jdlCst.children.entityDeclaration;
-              (0, import_console4.log)("entities::", entities3);
+              (0, import_console3.log)("entities::", entities3);
               entities3.forEach((entity) => {
                 const label = "entity:" + entity.children.NAME[0].image;
                 entity.children?.annotationDeclaration?.forEach((annotation) => {
@@ -44269,7 +44239,6 @@ function activate(context) {
             }
           });
         }
-        (0, import_console4.log)("lexResult:", lexResult);
         if (lexResult.errors?.length > 0) {
           const errors2 = lexResult.errors.map((error) => {
             const diagnostic = {
@@ -44286,7 +44255,7 @@ function activate(context) {
           collection.clear();
         }
       } catch (error) {
-        (0, import_console4.log)("error:", error);
+        (0, import_console3.log)("error:", error);
       }
     } else {
       collection.clear();
