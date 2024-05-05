@@ -3,6 +3,7 @@ import { cstTokens } from './extension';
 import { hoverData, tokenLableComplete } from './hoverHelper';
 import { parseJdl } from './parseJdl';
 import { get } from 'lodash';
+import { log } from 'console';
 
 const annotationValueDetail: Record<string, Record<string, Record<string, string>>> = {
 	AddCustomMethod: {
@@ -383,7 +384,7 @@ const annotationData: Record<string, string[]> = Object.keys(annotationValueDeta
 	return acc;
 }, {} as Record<string, string[]>);
 
-export function getCompleteItems(errors: any[], jdlObject?: any) {
+export function getCompleteItems(errors: any[], jdlObject: any = null, lastParseJdl?: any) {
 	const annotation = vscode.languages.registerCompletionItemProvider(
 		{language: 'jdl'},
 		{
@@ -446,7 +447,18 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 							if (error.context?.ruleStack) {
 								const ruleStackStr = error.context?.ruleStack.join('->');
 								if (ruleStackStr === ['prog', 'entityDeclaration', 'entityBody', 'fieldDeclaration', 'type'].join('->')) {
-									return fieldTypeDetail;
+									log('lastParseJdlObject', lastParseJdl.jdlObject);
+									const enumTypes = lastParseJdl.jdlObject?.enums?.map((enumItem: any) => {
+										return {
+											label: {
+												label: enumItem.name,
+												'detail': '',
+												'description': enumItem.documentation || enumItem.name,
+											},
+											kind: vscode.CompletionItemKind.Enum
+										};
+									});
+									return [...fieldTypeDetail].concat(enumTypes);
 								}
 							}
 						}

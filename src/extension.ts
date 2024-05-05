@@ -33,6 +33,7 @@ export { cstTokens };
 let jdlObject: any = {};
 let jdlCst: any = {};
 const errors: any[] = [];
+const lastParseJdl: any = {};
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -61,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 				if (cstToken) {
 					return {
-						contents: tokenLableHover(cstToken.label, jdlObject)
+						contents: tokenLableHover(cstToken.label, document.getText())
 					};
 				}
 				return {
@@ -77,6 +78,9 @@ export function activate(context: vscode.ExtensionContext) {
 				errors.length = 0;
 				jdlCst = parseResult.jdlCst;
 				jdlObject = parseResult.jdlObject;
+				if (parseResult.errors.length === 0) {
+					lastParseJdl.jdlObject = parseResult.jdlObject;
+				}
 				errors.push(...parseResult.errors || []);
 				cstTokens.length = 0;
 				cstTokens.push(...parseResult.cstTokens || []);
@@ -124,5 +128,5 @@ export function activate(context: vscode.ExtensionContext) {
 			updateDiagnostics(editor.document, diagnosticCollection);
 		}
 	}));
-	context.subscriptions.push(...getCompleteItems(errors, jdlObject));
+	context.subscriptions.push(...getCompleteItems(errors, jdlObject, lastParseJdl));
 }

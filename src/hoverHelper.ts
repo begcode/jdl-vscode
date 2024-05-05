@@ -968,7 +968,60 @@ const hoverData: any = {
 							'#### 适用范围：',
 							'- BegCode',
 						].join('\n'),
-					]
+					],
+					value: {
+						fileUrl: {
+							'contents': ['文件地址']
+						},
+						iconPicker: {
+							'contents': ['图标选择器']
+						},
+						imageUrl: {
+							'contents': ['图片地址']
+						},
+						videoUrl: {
+							'contents': ['视频地址']
+						},
+						audioUrl: {
+							'contents': ['音频地址']
+						},
+						editor: {
+							'contents': ['富文本编辑器']
+						},
+						codeEditor: {
+							'contents': ['代码编辑器']
+						},
+						select: {
+							'contents': ['下拉选择']
+						},
+						modalSelect: {
+							'contents': ['弹出选择']
+						},
+						checkbox: {
+							'contents': ['多选框']
+						},
+						radio: {
+							'contents': ['单选框']
+						},
+						radioButton: {
+							'contents': ['单选按钮']
+						},
+						rate: {
+							'contents': ['评分']
+						},
+						slider: {
+							'contents': ['滑块']
+						},
+						switch: {
+							'contents': ['开关']
+						},
+						textArea: {
+							'contents': ['文本域']
+						},
+						avatar: {
+							'contents': ['头像']
+						},
+					}
 				},
 				FieldConfig: {
 					completeItem: {
@@ -1007,21 +1060,26 @@ const hoverData: any = {
 					],
 					value: {
 						hideInForm: {
-							'contents': [
-								'在表单中隐藏',
-								[
-									'#### 使用方法:',
-									'```java',
-									' @FieldConfig(hideInForm)',
-									' name String',
-									'```'
-								].join('\n'),
-								[
-									'#### 适用范围：',
-									'- BegCode',
-								].join('\n'),
-							]
-						}
+							contents: ['在表单中隐藏']
+						},
+						hideInList: {
+							contents: ['在列表中隐藏']
+						},
+						editInList: {
+							contents: ['在列表中编辑']
+						},
+						searchForm: {
+							contents: ['在搜索表单中显示']
+						},
+						hideInDetail: {
+							contents: ['在详情页中隐藏']
+						},
+						filter: {
+							contents: ['过滤器']
+						},
+						sortable: {
+							contents: ['可排序']
+						},
 					}
 				},
 				ShowBy: {
@@ -1106,7 +1164,15 @@ const hoverData: any = {
 							'#### 适用范围：',
 							'- BegCode',
 						].join('\n'),
-					]
+					],
+					value: {
+						asc: {
+							contents: ['升序']
+						},
+						desc: {
+							contents: ['降序']
+						},
+					}
 				},
 				ColumnWidth: {
 					completeItem: {
@@ -1240,7 +1306,7 @@ const hoverData: any = {
 						insertText: new vscode.SnippetString('EditInContainer(${1|modal, page, drawer|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
-					'contents': [
+					contents: [
 						'编辑表单容器',
 						[
 							'#### 使用方法:',
@@ -1259,7 +1325,18 @@ const hoverData: any = {
 							'#### 适用范围：',
 							'- BegCode',
 						].join('\n'),
-					]
+					],
+					value: {
+						modal: {
+							contents: ['模态框']
+						},
+						page: {
+							contents: ['页面']
+						},
+						drawer: {
+							contents: ['抽屉']
+						},
+					}
 				},
 			},
 			type: {
