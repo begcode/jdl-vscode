@@ -68,7 +68,7 @@
 		  "begin": "(relationship)\\s+(ManyToMany|ManyToOne|OneToMany|OneToOne)",
 		  "beginCaptures": {
 			"1": { "name": "storage.modifier.java" },
-			"2": { "name": "storage.modifier.java" }
+			"2": { "name": "variable.parameter.java" }
 		  },
 		  "end": "}",
 		  "name": "meta.relationship.jdl",
@@ -85,7 +85,7 @@
 			},
 			{ "match": "\\bto\\b", "name": "keyword.control.java" },
 			{
-				 "match": "\\b(with)\\s+(builtIn)\\b",
+				 "match": "\\b(with)\\s+(builtInEntity)\\b",
 				 "captures": {
 					"1": { "name": "keyword.control.java" },
 					"2": { "name": "variable.parameter.java" }
@@ -98,26 +98,24 @@
 		  "begin": "(aigc)\\s+(Method|Api|Feature)",
 		  "beginCaptures": {
 			"1": { "name": "storage.modifier.java" },
-			"2": { "name": "storage.modifier.java" }
+			"2": { "name": "variable.parameter.java" }
 		  },
 		  "end": "}",
 		  "name": "meta.aigc.jdl",
 		  "patterns": [
 			{ "include": "source.java#comments" },
 			{
-			  "match": "\\b(([A-Z]\\w*)(\\s*\\{(\\s*\\w+\\s*)(\\s*\\((\\s*\\w+\\s*)\\))?\\s*\\s*\\})?)",
+			  "match": "\\b(([A-Z]\\w*)(\\s*\\{(\\s*\\w+\\s*)\\s*\\s*\\})?)",
 			  "captures": {
 				"2": { "name": "entity.name.type.class.java" },
-				"4": { "name": "variable.parameter.java" },
-				"6": { "name": "variable.parameter.java" }
+				"4": { "name": "variable.parameter.java" }
 			  }
 			},
 			{ "match": "\\bto\\b", "name": "keyword.control.java" },
 			{
-				 "match": "\\b(with)\\s+(builtInEntity)\\b",
+				 "match": "\\b(service|repository|queryService)\\b",
 				 "captures": {
-					"1": { "name": "keyword.control.java" },
-					"2": { "name": "variable.parameter.java" }
+					"1": { "name": "variable.parameter.java" }
 				}
 			}
 		  ]

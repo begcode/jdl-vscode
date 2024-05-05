@@ -1614,8 +1614,9 @@ const hoverData: any = {
 						[
 							'#### 使用方法:',
 							'```java',
-							' name String pattern("[a-zA-Z]+")',
-							'```'
+							' name String pattern(/[a-zA-Z]+/)',
+							'```',
+							'**注意**: 正则表达式需要使用/包裹，并且本行不能再有注释。',
 						].join('\n'),
 						[
 							'#### 适用范围：',
