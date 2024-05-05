@@ -7271,7 +7271,7 @@ var init_baseGet = __esm({
 });
 
 // node_modules/lodash-es/get.js
-function get2(object, path4, defaultValue) {
+function get(object, path4, defaultValue) {
   var result = object == null ? void 0 : baseGet_default(object, path4);
   return result === void 0 ? defaultValue : result;
 }
@@ -7279,7 +7279,7 @@ var get_default;
 var init_get = __esm({
   "node_modules/lodash-es/get.js"() {
     init_baseGet();
-    get_default = get2;
+    get_default = get;
   }
 });
 
@@ -25731,33 +25731,33 @@ function analyzeTokenTypes(tokenTypes, options) {
   };
 }
 function validatePatterns(tokenTypes, validModesNames) {
-  let errors = [];
+  let errors2 = [];
   const missingResult = findMissingPatterns(tokenTypes);
-  errors = errors.concat(missingResult.errors);
+  errors2 = errors2.concat(missingResult.errors);
   const invalidResult = findInvalidPatterns(missingResult.valid);
   const validTokenTypes = invalidResult.valid;
-  errors = errors.concat(invalidResult.errors);
-  errors = errors.concat(validateRegExpPattern(validTokenTypes));
-  errors = errors.concat(findInvalidGroupType(validTokenTypes));
-  errors = errors.concat(findModesThatDoNotExist(validTokenTypes, validModesNames));
-  errors = errors.concat(findUnreachablePatterns(validTokenTypes));
-  return errors;
+  errors2 = errors2.concat(invalidResult.errors);
+  errors2 = errors2.concat(validateRegExpPattern(validTokenTypes));
+  errors2 = errors2.concat(findInvalidGroupType(validTokenTypes));
+  errors2 = errors2.concat(findModesThatDoNotExist(validTokenTypes, validModesNames));
+  errors2 = errors2.concat(findUnreachablePatterns(validTokenTypes));
+  return errors2;
 }
 function validateRegExpPattern(tokenTypes) {
-  let errors = [];
+  let errors2 = [];
   const withRegExpPatterns = filter_default(tokenTypes, (currTokType) => isRegExp_default(currTokType[PATTERN]));
-  errors = errors.concat(findEndOfInputAnchor(withRegExpPatterns));
-  errors = errors.concat(findStartOfInputAnchor(withRegExpPatterns));
-  errors = errors.concat(findUnsupportedFlags(withRegExpPatterns));
-  errors = errors.concat(findDuplicatePatterns(withRegExpPatterns));
-  errors = errors.concat(findEmptyMatchRegExps(withRegExpPatterns));
-  return errors;
+  errors2 = errors2.concat(findEndOfInputAnchor(withRegExpPatterns));
+  errors2 = errors2.concat(findStartOfInputAnchor(withRegExpPatterns));
+  errors2 = errors2.concat(findUnsupportedFlags(withRegExpPatterns));
+  errors2 = errors2.concat(findDuplicatePatterns(withRegExpPatterns));
+  errors2 = errors2.concat(findEmptyMatchRegExps(withRegExpPatterns));
+  return errors2;
 }
 function findMissingPatterns(tokenTypes) {
   const tokenTypesWithMissingPattern = filter_default(tokenTypes, (currType) => {
     return !has_default(currType, PATTERN);
   });
-  const errors = map_default(tokenTypesWithMissingPattern, (currType) => {
+  const errors2 = map_default(tokenTypesWithMissingPattern, (currType) => {
     return {
       message: "Token Type: ->" + currType.name + "<- missing static 'PATTERN' property",
       type: LexerDefinitionErrorType.MISSING_PATTERN,
@@ -25765,14 +25765,14 @@ function findMissingPatterns(tokenTypes) {
     };
   });
   const valid = difference_default(tokenTypes, tokenTypesWithMissingPattern);
-  return { errors, valid };
+  return { errors: errors2, valid };
 }
 function findInvalidPatterns(tokenTypes) {
   const tokenTypesWithInvalidPattern = filter_default(tokenTypes, (currType) => {
     const pattern = currType[PATTERN];
     return !isRegExp_default(pattern) && !isFunction_default(pattern) && !has_default(pattern, "exec") && !isString_default(pattern);
   });
-  const errors = map_default(tokenTypesWithInvalidPattern, (currType) => {
+  const errors2 = map_default(tokenTypesWithInvalidPattern, (currType) => {
     return {
       message: "Token Type: ->" + currType.name + "<- static 'PATTERN' can only be a RegExp, a Function matching the {CustomPatternMatcherFunc} type or an Object matching the {ICustomPattern} interface.",
       type: LexerDefinitionErrorType.INVALID_PATTERN,
@@ -25780,7 +25780,7 @@ function findInvalidPatterns(tokenTypes) {
     };
   });
   const valid = difference_default(tokenTypes, tokenTypesWithInvalidPattern);
-  return { errors, valid };
+  return { errors: errors2, valid };
 }
 function findEndOfInputAnchor(tokenTypes) {
   class EndAnchorFinder extends BaseRegExpVisitor {
@@ -25803,28 +25803,28 @@ function findEndOfInputAnchor(tokenTypes) {
       return end_of_input.test(pattern.source);
     }
   });
-  const errors = map_default(invalidRegex, (currType) => {
+  const errors2 = map_default(invalidRegex, (currType) => {
     return {
       message: "Unexpected RegExp Anchor Error:\n	Token Type: ->" + currType.name + "<- static 'PATTERN' cannot contain end of input anchor '$'\n	See chevrotain.io/docs/guide/resolving_lexer_errors.html#ANCHORS	for details.",
       type: LexerDefinitionErrorType.EOI_ANCHOR_FOUND,
       tokenTypes: [currType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findEmptyMatchRegExps(tokenTypes) {
   const matchesEmptyString = filter_default(tokenTypes, (currType) => {
     const pattern = currType.PATTERN;
     return pattern.test("");
   });
-  const errors = map_default(matchesEmptyString, (currType) => {
+  const errors2 = map_default(matchesEmptyString, (currType) => {
     return {
       message: "Token Type: ->" + currType.name + "<- static 'PATTERN' must not match an empty string",
       type: LexerDefinitionErrorType.EMPTY_MATCH_PATTERN,
       tokenTypes: [currType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findStartOfInputAnchor(tokenTypes) {
   class StartAnchorFinder extends BaseRegExpVisitor {
@@ -25847,28 +25847,28 @@ function findStartOfInputAnchor(tokenTypes) {
       return start_of_input.test(pattern.source);
     }
   });
-  const errors = map_default(invalidRegex, (currType) => {
+  const errors2 = map_default(invalidRegex, (currType) => {
     return {
       message: "Unexpected RegExp Anchor Error:\n	Token Type: ->" + currType.name + "<- static 'PATTERN' cannot contain start of input anchor '^'\n	See https://chevrotain.io/docs/guide/resolving_lexer_errors.html#ANCHORS	for details.",
       type: LexerDefinitionErrorType.SOI_ANCHOR_FOUND,
       tokenTypes: [currType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findUnsupportedFlags(tokenTypes) {
   const invalidFlags = filter_default(tokenTypes, (currType) => {
     const pattern = currType[PATTERN];
     return pattern instanceof RegExp && (pattern.multiline || pattern.global);
   });
-  const errors = map_default(invalidFlags, (currType) => {
+  const errors2 = map_default(invalidFlags, (currType) => {
     return {
       message: "Token Type: ->" + currType.name + "<- static 'PATTERN' may NOT contain global('g') or multiline('m')",
       type: LexerDefinitionErrorType.UNSUPPORTED_FLAGS_FOUND,
       tokenTypes: [currType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findDuplicatePatterns(tokenTypes) {
   const found = [];
@@ -25886,7 +25886,7 @@ function findDuplicatePatterns(tokenTypes) {
   const duplicatePatterns = filter_default(identicalPatterns, (currIdenticalSet) => {
     return currIdenticalSet.length > 1;
   });
-  const errors = map_default(duplicatePatterns, (setOfIdentical) => {
+  const errors2 = map_default(duplicatePatterns, (setOfIdentical) => {
     const tokenTypeNames = map_default(setOfIdentical, (currType) => {
       return currType.name;
     });
@@ -25897,7 +25897,7 @@ function findDuplicatePatterns(tokenTypes) {
       tokenTypes: setOfIdentical
     };
   });
-  return errors;
+  return errors2;
 }
 function findInvalidGroupType(tokenTypes) {
   const invalidTypes = filter_default(tokenTypes, (clazz) => {
@@ -25907,20 +25907,20 @@ function findInvalidGroupType(tokenTypes) {
     const group = clazz.GROUP;
     return group !== Lexer.SKIPPED && group !== Lexer.NA && !isString_default(group);
   });
-  const errors = map_default(invalidTypes, (currType) => {
+  const errors2 = map_default(invalidTypes, (currType) => {
     return {
       message: "Token Type: ->" + currType.name + "<- static 'GROUP' can only be Lexer.SKIPPED/Lexer.NA/A String",
       type: LexerDefinitionErrorType.INVALID_GROUP_TYPE_FOUND,
       tokenTypes: [currType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findModesThatDoNotExist(tokenTypes, validModes) {
   const invalidModes = filter_default(tokenTypes, (clazz) => {
     return clazz.PUSH_MODE !== void 0 && !includes_default(validModes, clazz.PUSH_MODE);
   });
-  const errors = map_default(invalidModes, (tokType) => {
+  const errors2 = map_default(invalidModes, (tokType) => {
     const msg = `Token Type: ->${tokType.name}<- static 'PUSH_MODE' value cannot refer to a Lexer Mode ->${tokType.PUSH_MODE}<-which does not exist`;
     return {
       message: msg,
@@ -25928,10 +25928,10 @@ function findModesThatDoNotExist(tokenTypes, validModes) {
       tokenTypes: [tokType]
     };
   });
-  return errors;
+  return errors2;
 }
 function findUnreachablePatterns(tokenTypes) {
-  const errors = [];
+  const errors2 = [];
   const canBeTested = reduce_default(tokenTypes, (result, tokType, idx) => {
     const pattern = tokType.PATTERN;
     if (pattern === Lexer.NA) {
@@ -25950,7 +25950,7 @@ function findUnreachablePatterns(tokenTypes) {
         const msg = `Token: ->${tokenType.name}<- can never be matched.
 Because it appears AFTER the Token Type ->${tokType.name}<-in the lexer's definition.
 See https://chevrotain.io/docs/guide/resolving_lexer_errors.html#UNREACHABLE`;
-        errors.push({
+        errors2.push({
           message: msg,
           type: LexerDefinitionErrorType.UNREACHABLE_PATTERN,
           tokenTypes: [tokType, tokenType]
@@ -25958,7 +25958,7 @@ See https://chevrotain.io/docs/guide/resolving_lexer_errors.html#UNREACHABLE`;
       }
     });
   });
-  return errors;
+  return errors2;
 }
 function testTokenType(str, pattern) {
   if (isRegExp_default(pattern)) {
@@ -26001,21 +26001,21 @@ function addStickyFlag(pattern) {
   return new RegExp(`${pattern.source}`, flags);
 }
 function performRuntimeChecks(lexerDefinition, trackLines, lineTerminatorCharacters) {
-  const errors = [];
+  const errors2 = [];
   if (!has_default(lexerDefinition, DEFAULT_MODE)) {
-    errors.push({
+    errors2.push({
       message: "A MultiMode Lexer cannot be initialized without a <" + DEFAULT_MODE + "> property in its definition\n",
       type: LexerDefinitionErrorType.MULTI_MODE_LEXER_WITHOUT_DEFAULT_MODE
     });
   }
   if (!has_default(lexerDefinition, MODES)) {
-    errors.push({
+    errors2.push({
       message: "A MultiMode Lexer cannot be initialized without a <" + MODES + "> property in its definition\n",
       type: LexerDefinitionErrorType.MULTI_MODE_LEXER_WITHOUT_MODES_PROPERTY
     });
   }
   if (has_default(lexerDefinition, MODES) && has_default(lexerDefinition, DEFAULT_MODE) && !has_default(lexerDefinition.modes, lexerDefinition.defaultMode)) {
-    errors.push({
+    errors2.push({
       message: `A MultiMode Lexer cannot be initialized with a ${DEFAULT_MODE}: <${lexerDefinition.defaultMode}>which does not exist
 `,
       type: LexerDefinitionErrorType.MULTI_MODE_LEXER_DEFAULT_MODE_VALUE_DOES_NOT_EXIST
@@ -26025,7 +26025,7 @@ function performRuntimeChecks(lexerDefinition, trackLines, lineTerminatorCharact
     forEach_default(lexerDefinition.modes, (currModeValue, currModeName) => {
       forEach_default(currModeValue, (currTokType, currIdx) => {
         if (isUndefined_default(currTokType)) {
-          errors.push({
+          errors2.push({
             message: `A Lexer cannot be initialized using an undefined Token Type. Mode:<${currModeName}> at index: <${currIdx}>
 `,
             type: LexerDefinitionErrorType.LEXER_DEFINITION_CANNOT_CONTAIN_UNDEFINED
@@ -26034,7 +26034,7 @@ function performRuntimeChecks(lexerDefinition, trackLines, lineTerminatorCharact
           const longerAlt = isArray_default(currTokType.LONGER_ALT) ? currTokType.LONGER_ALT : [currTokType.LONGER_ALT];
           forEach_default(longerAlt, (currLongerAlt) => {
             if (!isUndefined_default(currLongerAlt) && !includes_default(currModeValue, currLongerAlt)) {
-              errors.push({
+              errors2.push({
                 message: `A MultiMode Lexer cannot be initialized with a longer_alt <${currLongerAlt.name}> on token <${currTokType.name}> outside of mode <${currModeName}>
 `,
                 type: LexerDefinitionErrorType.MULTI_MODE_LEXER_LONGER_ALT_NOT_IN_CURRENT_MODE
@@ -26045,7 +26045,7 @@ function performRuntimeChecks(lexerDefinition, trackLines, lineTerminatorCharact
       });
     });
   }
-  return errors;
+  return errors2;
 }
 function performWarningRuntimeChecks(lexerDefinition, trackLines, lineTerminatorCharacters) {
   const warnings = [];
@@ -26588,7 +26588,7 @@ var init_lexer_public = __esm({
         let matchedTokensIndex = 0;
         const guessedNumberOfTokens = this.hasCustom ? 0 : Math.floor(text.length / 10);
         const matchedTokens = new Array(guessedNumberOfTokens);
-        const errors = [];
+        const errors2 = [];
         let line = this.trackStartLines ? 1 : void 0;
         let column = this.trackStartLines ? 1 : void 0;
         const groups = cloneEmptyGroups(this.emptyGroups);
@@ -26618,7 +26618,7 @@ var init_lexer_public = __esm({
           // So no error should occur.
           popToken.tokenType.PUSH_MODE === void 0) {
             const msg2 = this.config.errorMessageProvider.buildUnableToPopLexerModeMessage(popToken);
-            errors.push({
+            errors2.push({
               offset: popToken.startOffset,
               line: popToken.startLine,
               column: popToken.startColumn,
@@ -26781,7 +26781,7 @@ var init_lexer_public = __esm({
             errLength = offset - errorStartOffset;
             column = this.computeNewColumn(column, errLength);
             msg = this.config.errorMessageProvider.buildUnexpectedCharactersMessage(orgText, errorStartOffset, errLength, errorLine, errorColumn);
-            errors.push({
+            errors2.push({
               offset: errorStartOffset,
               line: errorLine,
               column: errorColumn,
@@ -26799,7 +26799,7 @@ var init_lexer_public = __esm({
         return {
           tokens: matchedTokens,
           groups,
-          errors
+          errors: errors2
         };
       }
       handleModes(config, pop_mode, push_mode, newToken) {
@@ -28006,7 +28006,7 @@ function validateDuplicateProductions(topLevelRule, errMsgProvider) {
   const duplicates = pickBy_default(productionGroups, (currGroup) => {
     return currGroup.length > 1;
   });
-  const errors = map_default(values_default(duplicates), (currDuplicates) => {
+  const errors2 = map_default(values_default(duplicates), (currDuplicates) => {
     const firstProd = head_default(currDuplicates);
     const msg = errMsgProvider.buildDuplicateFoundError(topLevelRule, currDuplicates);
     const dslName = getProductionDslName(firstProd);
@@ -28023,7 +28023,7 @@ function validateDuplicateProductions(topLevelRule, errMsgProvider) {
     }
     return defError;
   });
-  return errors;
+  return errors2;
 }
 function identifyProductionForDuplicates(prod) {
   return `${getProductionDslName(prod)}_#_${prod.idx}_#_${getExtraProductionArgument(prod)}`;
@@ -28038,7 +28038,7 @@ function getExtraProductionArgument(prod) {
   }
 }
 function validateRuleDoesNotAlreadyExist(rule, allRules, className, errMsgProvider) {
-  const errors = [];
+  const errors2 = [];
   const occurrences = reduce_default(allRules, (result, curRule) => {
     if (curRule.name === rule.name) {
       return result + 1;
@@ -28050,29 +28050,29 @@ function validateRuleDoesNotAlreadyExist(rule, allRules, className, errMsgProvid
       topLevelRule: rule,
       grammarName: className
     });
-    errors.push({
+    errors2.push({
       message: errMsg,
       type: ParserDefinitionErrorType.DUPLICATE_RULE_NAME,
       ruleName: rule.name
     });
   }
-  return errors;
+  return errors2;
 }
 function validateRuleIsOverridden(ruleName, definedRulesNames, className) {
-  const errors = [];
+  const errors2 = [];
   let errMsg;
   if (!includes_default(definedRulesNames, ruleName)) {
     errMsg = `Invalid rule override, rule: ->${ruleName}<- cannot be overridden in the grammar: ->${className}<-as it is not defined in any of the super grammars `;
-    errors.push({
+    errors2.push({
       message: errMsg,
       type: ParserDefinitionErrorType.INVALID_RULE_OVERRIDE,
       ruleName
     });
   }
-  return errors;
+  return errors2;
 }
 function validateNoLeftRecursion(topRule, currRule, errMsgProvider, path4 = []) {
-  const errors = [];
+  const errors2 = [];
   const nextNonTerminals = getFirstNoneTerminal(currRule.definition);
   if (isEmpty_default(nextNonTerminals)) {
     return [];
@@ -28080,7 +28080,7 @@ function validateNoLeftRecursion(topRule, currRule, errMsgProvider, path4 = []) 
     const ruleName = topRule.name;
     const foundLeftRecursion = includes_default(nextNonTerminals, topRule);
     if (foundLeftRecursion) {
-      errors.push({
+      errors2.push({
         message: errMsgProvider.buildLeftRecursionError({
           topLevelRule: topRule,
           leftRecursionPath: path4
@@ -28095,7 +28095,7 @@ function validateNoLeftRecursion(topRule, currRule, errMsgProvider, path4 = []) 
       newPath.push(currRefRule);
       return validateNoLeftRecursion(topRule, currRefRule, errMsgProvider, newPath);
     });
-    return errors.concat(errorsFromNextSteps);
+    return errors2.concat(errorsFromNextSteps);
   }
 }
 function getFirstNoneTerminal(definition) {
@@ -28127,7 +28127,7 @@ function validateEmptyOrAlternative(topLevelRule, errMsgProvider) {
   const orCollector = new OrCollector();
   topLevelRule.accept(orCollector);
   const ors = orCollector.alternations;
-  const errors = flatMap_default(ors, (currOr) => {
+  const errors2 = flatMap_default(ors, (currOr) => {
     const exceptLast = dropRight_default(currOr.definition);
     return flatMap_default(exceptLast, (currAlternative, currAltIdx) => {
       const possibleFirstInAlt = nextPossibleTokensAfter([currAlternative], [], tokenStructuredMatcher, 1);
@@ -28150,14 +28150,14 @@ function validateEmptyOrAlternative(topLevelRule, errMsgProvider) {
       }
     });
   });
-  return errors;
+  return errors2;
 }
 function validateAmbiguousAlternationAlternatives(topLevelRule, globalMaxLookahead, errMsgProvider) {
   const orCollector = new OrCollector();
   topLevelRule.accept(orCollector);
   let ors = orCollector.alternations;
   ors = reject_default(ors, (currOr) => currOr.ignoreAmbiguities === true);
-  const errors = flatMap_default(ors, (currOr) => {
+  const errors2 = flatMap_default(ors, (currOr) => {
     const currOccurrence = currOr.idx;
     const actualMaxLookahead = currOr.maxLookahead || globalMaxLookahead;
     const alternatives = getLookaheadPathsForOr(currOccurrence, topLevelRule, actualMaxLookahead, currOr);
@@ -28165,13 +28165,13 @@ function validateAmbiguousAlternationAlternatives(topLevelRule, globalMaxLookahe
     const altsPrefixAmbiguityErrors = checkPrefixAlternativesAmbiguities(alternatives, currOr, topLevelRule, errMsgProvider);
     return altsAmbiguityErrors.concat(altsPrefixAmbiguityErrors);
   });
-  return errors;
+  return errors2;
 }
 function validateTooManyAlts(topLevelRule, errMsgProvider) {
   const orCollector = new OrCollector();
   topLevelRule.accept(orCollector);
   const ors = orCollector.alternations;
-  const errors = flatMap_default(ors, (currOr) => {
+  const errors2 = flatMap_default(ors, (currOr) => {
     if (currOr.definition.length > 255) {
       return [
         {
@@ -28188,10 +28188,10 @@ function validateTooManyAlts(topLevelRule, errMsgProvider) {
       return [];
     }
   });
-  return errors;
+  return errors2;
 }
 function validateSomeNonEmptyLookaheadPath(topLevelRules, maxLookahead, errMsgProvider) {
-  const errors = [];
+  const errors2 = [];
   forEach_default(topLevelRules, (currTopRule) => {
     const collectorVisitor2 = new RepetitionCollector();
     currTopRule.accept(collectorVisitor2);
@@ -28207,7 +28207,7 @@ function validateSomeNonEmptyLookaheadPath(topLevelRules, maxLookahead, errMsgPr
           topLevelRule: currTopRule,
           repetition: currProd
         });
-        errors.push({
+        errors2.push({
           message: errMsg,
           type: ParserDefinitionErrorType.NO_NON_EMPTY_LOOKAHEAD,
           ruleName: currTopRule.name
@@ -28215,7 +28215,7 @@ function validateSomeNonEmptyLookaheadPath(topLevelRules, maxLookahead, errMsgPr
       }
     });
   });
-  return errors;
+  return errors2;
 }
 function checkAlternativesAmbiguities(alternatives, alternation, rule, errMsgProvider) {
   const foundAmbiguousPaths = [];
@@ -28266,7 +28266,7 @@ function checkPrefixAlternativesAmbiguities(alternatives, alternation, rule, err
     });
     return result.concat(currPathsAndIdx);
   }, []);
-  const errors = compact_default(flatMap_default(pathsAndIndices, (currPathAndIdx) => {
+  const errors2 = compact_default(flatMap_default(pathsAndIndices, (currPathAndIdx) => {
     const alternativeGast = alternation.definition[currPathAndIdx.idx];
     if (alternativeGast.ignoreAmbiguities === true) {
       return [];
@@ -28300,23 +28300,23 @@ function checkPrefixAlternativesAmbiguities(alternatives, alternation, rule, err
     });
     return currPathPrefixErrors;
   }));
-  return errors;
+  return errors2;
 }
 function checkTerminalAndNoneTerminalsNameSpace(topLevels, tokenTypes, errMsgProvider) {
-  const errors = [];
+  const errors2 = [];
   const tokenNames = map_default(tokenTypes, (currToken) => currToken.name);
   forEach_default(topLevels, (currRule) => {
     const currRuleName = currRule.name;
     if (includes_default(tokenNames, currRuleName)) {
       const errMsg = errMsgProvider.buildNamespaceConflictError(currRule);
-      errors.push({
+      errors2.push({
         message: errMsg,
         type: ParserDefinitionErrorType.CONFLICT_TOKENS_RULES_NAMESPACE,
         ruleName: currRuleName
       });
     }
   });
-  return errors;
+  return errors2;
 }
 var OccurrenceValidationCollector, OrCollector, RepetitionCollector;
 var init_checks = __esm({
@@ -29048,14 +29048,14 @@ function validateMissingCstMethods(visitorInstance, ruleNames) {
   const missingRuleNames = filter_default(ruleNames, (currRuleName) => {
     return isFunction_default(visitorInstance[currRuleName]) === false;
   });
-  const errors = map_default(missingRuleNames, (currRuleName) => {
+  const errors2 = map_default(missingRuleNames, (currRuleName) => {
     return {
       msg: `Missing visitor method: <${currRuleName}> on ${visitorInstance.constructor.name} CST Visitor.`,
       type: CstVisitorDefinitionError.MISSING_METHOD,
       methodName: currRuleName
     };
   });
-  return compact_default(errors);
+  return compact_default(errors2);
 }
 var CstVisitorDefinitionError;
 var init_cst_visitor = __esm({
@@ -36658,8 +36658,8 @@ function getCst(input, startRule = "prog") {
   }
   return cst;
 }
-function throwParserError(errors) {
-  const parserError = errors[0];
+function throwParserError(errors2) {
+  const parserError = errors2[0];
   if (parserError.name === "MismatchedTokenException") {
     throwErrorAboutInvalidToken(parserError);
   }
@@ -36677,8 +36677,8 @@ function throwErrorAboutInvalidToken(parserError) {
   throw Error(`${parserError.name}: ${errorMessageBeginning}${errorMessageLocation}.
 	${errorMessageComplement}`);
 }
-function throwSyntaxError(errors) {
-  throw Error(errors.map((error) => `${error.message}
+function throwSyntaxError(errors2) {
+  throw Error(errors2.map((error) => `${error.message}
 	at line: ${error.token.startLine}, column: ${error.token.startColumn}`).join("\n"));
 }
 function getSyntacticAutoCompleteSuggestions(input, startRule = "prog") {
@@ -39139,18 +39139,18 @@ var init_jdl_to_json_basic_entity_converter = __esm({
 });
 
 // node_modules/generator-begcode/dist/jdl/converters/jdl-to-json/jdl-to-json-field-converter.js
-function convert2(jdlObject4) {
-  if (!jdlObject4) {
+function convert2(jdlObject5) {
+  if (!jdlObject5) {
     throw new Error("A JDL Object must be passed to convert JDL fields to JSON.");
   }
   const convertedFields = /* @__PURE__ */ new Map();
-  jdlObject4.forEachEntity((jdlEntity) => {
-    const convertedEntityFields = getConvertedFieldsForEntity(jdlEntity, jdlObject4);
+  jdlObject5.forEachEntity((jdlEntity) => {
+    const convertedEntityFields = getConvertedFieldsForEntity(jdlEntity, jdlObject5);
     convertedFields.set(jdlEntity.name, convertedEntityFields);
   });
   return convertedFields;
 }
-function getConvertedFieldsForEntity(jdlEntity, jdlObject4) {
+function getConvertedFieldsForEntity(jdlEntity, jdlObject5) {
   const convertedEntityFields = [];
   jdlEntity.forEachField((jdlField) => {
     let fieldData = {
@@ -39161,13 +39161,13 @@ function getConvertedFieldsForEntity(jdlEntity, jdlObject4) {
     if (comment) {
       fieldData.documentation = comment;
     }
-    if (jdlObject4.hasEnum(jdlField.type)) {
-      fieldData.fieldValues = jdlObject4.getEnum(fieldData.fieldType).getValuesAsString();
-      const fieldTypeComment = jdlObject4.getEnum(fieldData.fieldType).comment;
+    if (jdlObject5.hasEnum(jdlField.type)) {
+      fieldData.fieldValues = jdlObject5.getEnum(fieldData.fieldType).getValuesAsString();
+      const fieldTypeComment = jdlObject5.getEnum(fieldData.fieldType).comment;
       if (fieldTypeComment) {
         fieldData.fieldTypeDocumentation = fieldTypeComment;
       }
-      const fieldValuesJavadocs = jdlObject4.getEnum(fieldData.fieldType).getValueJavadocs();
+      const fieldValuesJavadocs = jdlObject5.getEnum(fieldData.fieldType).getValueJavadocs();
       if (fieldValuesJavadocs && Object.keys(fieldValuesJavadocs).length > 0) {
         fieldData.fieldValuesJavadocs = fieldValuesJavadocs;
       }
@@ -40314,13 +40314,13 @@ var init_binary_option_validator = __esm({
 });
 
 // node_modules/generator-begcode/dist/jdl/validators/jdl-with-application-validator.js
-function createValidator(jdlObject4, logger = console) {
-  if (!jdlObject4) {
+function createValidator(jdlObject5, logger = console) {
+  if (!jdlObject5) {
     throw new Error("A JDL object must be passed to check for business errors.");
   }
   return {
     checkForErrors: () => {
-      jdlObject4.forEachApplication((jdlApplication) => {
+      jdlObject5.forEachApplication((jdlApplication) => {
         const blueprints = jdlApplication.getConfigurationOptionValue(BLUEPRINTS2);
         const checkReservedKeywords = (blueprints?.length ?? 0) === 0;
         checkForNamespaceConfigErrors(jdlApplication);
@@ -40346,11 +40346,11 @@ function createValidator(jdlObject4, logger = console) {
     });
   }
   function checkForEntityErrors(jdlApplication, options) {
-    if (jdlObject4.getEntityQuantity() === 0) {
+    if (jdlObject5.getEntityQuantity() === 0) {
       return;
     }
     const validator = new EntityValidator();
-    jdlObject4.forEachEntity((jdlEntity) => {
+    jdlObject5.forEachEntity((jdlEntity) => {
       if (!jdlApplication.hasEntityName(jdlEntity.name)) {
         return;
       }
@@ -40363,7 +40363,7 @@ function createValidator(jdlObject4, logger = console) {
     Object.keys(jdlFields).forEach((fieldName) => {
       const jdlField = jdlFields[fieldName];
       validator.validate(jdlField);
-      const isAnEnum = jdlObject4.hasEnum(jdlField.type);
+      const isAnEnum = jdlObject5.hasEnum(jdlField.type);
       checkForValidationErrors(jdlField, isAnEnum);
     });
   }
@@ -40378,43 +40378,43 @@ function createValidator(jdlObject4, logger = console) {
     });
   }
   function checkForRelationshipErrors() {
-    if (jdlObject4.getRelationshipQuantity() === 0) {
+    if (jdlObject5.getRelationshipQuantity() === 0) {
       return;
     }
     const validator = new RelationshipValidator();
-    jdlObject4.forEachRelationship((jdlRelationship) => {
+    jdlObject5.forEachRelationship((jdlRelationship) => {
       validator.validate(jdlRelationship);
       checkForAbsentEntities({
         jdlRelationship,
-        doesEntityExist: (entityName) => !!jdlObject4.getEntity(entityName)
+        doesEntityExist: (entityName) => !!jdlObject5.getEntity(entityName)
       });
     });
   }
   function checkForEnumErrors(options) {
-    if (jdlObject4.getEnumQuantity() === 0) {
+    if (jdlObject5.getEnumQuantity() === 0) {
       return;
     }
     const validator = new EnumValidator();
-    jdlObject4.forEachEnum((jdlEnum) => {
+    jdlObject5.forEachEnum((jdlEnum) => {
       validator.validate(jdlEnum, options);
     });
   }
   function checkDeploymentsErrors() {
-    if (jdlObject4.getDeploymentQuantity() === 0) {
+    if (jdlObject5.getDeploymentQuantity() === 0) {
       return;
     }
     const validator = new DeploymentValidator();
-    jdlObject4.forEachDeployment((deployment) => {
+    jdlObject5.forEachDeployment((deployment) => {
       validator.validate(deployment);
     });
   }
   function checkForOptionErrors() {
-    if (jdlObject4.getOptionQuantity() === 0) {
+    if (jdlObject5.getOptionQuantity() === 0) {
       return;
     }
     const unaryOptionValidator = new UnaryOptionValidator();
     const binaryOptionValidator = new BinaryOptionValidator();
-    jdlObject4.getOptions().forEach((option) => {
+    jdlObject5.getOptions().forEach((option) => {
       if (option.getType() === "UNARY") {
         unaryOptionValidator.validate(option);
       } else {
@@ -40423,8 +40423,8 @@ function createValidator(jdlObject4, logger = console) {
     });
   }
   function checkForRelationshipsBetweenApplications() {
-    const applicationsPerEntityNames = getApplicationsPerEntityNames(jdlObject4);
-    jdlObject4.forEachRelationship((jdlRelationship) => {
+    const applicationsPerEntityNames = getApplicationsPerEntityNames(jdlObject5);
+    jdlObject5.forEachRelationship((jdlRelationship) => {
       checkIfRelationshipIsBetweenApplications({
         jdlRelationship,
         applicationsPerEntityName: applicationsPerEntityNames
@@ -40457,9 +40457,9 @@ function checkIfRelationshipIsBetweenApplications({ jdlRelationship, application
     throw new Error(`Entities for the ${jdlRelationship.type} relationship from '${jdlRelationship.from}' to '${jdlRelationship.to}' do not belong to the same application.`);
   }
 }
-function getApplicationsPerEntityNames(jdlObject4) {
+function getApplicationsPerEntityNames(jdlObject5) {
   const applicationsPerEntityName2 = {};
-  jdlObject4.forEachApplication((jdlApplication) => {
+  jdlObject5.forEachApplication((jdlApplication) => {
     jdlApplication.forEachEntityName((entityName) => {
       applicationsPerEntityName2[entityName] = applicationsPerEntityName2[entityName] || [];
       applicationsPerEntityName2[entityName].push(jdlApplication);
@@ -40486,8 +40486,8 @@ var init_jdl_with_application_validator = __esm({
 });
 
 // node_modules/generator-begcode/dist/jdl/validators/jdl-without-application-validator.js
-function createValidator2(jdlObject4, applicationSettings = {}, logger = console) {
-  if (!jdlObject4) {
+function createValidator2(jdlObject5, applicationSettings = {}, logger = console) {
+  if (!jdlObject5) {
     throw new Error("A JDL object must be passed to check for business errors.");
   }
   const { blueprints, databaseType } = applicationSettings;
@@ -40506,11 +40506,11 @@ function createValidator2(jdlObject4, applicationSettings = {}, logger = console
     }
   };
   function checkForEntityErrors(options) {
-    if (jdlObject4.getEntityQuantity() === 0) {
+    if (jdlObject5.getEntityQuantity() === 0) {
       return;
     }
     const validator = new EntityValidator();
-    jdlObject4.forEachEntity((jdlEntity) => {
+    jdlObject5.forEachEntity((jdlEntity) => {
       validator.validate(jdlEntity, options);
       if (options.checkReservedKeywords) {
         if (isReservedTableName(jdlEntity.tableName, applicationSettings.databaseType)) {
@@ -40535,10 +40535,10 @@ function createValidator2(jdlObject4, applicationSettings = {}, logger = console
         }
       }
       const typeCheckingFunction = getTypeCheckingFunction(entityName, applicationSettings);
-      if (!jdlObject4.hasEnum(jdlField.type) && !typeCheckingFunction(jdlField.type)) {
+      if (!jdlObject5.hasEnum(jdlField.type) && !typeCheckingFunction(jdlField.type)) {
         throw new Error(`The type '${jdlField.type}' is an unknown field type for field '${fieldName}' of entity '${entityName}'.`);
       }
-      const isAnEnum = jdlObject4.hasEnum(jdlField.type);
+      const isAnEnum = jdlObject5.hasEnum(jdlField.type);
       checkForValidationErrors(jdlField, isAnEnum);
     });
   }
@@ -40552,43 +40552,43 @@ function createValidator2(jdlObject4, applicationSettings = {}, logger = console
     });
   }
   function checkForRelationshipErrors() {
-    if (jdlObject4.getRelationshipQuantity() === 0) {
+    if (jdlObject5.getRelationshipQuantity() === 0) {
       return;
     }
     const validator = new RelationshipValidator();
-    jdlObject4.forEachRelationship((jdlRelationship) => {
+    jdlObject5.forEachRelationship((jdlRelationship) => {
       validator.validate(jdlRelationship);
       checkForAbsentEntities2({
         jdlRelationship,
-        doesEntityExist: (entityName) => !!jdlObject4.getEntity(entityName)
+        doesEntityExist: (entityName) => !!jdlObject5.getEntity(entityName)
       });
     });
   }
   function checkForEnumErrors(options) {
-    if (jdlObject4.getEnumQuantity() === 0) {
+    if (jdlObject5.getEnumQuantity() === 0) {
       return;
     }
     const validator = new EnumValidator();
-    jdlObject4.forEachEnum((jdlEnum) => {
+    jdlObject5.forEachEnum((jdlEnum) => {
       validator.validate(jdlEnum, options);
     });
   }
   function checkDeploymentsErrors() {
-    if (jdlObject4.getDeploymentQuantity() === 0) {
+    if (jdlObject5.getDeploymentQuantity() === 0) {
       return;
     }
     const validator = new DeploymentValidator();
-    jdlObject4.forEachDeployment((deployment) => {
+    jdlObject5.forEachDeployment((deployment) => {
       validator.validate(deployment);
     });
   }
   function checkForOptionErrors() {
-    if (jdlObject4.getOptionQuantity() === 0) {
+    if (jdlObject5.getOptionQuantity() === 0) {
       return;
     }
     const unaryOptionValidator = new UnaryOptionValidator();
     const binaryOptionValidator = new BinaryOptionValidator();
-    jdlObject4.getOptions().forEach((option) => {
+    jdlObject5.getOptions().forEach((option) => {
       if (option.getType() === "UNARY") {
         unaryOptionValidator.validate(option);
       } else {
@@ -40664,17 +40664,17 @@ function makeJDLImporter(content, configuration3) {
   };
   return {
     import: (logger = console) => {
-      const jdlObject4 = getJDLObject(content, configuration3);
-      checkForErrors2(jdlObject4, configuration3, logger);
-      if (jdlObject4.getApplicationQuantity() === 0 && jdlObject4.getEntityQuantity() > 0) {
-        importState.exportedEntities = importOnlyEntities(jdlObject4, configuration3);
-      } else if (jdlObject4.getApplicationQuantity() === 1) {
-        importState = importOneApplicationAndEntities(jdlObject4, configuration3);
+      const jdlObject5 = getJDLObject(content, configuration3);
+      checkForErrors2(jdlObject5, configuration3, logger);
+      if (jdlObject5.getApplicationQuantity() === 0 && jdlObject5.getEntityQuantity() > 0) {
+        importState.exportedEntities = importOnlyEntities(jdlObject5, configuration3);
+      } else if (jdlObject5.getApplicationQuantity() === 1) {
+        importState = importOneApplicationAndEntities(jdlObject5, configuration3);
       } else {
-        importState = importApplicationsAndEntities(jdlObject4, configuration3);
+        importState = importApplicationsAndEntities(jdlObject5, configuration3);
       }
-      if (jdlObject4.getDeploymentQuantity()) {
-        importState.exportedDeployments = importDeployments(jdlObject4.deployments);
+      if (jdlObject5.getDeploymentQuantity()) {
+        importState.exportedDeployments = importDeployments(jdlObject5.deployments);
       }
       return importState;
     }
@@ -40699,9 +40699,9 @@ function getJDLObject(parsedJDLContent, configuration3) {
     databaseType
   });
 }
-function checkForErrors2(jdlObject4, configuration3, logger = console) {
+function checkForErrors2(jdlObject5, configuration3, logger = console) {
   let validator;
-  if (jdlObject4.getApplicationQuantity() === 0) {
+  if (jdlObject5.getApplicationQuantity() === 0) {
     let application = configuration3.application;
     if (!application && doesFileExist(".yo-rc.json")) {
       application = readJSONFile(".yo-rc.json");
@@ -40720,17 +40720,17 @@ function checkForErrors2(jdlObject4, configuration3, logger = console) {
         blueprints = application["generator-begcode"].blueprints;
       }
     }
-    validator = createValidator2(jdlObject4, {
+    validator = createValidator2(jdlObject5, {
       applicationType,
       databaseType,
       blueprints
     }, logger);
   } else {
-    validator = createValidator(jdlObject4, logger);
+    validator = createValidator(jdlObject5, logger);
   }
   validator.checkForErrors();
 }
-function importOnlyEntities(jdlObject4, configuration3) {
+function importOnlyEntities(jdlObject5, configuration3) {
   let { applicationName, applicationType, databaseType } = configuration3;
   let application = configuration3.application;
   if (!configuration3.application && doesFileExist(".yo-rc.json")) {
@@ -40748,7 +40748,7 @@ function importOnlyEntities(jdlObject4, configuration3) {
     }
   }
   const entitiesPerApplicationMap = jdl_without_application_to_json_converter_default.convert({
-    jdlObject: jdlObject4,
+    jdlObject: jdlObject5,
     applicationName,
     applicationType,
     databaseType
@@ -40756,19 +40756,19 @@ function importOnlyEntities(jdlObject4, configuration3) {
   const jsonEntities = entitiesPerApplicationMap.get(applicationName);
   return exportJSONEntities(jsonEntities, configuration3);
 }
-function importOneApplicationAndEntities(jdlObject4, configuration3) {
+function importOneApplicationAndEntities(jdlObject5, configuration3) {
   const importState = {
     exportedApplications: [],
     exportedApplicationsWithEntities: {},
     exportedEntities: [],
     exportedDeployments: []
   };
-  const formattedApplication = formatApplicationToExport(jdlObject4.getApplications()[0], configuration3);
+  const formattedApplication = formatApplicationToExport(jdlObject5.getApplications()[0], configuration3);
   importState.exportedApplications.push(formattedApplication);
-  const jdlApplication = jdlObject4.getApplications()[0];
+  const jdlApplication = jdlObject5.getApplications()[0];
   const applicationName = jdlApplication.getConfigurationOptionValue(BASE_NAME5);
   const entitiesPerApplicationMap = convert7({
-    jdlObject: jdlObject4
+    jdlObject: jdlObject5
   });
   const jsonEntities = entitiesPerApplicationMap.get(applicationName);
   const { "generator-begcode": config, ...remaining } = formattedApplication;
@@ -40788,20 +40788,20 @@ function importOneApplicationAndEntities(jdlObject4, configuration3) {
   }
   return importState;
 }
-function importApplicationsAndEntities(jdlObject4, configuration3) {
+function importApplicationsAndEntities(jdlObject5, configuration3) {
   const importState = {
     exportedApplications: [],
     exportedApplicationsWithEntities: {},
     exportedEntities: [],
     exportedDeployments: []
   };
-  const formattedApplications = formatApplicationsToExport(jdlObject4.applications, configuration3);
+  const formattedApplications = formatApplicationsToExport(jdlObject5.applications, configuration3);
   importState.exportedApplications = formattedApplications;
   const entitiesPerApplicationMap = convert7({
-    jdlObject: jdlObject4
+    jdlObject: jdlObject5
   });
   entitiesPerApplicationMap.forEach((jsonEntities, applicationName) => {
-    const jdlApplication = jdlObject4.getApplication(applicationName);
+    const jdlApplication = jdlObject5.getApplication(applicationName);
     const exportedJSONEntities = exportJSONEntities(jsonEntities, {
       applicationName,
       applicationType: jdlApplication.getConfigurationOptionValue(APPLICATION_TYPE3),
@@ -41110,9 +41110,240 @@ var vscode3 = __toESM(require("vscode"));
 var vscode2 = __toESM(require("vscode"));
 
 // src/hoverHelper.ts
+var import_console2 = require("console");
+var import_lodash2 = __toESM(require_lodash());
+var vscode = __toESM(require("vscode"));
+
+// src/parseJdl.ts
 var import_console = require("console");
 var import_lodash = __toESM(require_lodash());
-var vscode = __toESM(require("vscode"));
+var jdl;
+async function getJdl() {
+  if (!jdl) {
+    jdl = await Promise.resolve().then(() => (init_jdl3(), jdl_exports));
+  }
+}
+getJdl();
+function parseJdl(text) {
+  const lexResult = jdl.getLexResult(text);
+  let jdlObject5 = null;
+  const errors2 = [];
+  const cstTokens2 = [];
+  try {
+    if (!lexResult.errors || lexResult.errors?.length === 0) {
+      const parseResult = jdl.grammarParse(text);
+      if (parseResult) {
+        jdlObject5 = parseResult;
+      }
+    } else {
+      errors2.push(...lexResult.errors || []);
+    }
+  } catch (error) {
+    (0, import_console.log)("error:", error);
+  }
+  if (lexResult.children) {
+    cstTokens2.length = 0;
+    Object.keys(lexResult.children).forEach((key) => {
+      if (key === "binaryOptionDeclaration") {
+        const binaryOptions = lexResult.children.binaryOptionDeclaration;
+        binaryOptions.forEach((binaryOption) => {
+          if (binaryOption.children?.BINARY_OPTION) {
+            const binaryOptionLabel = "binaryOption:" + binaryOption.children.BINARY_OPTION[0].image;
+            const binaryOptionData = { ...binaryOption.children.BINARY_OPTION[0], label: binaryOptionLabel };
+            cstTokens2.push(binaryOptionData);
+            binaryOption.children?.entityList?.forEach((entity) => {
+              if (entity.children) {
+                if (entity.children.WITH?.length > 0) {
+                  const binaryOptionWithLabel = "=>with:" + entity.children.WITH[0].image;
+                  const binaryOptionWithData = { ...entity.children.WITH[0], label: binaryOptionWithLabel };
+                  cstTokens2.push(binaryOptionWithData);
+                }
+                entity.children?.NAME?.forEach((name) => {
+                  const binaryOptionEntityNameLabel = binaryOptionLabel + "=>entity:" + name.image;
+                  const binaryOptionEntityNameData = { ...name, label: binaryOptionEntityNameLabel };
+                  cstTokens2.push(binaryOptionEntityNameData);
+                });
+                if (entity.children?.method[0]) {
+                  const binaryOptionMethodLabel = binaryOptionLabel + "=>method:" + entity.children.method[0].image;
+                  const binaryOptionMethodData = { ...entity.children.method[0], label: binaryOptionMethodLabel };
+                  cstTokens2.push(binaryOptionMethodData);
+                }
+              }
+            });
+          }
+        });
+      }
+      if (key === "entityDeclaration") {
+        const entities3 = lexResult.children.entityDeclaration;
+        entities3.forEach((entity) => {
+          const keywordLabel = "keyword:entity=>entity:" + entity.children.NAME[0].image;
+          const keywordData = { ...entity.children.ENTITY[0], label: keywordLabel };
+          cstTokens2.push(keywordData);
+          const label = "entity:" + entity.children.NAME[0].image;
+          entity.children?.annotationDeclaration?.forEach((annotation) => {
+            const annoLabel = label + "=>anno:" + (0, import_lodash.upperFirst)(annotation.children.option[0].image);
+            const data = { ...annotation.children.option[0], label: annoLabel };
+            cstTokens2.push(data);
+            if (annotation.children.value) {
+              const valueLabel = annoLabel + "=>value:" + annotation.children.value[0].image;
+              const valueData = { ...annotation.children.value[0], label: valueLabel };
+              cstTokens2.push(valueData);
+            }
+          });
+          entity.children?.entityBody?.forEach((entityBody) => {
+            entityBody?.children?.fieldDeclaration?.forEach((field) => {
+              const fieldLabel = label + "=>field:" + field.children.NAME[0].image;
+              const fieldData = { ...field.children.NAME[0], label: fieldLabel };
+              cstTokens2.push(fieldData);
+              const fieldTypeLabel = fieldLabel + "=>type:" + field.children.type[0].children.NAME[0].image;
+              const fieldTypeData = { ...field.children.type[0].children.NAME[0], label: fieldTypeLabel };
+              cstTokens2.push(fieldTypeData);
+              field.children?.annotationDeclaration?.forEach((annotation) => {
+                const annoLabel = fieldLabel + "=>anno:" + (0, import_lodash.upperFirst)(annotation.children.option[0].image);
+                const data = { ...annotation.children.option[0], label: annoLabel };
+                cstTokens2.push(data);
+                if (annotation.children.value) {
+                  const valueLabel = annoLabel + "=>value:" + annotation.children.value[0].image;
+                  const valueData = { ...annotation.children.value[0], label: valueLabel };
+                  cstTokens2.push(valueData);
+                }
+              });
+              field.children?.validation?.forEach((validation) => {
+                if (validation.children?.REQUIRED) {
+                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.REQUIRED[0].image;
+                  const validationData = { ...validation.children?.REQUIRED[0], label: validationLabel };
+                  cstTokens2.push(validationData);
+                }
+                if (validation.children?.UNIQUE) {
+                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.UNIQUE[0].image;
+                  const validationData = { ...validation.children?.UNIQUE[0], label: validationLabel };
+                  cstTokens2.push(validationData);
+                }
+                if (validation.children?.pattern) {
+                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.pattern[0].children.PATTERN[0].image;
+                  const validationData = { ...validation.children?.pattern[0].children.PATTERN[0], label: validationLabel };
+                  cstTokens2.push(validationData);
+                  const validationValueLabel = validationLabel + "=>value:" + validation.children?.pattern[0].children?.REGEX[0].image;
+                  const validationValueData = { ...validation.children?.pattern[0].children?.REGEX[0], label: validationValueLabel };
+                  cstTokens2.push(validationValueData);
+                }
+                if (validation.children?.minMaxValidation) {
+                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0].image;
+                  const validationData = { ...validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0], label: validationLabel };
+                  cstTokens2.push(validationData);
+                  const validationValueLabel = validationLabel + "=>value:" + validation.children?.minMaxValidation[0].children?.INTEGER[0].image;
+                  const validationValueData = { ...validation.children?.minMaxValidation[0].children?.INTEGER[0], label: validationValueLabel };
+                  cstTokens2.push(validationValueData);
+                }
+              });
+            });
+          });
+        });
+      }
+      if (key === "enumDeclaration") {
+        const enums = lexResult.children.enumDeclaration;
+        enums?.forEach((enumItem) => {
+          if (enumItem.children) {
+            const enumName = enumItem.children.NAME[0].image;
+            const enumLabel = "enum:" + enumName;
+            const enumData = { ...enumItem.children.NAME[0], label: enumLabel };
+            cstTokens2.push(enumData);
+            enumItem.children.enumPropList?.forEach((enumProp) => {
+              enumProp.children?.enumProp?.forEach((prop) => {
+                const propLabel = enumLabel + "=>prop:" + prop.children.enumPropKey[0].image;
+                const propData = { ...prop.children.enumPropKey[0], label: propLabel };
+                cstTokens2.push(propData);
+                if (prop.children?.enumPropValue) {
+                  const propValueLabel = propLabel + "=>value:" + prop.children.enumPropValue[0].image;
+                  const propValueData = { ...prop.children.enumPropValue[0], label: propValueLabel };
+                  cstTokens2.push(propValueData);
+                }
+                if (prop.children?.enumPropValueWithQuotes) {
+                  const propValueLabel = propLabel + "=>value:" + prop.children.enumPropValueWithQuotes[0].image;
+                  const propValueData = { ...prop.children.enumPropValueWithQuotes[0], label: propValueLabel };
+                  cstTokens2.push(propValueData);
+                }
+              });
+            });
+          }
+        });
+      }
+      if (key === "relationDeclaration") {
+        const relationships = lexResult.children.relationDeclaration;
+        relationships.forEach((relationship) => {
+          if (relationship.children?.relationshipType && relationship.children?.relationshipType[0]?.children?.RELATIONSHIP_TYPE) {
+            const relationshipLabel = "relationship:" + relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0].image;
+            const relationshipData = { ...relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0], label: relationshipLabel };
+            cstTokens2.push(relationshipData);
+            relationship.children?.relationshipBody?.forEach((relationshipBody) => {
+              if (relationshipBody.children && relationshipBody.children.from[0]?.children?.NAME && relationshipBody.children.to[0]?.children?.NAME) {
+                const fromLabelOnly = "from:" + relationshipBody.children.from[0].children.NAME[0].image;
+                const fromLabel = relationshipLabel + "=>" + fromLabelOnly;
+                const fromData = { ...relationshipBody.children.from[0].children.NAME[0], label: fromLabel };
+                cstTokens2.push(fromData);
+                const toLabelOnly = "to:" + relationshipBody.children.to[0].children.NAME[0].image;
+                const toLabel = relationshipLabel + "=>" + toLabelOnly;
+                const toData = { ...relationshipBody.children.to[0].children.NAME[0], label: toLabel };
+                cstTokens2.push(toData);
+                const toKeywordOnly = "keyword:" + relationshipBody.children.TO[0].image;
+                const toKeywordLabel = relationshipLabel + "=>" + toKeywordOnly;
+                const toKeywordData = { ...relationshipBody.children.TO[0], label: toKeywordLabel };
+                cstTokens2.push(toKeywordData);
+                if (relationshipBody.children.from[0]?.children?.injectedField) {
+                  const fromInjectedFieldLabel = fromLabel + "=>" + toLabelOnly + "=>injectedField:" + relationshipBody.children.from[0].children.injectedField[0].image;
+                  const fromInjectedFieldData = { ...relationshipBody.children.from[0].children.injectedField[0], label: fromInjectedFieldLabel };
+                  cstTokens2.push(fromInjectedFieldData);
+                }
+                if (relationshipBody.children.from[0]?.children?.injectedFieldParam) {
+                  const fromInjectedFieldParamLabel = fromLabel + "=>" + toLabelOnly + "=>injectedFieldParam:" + relationshipBody.children.from[0].children.injectedFieldParam[0].image;
+                  const fromInjectedFieldParamData = { ...relationshipBody.children.from[0].children.injectedFieldParam[0], label: fromInjectedFieldParamLabel };
+                  cstTokens2.push(fromInjectedFieldParamData);
+                }
+                if (relationshipBody.children.to[0]?.children?.injectedField) {
+                  const toInjectedFieldLabel = toLabel + "=>" + fromLabelOnly + "=>injectedField:" + relationshipBody.children.to[0].children.injectedField[0].image;
+                  const toInjectedFieldData = { ...relationshipBody.children.to[0].children.injectedField[0], label: toInjectedFieldLabel };
+                  cstTokens2.push(toInjectedFieldData);
+                }
+                if (relationshipBody.children.to[0]?.children?.injectedFieldParam) {
+                  const toInjectedFieldParamLabel = toLabel + "=>" + fromLabelOnly + "=>injectedFieldParam:" + relationshipBody.children.to[0].children.injectedFieldParam[0].image;
+                  const toInjectedFieldParamData = { ...relationshipBody.children.to[0].children.injectedFieldParam[0], label: toInjectedFieldParamLabel };
+                  cstTokens2.push(toInjectedFieldParamData);
+                }
+              }
+            });
+          }
+        });
+      }
+      if (key === "unaryOptionDeclaration") {
+        const unaryOptions = lexResult.children.unaryOptionDeclaration;
+        unaryOptions.forEach((unaryOption) => {
+          if (unaryOption.children?.UNARY_OPTION) {
+            const unaryOptionLabel = "unaryOption:" + unaryOption.children.UNARY_OPTION[0].image;
+            const unaryOptionData = { ...unaryOption.children.UNARY_OPTION[0], label: unaryOptionLabel };
+            cstTokens2.push(unaryOptionData);
+            const defName = unaryOption.children.UNARY_OPTION[0].image + "Def";
+            if (unaryOption.children[defName]) {
+              const unaryOptionDef = unaryOption.children[defName][0];
+              unaryOptionDef?.NAME?.forEach((name) => {
+                const unaryOptionNameLabel = unaryOptionLabel + "=>name:" + name.image;
+                const unaryOptionNameData = { ...name, label: unaryOptionNameLabel };
+                cstTokens2.push(unaryOptionNameData);
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+  return {
+    jdlObject: jdlObject5,
+    errors: errors2,
+    cstTokens: cstTokens2,
+    jdlCst: lexResult
+  };
+}
+
+// src/hoverHelper.ts
 var hoverData = {
   entity: {
     anno: {
@@ -43010,16 +43241,16 @@ var hoverData = {
     }
   }
 };
-function tokenLableHover(tokenLabel3, jdlObject4) {
+function tokenLableHover(tokenLabel3, jdlObject5) {
   if (tokenLabel3) {
     const labels = tokenLabel3.split("=>");
     if (tokenLabel3.startsWith("relationship:")) {
-      (0, import_console.log)("tokenLabel.relationship", tokenLabel3);
+      (0, import_console2.log)("tokenLabel.relationship", tokenLabel3);
       if (labels.length === 4 && labels[labels.length - 1].startsWith("injectedFieldParam:")) {
         const entity = labels[2].split(":")[1];
         const field = labels[3].split(":")[1];
-        if (jdlObject4 && jdlObject4.entities) {
-          const entityObj = jdlObject4.entities.find((entityObj2) => entityObj2.name === entity);
+        if (jdlObject5 && jdlObject5.entities) {
+          const entityObj = jdlObject5.entities.find((entityObj2) => entityObj2.name === entity);
           if (entityObj && entityObj.body) {
             const fieldObj = entityObj.body.find((fieldObj2) => fieldObj2.name === field);
             if (fieldObj && fieldObj.documentation) {
@@ -43038,8 +43269,8 @@ function tokenLableHover(tokenLabel3, jdlObject4) {
         }
       } else if (labels.length === 2 && (labels[labels.length - 1].startsWith("to:") || labels[labels.length - 1].startsWith("from:"))) {
         const entity = labels[1].split(":")[1];
-        if (jdlObject4 && jdlObject4.entities) {
-          const entityObj = jdlObject4.entities.find((entityObj2) => entityObj2.name === entity);
+        if (jdlObject5 && jdlObject5.entities) {
+          const entityObj = jdlObject5.entities.find((entityObj2) => entityObj2.name === entity);
           if (entityObj.documentation) {
             return [
               entityObj.documentation
@@ -43060,18 +43291,18 @@ function tokenLableHover(tokenLabel3, jdlObject4) {
         return (prev ? prev + "." : "") + current.split(":")[0];
       }
     }, "");
-    return (0, import_lodash.get)(hoverData, labelPath + ".contents", []);
+    return (0, import_lodash2.get)(hoverData, labelPath + ".contents", []);
   }
   return [];
 }
-function tokenLableComplete(tokenLabel3, jdlObject4) {
+function tokenLableComplete(tokenLabel3, text) {
   if (tokenLabel3) {
     const labels = tokenLabel3.split("=>");
     const typeChain = labels.map((label) => label.split(":")[0]).join(".");
     if (typeChain === "entity.field.type") {
       const validationPath = "entity.field.validation";
       const typeName = [...labels].pop()?.split(":")[1];
-      const validationObject = (0, import_lodash.get)(hoverData, validationPath, {});
+      const validationObject = (0, import_lodash2.get)(hoverData, validationPath, {});
       const completeItems = [];
       Object.keys(validationObject).forEach((key) => {
         if (validationObject[key]?.completeItem?.scope?.includes(typeName)) {
@@ -43082,16 +43313,17 @@ function tokenLableComplete(tokenLabel3, jdlObject4) {
     }
     if (typeChain === "entity.field.validation") {
       const validationPath = "entity.field.validation";
-      if (jdlObject4?.entities) {
+      const parseResult = parseJdl(text);
+      if (parseResult.jdlObject?.entities) {
         const entityName = labels[0].split(":")[1];
         const fieldName = labels[1].split(":")[1];
-        const entity = jdlObject4?.entities.find((entity2) => entity2.name === entityName);
+        const entity = parseResult.jdlObject?.entities.find((entity2) => entity2.name === entityName);
         if (entity?.body) {
           const field = entity?.body?.find((field2) => field2.name === fieldName);
           if (field) {
             const existValidations = field.validations?.map((valid) => valid.key) || [];
             const fieldType = field.type;
-            const validationObject = (0, import_lodash.get)(hoverData, validationPath, {});
+            const validationObject = (0, import_lodash2.get)(hoverData, validationPath, {});
             const completeItems = [];
             Object.keys(validationObject).filter((key) => !existValidations.includes(key)).forEach((key) => {
               if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
@@ -43105,16 +43337,17 @@ function tokenLableComplete(tokenLabel3, jdlObject4) {
     }
     if (typeChain === "entity.field.validation.value") {
       const validationPath = "entity.field.validation";
-      if (jdlObject4?.entities) {
+      const parseResult = parseJdl(text);
+      if (parseResult.jdlObject?.entities) {
         const entityName = labels[0].split(":")[1];
         const fieldName = labels[1].split(":")[1];
-        const entity = jdlObject4?.entities.find((entity2) => entity2.name === entityName);
+        const entity = parseResult.jdlObject?.entities.find((entity2) => entity2.name === entityName);
         if (entity?.body) {
           const field = entity?.body?.find((field2) => field2.name === fieldName);
           if (field) {
             const existValidations = field.validations?.map((valid) => valid.key) || [];
             const fieldType = field.type;
-            const validationObject = (0, import_lodash.get)(hoverData, validationPath, {});
+            const validationObject = (0, import_lodash2.get)(hoverData, validationPath, {});
             const completeItems = [];
             Object.keys(validationObject).filter((key) => !existValidations.includes(key)).forEach((key) => {
               if (validationObject[key]?.completeItem?.scope?.includes(fieldType)) {
@@ -43128,235 +43361,6 @@ function tokenLableComplete(tokenLabel3, jdlObject4) {
     }
   }
   return [];
-}
-
-// src/parseJdl.ts
-var import_console2 = require("console");
-var import_lodash2 = __toESM(require_lodash());
-var jdl;
-async function getJdl() {
-  if (!jdl) {
-    jdl = await Promise.resolve().then(() => (init_jdl3(), jdl_exports));
-  }
-}
-getJdl();
-function parseJdl(text) {
-  const lexResult = jdl.getLexResult(text);
-  let jdlObject4 = null;
-  const errors = [];
-  const cstTokens2 = [];
-  try {
-    if (!lexResult.errors || lexResult.errors?.length === 0) {
-      const parseResult = jdl.grammarParse(text);
-      if (parseResult) {
-        jdlObject4 = parseResult;
-      }
-    } else {
-      errors.push(...lexResult.errors || []);
-    }
-  } catch (error) {
-    (0, import_console2.log)("error:", error);
-  }
-  if (lexResult.children) {
-    cstTokens2.length = 0;
-    Object.keys(lexResult.children).forEach((key) => {
-      if (key === "binaryOptionDeclaration") {
-        const binaryOptions = lexResult.children.binaryOptionDeclaration;
-        binaryOptions.forEach((binaryOption) => {
-          if (binaryOption.children?.BINARY_OPTION) {
-            const binaryOptionLabel = "binaryOption:" + binaryOption.children.BINARY_OPTION[0].image;
-            const binaryOptionData = { ...binaryOption.children.BINARY_OPTION[0], label: binaryOptionLabel };
-            cstTokens2.push(binaryOptionData);
-            binaryOption.children?.entityList?.forEach((entity) => {
-              if (entity.children) {
-                if (entity.children.WITH?.length > 0) {
-                  const binaryOptionWithLabel = "=>with:" + entity.children.WITH[0].image;
-                  const binaryOptionWithData = { ...entity.children.WITH[0], label: binaryOptionWithLabel };
-                  cstTokens2.push(binaryOptionWithData);
-                }
-                entity.children?.NAME?.forEach((name) => {
-                  const binaryOptionEntityNameLabel = binaryOptionLabel + "=>entity:" + name.image;
-                  const binaryOptionEntityNameData = { ...name, label: binaryOptionEntityNameLabel };
-                  cstTokens2.push(binaryOptionEntityNameData);
-                });
-                if (entity.children?.method[0]) {
-                  const binaryOptionMethodLabel = binaryOptionLabel + "=>method:" + entity.children.method[0].image;
-                  const binaryOptionMethodData = { ...entity.children.method[0], label: binaryOptionMethodLabel };
-                  cstTokens2.push(binaryOptionMethodData);
-                }
-              }
-            });
-          }
-        });
-      }
-      if (key === "entityDeclaration") {
-        const entities3 = lexResult.children.entityDeclaration;
-        entities3.forEach((entity) => {
-          const keywordLabel = "keyword:entity=>entity:" + entity.children.NAME[0].image;
-          const keywordData = { ...entity.children.ENTITY[0], label: keywordLabel };
-          cstTokens2.push(keywordData);
-          const label = "entity:" + entity.children.NAME[0].image;
-          entity.children?.annotationDeclaration?.forEach((annotation) => {
-            const annoLabel = label + "=>anno:" + (0, import_lodash2.upperFirst)(annotation.children.option[0].image);
-            const data = { ...annotation.children.option[0], label: annoLabel };
-            cstTokens2.push(data);
-            if (annotation.children.value) {
-              const valueLabel = annoLabel + "=>value:" + annotation.children.value[0].image;
-              const valueData = { ...annotation.children.value[0], label: valueLabel };
-              cstTokens2.push(valueData);
-            }
-          });
-          entity.children?.entityBody?.forEach((entityBody) => {
-            entityBody?.children?.fieldDeclaration?.forEach((field) => {
-              const fieldLabel = label + "=>field:" + field.children.NAME[0].image;
-              const fieldData = { ...field.children.NAME[0], label: fieldLabel };
-              cstTokens2.push(fieldData);
-              const fieldTypeLabel = fieldLabel + "=>type:" + field.children.type[0].children.NAME[0].image;
-              const fieldTypeData = { ...field.children.type[0].children.NAME[0], label: fieldTypeLabel };
-              cstTokens2.push(fieldTypeData);
-              field.children?.annotationDeclaration?.forEach((annotation) => {
-                const annoLabel = fieldLabel + "=>anno:" + (0, import_lodash2.upperFirst)(annotation.children.option[0].image);
-                const data = { ...annotation.children.option[0], label: annoLabel };
-                cstTokens2.push(data);
-                if (annotation.children.value) {
-                  const valueLabel = annoLabel + "=>value:" + annotation.children.value[0].image;
-                  const valueData = { ...annotation.children.value[0], label: valueLabel };
-                  cstTokens2.push(valueData);
-                }
-              });
-              field.children?.validation?.forEach((validation) => {
-                if (validation.children?.REQUIRED) {
-                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.REQUIRED[0].image;
-                  const validationData = { ...validation.children?.REQUIRED[0], label: validationLabel };
-                  cstTokens2.push(validationData);
-                }
-                if (validation.children?.UNIQUE) {
-                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.UNIQUE[0].image;
-                  const validationData = { ...validation.children?.UNIQUE[0], label: validationLabel };
-                  cstTokens2.push(validationData);
-                }
-                if (validation.children?.pattern) {
-                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.pattern[0].children.PATTERN[0].image;
-                  const validationData = { ...validation.children?.pattern[0].children.PATTERN[0], label: validationLabel };
-                  cstTokens2.push(validationData);
-                  const validationValueLabel = validationLabel + "=>value:" + validation.children?.pattern[0].children?.REGEX[0].image;
-                  const validationValueData = { ...validation.children?.pattern[0].children?.REGEX[0], label: validationValueLabel };
-                  cstTokens2.push(validationValueData);
-                }
-                if (validation.children?.minMaxValidation) {
-                  const validationLabel = fieldLabel + "=>validation:" + validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0].image;
-                  const validationData = { ...validation.children?.minMaxValidation[0].children?.MIN_MAX_KEYWORD[0], label: validationLabel };
-                  cstTokens2.push(validationData);
-                  const validationValueLabel = validationLabel + "=>value:" + validation.children?.minMaxValidation[0].children?.INTEGER[0].image;
-                  const validationValueData = { ...validation.children?.minMaxValidation[0].children?.INTEGER[0], label: validationValueLabel };
-                  cstTokens2.push(validationValueData);
-                }
-              });
-            });
-          });
-        });
-      }
-      if (key === "enumDeclaration") {
-        const enums = lexResult.children.enumDeclaration;
-        enums?.forEach((enumItem) => {
-          if (enumItem.children) {
-            const enumName = enumItem.children.NAME[0].image;
-            const enumLabel = "enum:" + enumName;
-            const enumData = { ...enumItem.children.NAME[0], label: enumLabel };
-            cstTokens2.push(enumData);
-            enumItem.children.enumPropList?.forEach((enumProp) => {
-              enumProp.children?.enumProp?.forEach((prop) => {
-                const propLabel = enumLabel + "=>prop:" + prop.children.enumPropKey[0].image;
-                const propData = { ...prop.children.enumPropKey[0], label: propLabel };
-                cstTokens2.push(propData);
-                if (prop.children?.enumPropValue) {
-                  const propValueLabel = propLabel + "=>value:" + prop.children.enumPropValue[0].image;
-                  const propValueData = { ...prop.children.enumPropValue[0], label: propValueLabel };
-                  cstTokens2.push(propValueData);
-                }
-                if (prop.children?.enumPropValueWithQuotes) {
-                  const propValueLabel = propLabel + "=>value:" + prop.children.enumPropValueWithQuotes[0].image;
-                  const propValueData = { ...prop.children.enumPropValueWithQuotes[0], label: propValueLabel };
-                  cstTokens2.push(propValueData);
-                }
-              });
-            });
-          }
-        });
-      }
-      if (key === "relationDeclaration") {
-        const relationships = lexResult.children.relationDeclaration;
-        relationships.forEach((relationship) => {
-          if (relationship.children?.relationshipType && relationship.children?.relationshipType[0]?.children?.RELATIONSHIP_TYPE) {
-            const relationshipLabel = "relationship:" + relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0].image;
-            const relationshipData = { ...relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0], label: relationshipLabel };
-            cstTokens2.push(relationshipData);
-            relationship.children?.relationshipBody?.forEach((relationshipBody) => {
-              if (relationshipBody.children && relationshipBody.children.from[0]?.children?.NAME && relationshipBody.children.to[0]?.children?.NAME) {
-                const fromLabelOnly = "from:" + relationshipBody.children.from[0].children.NAME[0].image;
-                const fromLabel = relationshipLabel + "=>" + fromLabelOnly;
-                const fromData = { ...relationshipBody.children.from[0].children.NAME[0], label: fromLabel };
-                cstTokens2.push(fromData);
-                const toLabelOnly = "to:" + relationshipBody.children.to[0].children.NAME[0].image;
-                const toLabel = relationshipLabel + "=>" + toLabelOnly;
-                const toData = { ...relationshipBody.children.to[0].children.NAME[0], label: toLabel };
-                cstTokens2.push(toData);
-                const toKeywordOnly = "keyword:" + relationshipBody.children.TO[0].image;
-                const toKeywordLabel = relationshipLabel + "=>" + toKeywordOnly;
-                const toKeywordData = { ...relationshipBody.children.TO[0], label: toKeywordLabel };
-                cstTokens2.push(toKeywordData);
-                if (relationshipBody.children.from[0]?.children?.injectedField) {
-                  const fromInjectedFieldLabel = fromLabel + "=>" + toLabelOnly + "=>injectedField:" + relationshipBody.children.from[0].children.injectedField[0].image;
-                  const fromInjectedFieldData = { ...relationshipBody.children.from[0].children.injectedField[0], label: fromInjectedFieldLabel };
-                  cstTokens2.push(fromInjectedFieldData);
-                }
-                if (relationshipBody.children.from[0]?.children?.injectedFieldParam) {
-                  const fromInjectedFieldParamLabel = fromLabel + "=>" + toLabelOnly + "=>injectedFieldParam:" + relationshipBody.children.from[0].children.injectedFieldParam[0].image;
-                  const fromInjectedFieldParamData = { ...relationshipBody.children.from[0].children.injectedFieldParam[0], label: fromInjectedFieldParamLabel };
-                  cstTokens2.push(fromInjectedFieldParamData);
-                }
-                if (relationshipBody.children.to[0]?.children?.injectedField) {
-                  const toInjectedFieldLabel = toLabel + "=>" + fromLabelOnly + "=>injectedField:" + relationshipBody.children.to[0].children.injectedField[0].image;
-                  const toInjectedFieldData = { ...relationshipBody.children.to[0].children.injectedField[0], label: toInjectedFieldLabel };
-                  cstTokens2.push(toInjectedFieldData);
-                }
-                if (relationshipBody.children.to[0]?.children?.injectedFieldParam) {
-                  const toInjectedFieldParamLabel = toLabel + "=>" + fromLabelOnly + "=>injectedFieldParam:" + relationshipBody.children.to[0].children.injectedFieldParam[0].image;
-                  const toInjectedFieldParamData = { ...relationshipBody.children.to[0].children.injectedFieldParam[0], label: toInjectedFieldParamLabel };
-                  cstTokens2.push(toInjectedFieldParamData);
-                }
-              }
-            });
-          }
-        });
-      }
-      if (key === "unaryOptionDeclaration") {
-        const unaryOptions = lexResult.children.unaryOptionDeclaration;
-        unaryOptions.forEach((unaryOption) => {
-          if (unaryOption.children?.UNARY_OPTION) {
-            const unaryOptionLabel = "unaryOption:" + unaryOption.children.UNARY_OPTION[0].image;
-            const unaryOptionData = { ...unaryOption.children.UNARY_OPTION[0], label: unaryOptionLabel };
-            cstTokens2.push(unaryOptionData);
-            const defName = unaryOption.children.UNARY_OPTION[0].image + "Def";
-            if (unaryOption.children[defName]) {
-              const unaryOptionDef = unaryOption.children[defName][0];
-              unaryOptionDef?.NAME?.forEach((name) => {
-                const unaryOptionNameLabel = unaryOptionLabel + "=>name:" + name.image;
-                const unaryOptionNameData = { ...name, label: unaryOptionNameLabel };
-                cstTokens2.push(unaryOptionNameData);
-              });
-            }
-          }
-        });
-      }
-    });
-  }
-  return {
-    jdlObject: jdlObject4,
-    errors,
-    cstTokens: cstTokens2,
-    jdlCst: lexResult
-  };
 }
 
 // src/completeItems.ts
@@ -43735,7 +43739,7 @@ var annotationData = Object.keys(annotationValueDetail).reduce((acc, key) => {
   acc[key] = Object.keys(annotationValueDetail[key]);
   return acc;
 }, {});
-function getCompleteItems(errors, jdlObject4) {
+function getCompleteItems(errors2, jdlObject5) {
   const annotation = vscode2.languages.registerCompletionItemProvider(
     { language: "jdl" },
     {
@@ -43779,10 +43783,10 @@ function getCompleteItems(errors, jdlObject4) {
           if (typeChain === "entity.field") {
             return fieldTypeDetail;
           }
-          return tokenLableComplete(cstToken.label, jdlObject4);
+          return tokenLableComplete(cstToken.label, document.getText());
         } else {
-          if (errors && errors.length) {
-            const error = errors.find((error2) => {
+          if (errors2 && errors2.length) {
+            const error = errors2.find((error2) => {
               return error2.name === "MismatchedTokenException" && error2.previousToken?.startLine === beforePosition.line + 1 && error2.previousToken?.endColumn <= beforePosition.character + 1;
             });
             if (error) {
@@ -43809,8 +43813,8 @@ function getCompleteItems(errors, jdlObject4) {
         let entity = null;
         let entityName = "";
         let fieldName = "";
-        let entities3 = jdlObject4.entities || [];
-        if (errors?.length > 0) {
+        let entities3 = jdlObject5.entities || [];
+        if (errors2?.length > 0) {
           const lineText = document.lineAt(position).text;
           if (lineText.trim() === "@") {
             const offset = document.offsetAt(position);
@@ -43994,10 +43998,10 @@ var jdlKeywordTokenTypes = {
   SERVICE: "JDL\u5B9A\u4E49Service\u5173\u952E\u5B57"
 };
 var cstTokens = [];
+var jdlObject4 = {};
+var jdlCst = {};
+var errors = [];
 function activate(context) {
-  let jdlObject4 = {};
-  let jdlCst = {};
-  const errors = [];
   context.subscriptions.push(
     vscode3.languages.registerHoverProvider("jdl", {
       provideHover(document, position, token) {

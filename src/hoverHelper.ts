@@ -1,6 +1,6 @@
-import { log } from 'console';
 import { get } from 'lodash';
 import * as vscode from 'vscode';
+import { parseJdl } from './parseJdl';
 
 const hoverData: any = {
 	entity: {
@@ -1900,18 +1900,18 @@ const hoverData: any = {
 	}
 };
 
-function tokenLableHover(tokenLabel: any, jdlObject?: any): vscode.MarkdownString[]| string[] {
+function tokenLableHover(tokenLabel: any, text: string): vscode.MarkdownString[]| string[] {
 	if (tokenLabel) {
 		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
 		const labels = tokenLabel.split('=>');
 		if (tokenLabel.startsWith('relationship:')) {
-			log('tokenLabel.relationship', tokenLabel);
 			if (labels.length === 4 && labels[labels.length - 1].startsWith('injectedFieldParam:')) {
 				const entity = labels[2].split(':')[1];
 				const field = labels[3].split(':')[1];
-				if (jdlObject && jdlObject.entities) {
+				const parseResult = parseJdl(text);
+				if (parseResult.jdlObject?.entities) {
 					// 查找字段的名称
-					const entityObj = jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+					const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
 					if (entityObj && entityObj.body) {
 						const fieldObj = entityObj.body.find((fieldObj: any) => fieldObj.name === field);
 						if (fieldObj && fieldObj.documentation) {
@@ -1931,9 +1931,10 @@ function tokenLableHover(tokenLabel: any, jdlObject?: any): vscode.MarkdownStrin
 
 			} else if (labels.length === 2 && (labels[labels.length - 1].startsWith('to:') || labels[labels.length - 1].startsWith('from:'))){
 				const entity = labels[1].split(':')[1];
-				if (jdlObject && jdlObject.entities) {
+				const parseResult = parseJdl(text);
+				if (parseResult.jdlObject?.entities) {
 					// 查找实体的名称
-					const entityObj = jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+					const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
 					if (entityObj.documentation) {
 						return [
 							entityObj.documentation,
@@ -1960,7 +1961,7 @@ function tokenLableHover(tokenLabel: any, jdlObject?: any): vscode.MarkdownStrin
 	return [];
 }
 
-function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownString[] {
+function tokenLableComplete(tokenLabel: any, text: string): vscode.MarkdownString[] {
 	if (tokenLabel) {
 		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
 		// relationship:ManyToOne=>to:TestEntity2=>injectedFieldParam:name
@@ -1983,10 +1984,11 @@ function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownSt
 		}
 		if (typeChain === 'entity.field.validation') {
 			const validationPath = 'entity.field.validation';
-			if (jdlObject?.entities) {
+			const parseResult = parseJdl(text);
+			if (parseResult.jdlObject?.entities) {
 				const entityName = labels[0].split(':')[1];
 				const fieldName = labels[1].split(':')[1];
-				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
+				const entity = parseResult.jdlObject?.entities.find((entity: any) => entity.name === entityName);
 				if (entity?.body) {
 					const field = entity?.body?.find((field: any) => field.name === fieldName);
 					if (field) {
@@ -2008,10 +2010,11 @@ function tokenLableComplete(tokenLabel: any, jdlObject?: any): vscode.MarkdownSt
 		}
 		if (typeChain === 'entity.field.validation.value') {
 			const validationPath = 'entity.field.validation';
-			if (jdlObject?.entities) {
+			const parseResult = parseJdl(text);
+			if (parseResult.jdlObject?.entities) {
 				const entityName = labels[0].split(':')[1];
 				const fieldName = labels[1].split(':')[1];
-				const entity = jdlObject?.entities.find((entity: any) => entity.name === entityName);
+				const entity = parseResult.jdlObject?.entities.find((entity: any) => entity.name === entityName);
 				if (entity?.body) {
 					const field = entity?.body?.find((field: any) => field.name === fieldName);
 					if (field) {

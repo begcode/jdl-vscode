@@ -30,12 +30,11 @@ const jdlKeywordTokenTypes: Record<string, string> = {
 const cstTokens: any[] = [];
 
 export { cstTokens };
+let jdlObject: any = {};
+let jdlCst: any = {};
+const errors: any[] = [];
 
 export function activate(context: vscode.ExtensionContext) {
-	let jdlObject: any = {};
-	let jdlCst: any = {};
-	const errors: any[] = [];
-
 	context.subscriptions.push(
 		vscode.languages.registerHoverProvider('jdl', {
 			provideHover(document, position, token) {
@@ -123,7 +122,6 @@ export function activate(context: vscode.ExtensionContext) {
 						}
 						if (key === 'entityDeclaration') {
 							const entities = jdlCst.children.entityDeclaration;
-							log('entities::', entities);
 							entities.forEach((entity: any) => {
 								const label = 'entity:' + entity.children.NAME[0].image;
 								entity.children?.annotationDeclaration?.forEach((annotation: any) => {

@@ -1,4 +1,3 @@
-import { log } from 'console';
 import * as vscode from 'vscode';
 import { cstTokens } from './extension';
 import { hoverData, tokenLableComplete } from './hoverHelper';
@@ -437,7 +436,7 @@ export function getCompleteItems(errors: any[], jdlObject?: any) {
 					if (typeChain === 'entity.field') {
 						return fieldTypeDetail;
 					}
-					return tokenLableComplete(cstToken.label, jdlObject);
+					return tokenLableComplete(cstToken.label, document.getText());
 				} else {
 					if (errors && errors.length) {
 						const error = errors.find(error => {
