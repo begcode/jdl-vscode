@@ -8,6 +8,10 @@
 
 ![预览](docs/preview.png)
 
+![预览](docs/enum-complete-item.png)
+
+![预览](docs/relationship-complete-item.png)
+
 ### 支持代码片段和语法高亮
 
 ![预览](docs/jdl-vscode-highlight.png)

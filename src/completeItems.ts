@@ -408,12 +408,38 @@ export function getCompleteItems(errors: any[], jdlObject: any = null, lastParse
 							return completionItem;
 						});
 					}
+				} else {
+					const range = document.getWordRangeAtPosition(position.with(position.line, position.character - 1));
+					const word = document.getText(range);
+					const cstToken = cstTokens.find((cstToken: any) => {
+						return cstToken.image === word && cstToken.startLine <= range!.start.line + 1 && cstToken.endLine >= range!.end.line + 1 && cstToken.startColumn <= range!.start.character + 1 && cstToken.endColumn === range!.end.character;
+					});
+					if (cstToken) {
+						const labels: string[] = cstToken.label.split('=>');
+						const typeChain = labels.map(label => label.split(':')[0]).join('.');
+						if (['relationship.from.to.injectedField','relationship.to.from.injectedField'].includes(typeChain)) {
+							const entityName = labels[2].split(':')[1];
+							const entities = lastParseJdl.jdlObject?.entities || [];
+							const entity = entities.find((entity: any) => entity.name === entityName);
+							const fieldCompleteItems = entity.body?.map((field: any) => {
+								return {
+									label: {
+										label: field.name,
+										detail: '   ' + field.type,
+										description: field.documentation || field.name
+									},
+									kind: vscode.CompletionItemKind.Field
+								};
+							}) || [];
+							return fieldCompleteItems;
+						}
+					}
 				}
 				return undefined;
 			}
 		},
 		'-',
-		'('
+		'(',
 	);
 	const fieldType = vscode.languages.registerCompletionItemProvider(
 		{language: 'jdl'},
@@ -447,7 +473,6 @@ export function getCompleteItems(errors: any[], jdlObject: any = null, lastParse
 							if (error.context?.ruleStack) {
 								const ruleStackStr = error.context?.ruleStack.join('->');
 								if (ruleStackStr === ['prog', 'entityDeclaration', 'entityBody', 'fieldDeclaration', 'type'].join('->')) {
-									log('lastParseJdlObject', lastParseJdl.jdlObject);
 									const enumTypes = lastParseJdl.jdlObject?.enums?.map((enumItem: any) => {
 										return {
 											label: {

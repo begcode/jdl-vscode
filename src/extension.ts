@@ -80,10 +80,10 @@ export function activate(context: vscode.ExtensionContext) {
 				jdlObject = parseResult.jdlObject;
 				if (parseResult.errors.length === 0) {
 					lastParseJdl.jdlObject = parseResult.jdlObject;
+					cstTokens.length = 0;
+					cstTokens.push(...parseResult.cstTokens || []);
 				}
 				errors.push(...parseResult.errors || []);
-				cstTokens.length = 0;
-				cstTokens.push(...parseResult.cstTokens || []);
 				if (errors?.length > 0) {
 					const diagnostics = errors.map((error: any) => {
 						const diagnostic: any = {
