@@ -377,6 +377,8 @@ const fieldTypeDetail: any[] = [
 	}
 ];
 
+const fieldTypes = fieldTypeDetail.map(item => item.label.label);
+
 
 
 const annotationData: Record<string, string[]> = Object.keys(annotationValueDetail).reduce((acc, key) => {
@@ -685,3 +687,5 @@ export function getCompleteItems(errors: any[], jdlObject: any = null, lastParse
 	);
 	return [annotation, fieldType, annotationType];
 }
+
+export { fieldTypes };

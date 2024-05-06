@@ -4,7 +4,7 @@
 
 import { log } from 'console';
 import * as vscode from 'vscode';
-import { getCompleteItems } from './completeItems';
+import { fieldTypes, getCompleteItems } from './completeItems';
 import { tokenLableHover } from './hoverHelper';
 import { parseJdl } from './parseJdl';
 let jdl: any;
@@ -128,5 +128,53 @@ export function activate(context: vscode.ExtensionContext) {
 			updateDiagnostics(editor.document, diagnosticCollection);
 		}
 	}));
+	function provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.Location | undefined{
+		const line = position.line + 1;
+		const character = position.character + 1;
+		const word = document.getText(document.getWordRangeAtPosition(position));
+		const cstToken = cstTokens.find((cstToken: any) => {
+			return cstToken.image === word && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
+		});
+		if (cstToken) {
+			const labels: string[] = cstToken.label.split('=>');
+			const typeChain = labels.map(label => label.split(':')[0]).join('.');
+			if (['relationship.from','relationship.to'].includes(typeChain)) {
+				const entityName = labels[1].split(':')[1];
+				const findLabel = 'keyword:entity=>entity:' + entityName;
+				const entityToken = cstTokens.find((cstToken: any) => {
+					return cstToken.label === findLabel;
+				});
+				if (entityToken) {
+					return new vscode.Location(document.uri, new vscode.Position(entityToken.startLine - 1, entityToken.startColumn - 1));
+				}
+			}
+			if (['relationship.from.to.injectedFieldParam','relationship.to.from.injectedFieldParam'].includes(typeChain)) {
+				const entityName = labels[2].split(':')[1];
+				const fieldName = labels[3].split(':')[1];
+				const findLabel = `entity:${entityName}=>field:${fieldName}`;
+				const entityToken = cstTokens.find((cstToken: any) => {
+					return cstToken.label === findLabel;
+				});
+				if (entityToken) {
+					return new vscode.Location(document.uri, new vscode.Position(entityToken.startLine - 1, entityToken.startColumn - 1));
+				}
+			
+			}
+			if (typeChain === 'entity.field.type') {
+				const typeName = labels[2].split(':')[1];
+				if (!fieldTypes.includes(typeName)) {
+					const findLabel = 'enum:' + typeName;
+					const entityToken = cstTokens.find((cstToken: any) => {
+						return cstToken.label === findLabel;
+					});
+					if (entityToken) {
+						return new vscode.Location(document.uri, new vscode.Position(entityToken.startLine - 1, entityToken.startColumn - 1));
+					}
+				}
+			}
+			return undefined;
+		}
+	}
+	context.subscriptions.push(vscode.languages.registerDefinitionProvider('jdl', {provideDefinition}));
 	context.subscriptions.push(...getCompleteItems(errors, jdlObject, lastParseJdl));
 }
