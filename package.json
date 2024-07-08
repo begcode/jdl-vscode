@@ -45,29 +45,6 @@
 		"rimraf": "^3.0.2"
 	},
 	"contributes": {
-		"configuration": {
-			"type": "object",
-			"title": "Example configuration",
-			"properties": {
-				"languageServerExample.maxNumberOfProblems": {
-					"scope": "resource",
-					"type": "number",
-					"default": 100,
-					"description": "Controls the maximum number of problems produced by the server."
-				},
-				"languageServerExample.trace.server": {
-					"scope": "window",
-					"type": "string",
-					"enum": [
-						"off",
-						"messages",
-						"verbose"
-					],
-					"default": "off",
-					"description": "Traces the communication between VS Code and the language server."
-				}
-			}
-		},
 		"languages": [{
 			"id": "jdl",
 			"aliases": ["JDL", "jdl"],
@@ -85,6 +62,25 @@
 			  "language": "jdl", 
 			  "path": "snippets/jdl.snippets.json"
 			}
-		]
+		],
+		"commands": [
+			{
+				"command": "jdl.erview",
+				"title": "ER Diagram",
+				"icon": {
+					"light": "./docs/book-fill.svg",
+					"dark": "./docs/book.svg"
+				}
+			}
+		],
+		"menus": {
+			"editor/title": [
+				{
+					"command": "jdl.erview",
+					"group": "navigation",
+					"when": "resourceLangId == jdl"
+				}
+			]
+		}
 	}
 }
