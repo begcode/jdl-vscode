@@ -1,6 +1,6 @@
- Copyright 2016-2022 the original author or authors from the JHipster project.
+ Copyright 2021-2024 the original author or authors from the BegCode project.
  
- This file is part of the JHipster project, see http://www.jhipster.tech/
+ This file is part of the BegCode project, see http://www.begcode.com/
  for more information.
  
  Licensed under the Apache License, Version 2.0 (the "License");

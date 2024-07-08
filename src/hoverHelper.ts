@@ -994,7 +994,7 @@ const hoverData: any = {
 						select: {
 							'contents': ['下拉选择']
 						},
-						modalSelect: {
+						selectModal: {
 							'contents': ['弹出选择']
 						},
 						checkbox: {

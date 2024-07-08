@@ -2,3 +2,15 @@
 node_modules
 src/
 tsconfig.json
+webview-ui/components-antv/
+webview-ui/design-online/
+webview-ui/mock-server/
+webview-ui/erview/public/
+webview-ui/erview/src/
+webview-ui/erview/.editorconfig
+webview-ui/erview/index.html
+webview-ui/erview/package.json
+webview-ui/erview/pnpm-lock.yaml
+webview-ui/erview/tsconfig.json
+webview-ui/erview/vite.config.ts
+webview-ui/erview/node_modules/

@@ -4,6 +4,9 @@
 
 反馈或联系微信号：wangxin060906
 
+### 支持E-R图生成
+![预览](docs/jdl-vscode-er.png)
+
 ### 支持自动补全
 
 ![预览](docs/preview.png)

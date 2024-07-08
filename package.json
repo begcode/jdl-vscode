@@ -2,7 +2,7 @@
 	"name": "jdl-begcode",
 	"private": true,
 	"displayName": "JDL BegCode",
-	"version": "0.1.0",
+	"version": "0.1.2",
 	"publisher": "begcode",
 	"repository": {
 		"type": "git",
@@ -25,12 +25,12 @@
 	"scripts": {
 		"vscode:prepublish": "npm run -S esbuild-base -- --minify",
 		"esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
-		"build": "npm run -S esbuild-base -- --sourcemap",
 		"watch": "npm run -S esbuild-base -- --sourcemap --watch",
-		"test-compile": "tsc -p ./"
+		"test-compile": "tsc -p ./",
+		"build": "npm run -S esbuild-base -- --sourcemap"
 	},
 	"dependencies": {
-		"generator-begcode": "8.4.0-beta.0",
+		"generator-begcode": "8.6.0",
 		"lodash": "4.17.21"
 	},
 	"devDependencies": {

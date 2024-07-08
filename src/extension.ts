@@ -4,9 +4,11 @@
 
 import { log } from 'console';
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { fieldTypes, getCompleteItems } from './completeItems';
 import { tokenLableHover } from './hoverHelper';
-import { parseJdl } from './parseJdl';
+import { parseJdl, getErData } from './parseJdl';
+import { ErViewPanel } from './panels/erview';
 let jdl: any;
 
 async function getJdl() {
@@ -34,6 +36,16 @@ let jdlObject: any = {};
 let jdlCst: any = {};
 const errors: any[] = [];
 const lastParseJdl: any = {};
+const toPngFile = (file: string): string => {
+	let pos = file.lastIndexOf('.jdl');
+    const filename = file.substring(0, pos) + '.png';
+	pos = filename.lastIndexOf('/');
+	if (pos === -1) {
+		return filename;
+	} else {
+		return filename.substring(pos + 1);
+	} 
+};
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -72,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 	);
 	function updateDiagnostics(document: vscode.TextDocument, collection: vscode.DiagnosticCollection): void {
-		if (document) {
+		if (document && ['.jdl', '.jh'].includes(path.extname(document.uri.fsPath).toLowerCase())) {
 			try {
 				const parseResult = parseJdl(document.getText());
 				errors.length = 0;
@@ -108,8 +120,6 @@ export function activate(context: vscode.ExtensionContext) {
 			catch (error) {
 				log('error:', error);
 			}
-		} else {
-			collection.clear();
 		}
 	}
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('jdl');
@@ -177,4 +187,36 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 	context.subscriptions.push(vscode.languages.registerDefinitionProvider('jdl', {provideDefinition}));
 	context.subscriptions.push(...getCompleteItems(errors, jdlObject, lastParseJdl));
+	// Create the show ErView command
+	const showErViewCommand = vscode.commands.registerCommand("jdl.erview", () => {
+		const erList = getErData(lastParseJdl.jdlObject || {});
+		ErViewPanel.render(context.extensionUri, erList, vscode.window.activeTextEditor?.document.fileName || '');
+	});
+	context.subscriptions.push(showErViewCommand);
+
+	const base64ImgtoFile = (dataurl: string): Uint8Array => {
+		const arr = dataurl.split(',');
+		const bstr = atob(arr[1]);
+		let n = bstr.length;
+		const u8arr = new Uint8Array(n);
+		while (n--) {
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+		return u8arr;
+	};
+
+	const writePngFile = vscode.commands.registerCommand('jdl.jdl2png', async function(text: any, fileName: string) {
+		if (!vscode.workspace.workspaceFolders) {
+			return vscode.window.showInformationMessage('No folder or workspace opened');
+		}
+		const writeData = Buffer.from(base64ImgtoFile(text));
+
+		const folderUri = vscode.workspace.workspaceFolders[0].uri;
+		const fileUri = folderUri.with({ path: path.posix.join(folderUri.path, toPngFile(fileName)) });
+
+		await vscode.workspace.fs.writeFile(fileUri, writeData);
+
+		vscode.window.showInformationMessage('PNG file created successfully');
+	});
+	context.subscriptions.push(writePngFile);
 }

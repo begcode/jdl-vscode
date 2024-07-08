@@ -232,3 +232,201 @@ export function parseJdl(text: string) {
 		jdlCst: lexResult,
 	};
 }
+
+export function getErData(jdlObject: any) {
+	const erList: any[] = [];
+	let addX = 20;
+	let addY = 20;
+	let maxFieldCommentLength = 0;
+	let maxFiledsCount = 0;
+	let erWidth = 160;
+	jdlObject?.entities.forEach((entity: any, index: number) => {
+		
+		if (index % 4 === 0) {
+			
+			addX = 20;
+			addY += (maxFiledsCount + 2) * 24;
+			maxFiledsCount = 0;
+		} else {
+			addX += 200 + (erWidth > 160 ? erWidth - 160 : 0);
+		}
+		erWidth = 160;
+		maxFieldCommentLength = 0;
+		let erLabel = '';
+		const documentation = (entity.documentation || '').replace(/[\r\n]/g, '').replace(/^[ ]*\*[ ]*/, '');
+		if (documentation) {
+			erLabel = `${entity.name}[${documentation}]`;
+		} else {
+			erLabel = entity.name;
+		}
+		const erObject = {
+			"id": entity.name,
+			"shape": "er-rect",
+			"label": erLabel,
+			"width": erWidth,
+			"height": 24,
+			"ports": [] as any[],
+			"position": {
+				"x": addX,
+				"y": addY
+			},
+		};
+		entity?.body.forEach((field: any) => {
+			const fieldComment = (field.documentation || '').replace(/^[ ]*\*[ ]*/, '').replace(/[\r\n]/g, '');
+			if (fieldComment.length > maxFieldCommentLength) {
+				maxFieldCommentLength = fieldComment.length;
+			}
+			const port: any = {
+				id: entity.name + '-' + field.name,
+				group: "column",
+				attrs: {
+					columnCode: {
+						text: field.name,
+					},
+					dataType: {
+						text: field.type
+					},
+				}
+			};
+			const idField =  field.annotations.find((annotation: any) => annotation.optionName.toLowerCase() === 'id');
+			if (idField) {
+				port.attrs.primaryKey = {
+					"xlink:href": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAUJJREFUOE+tkj1LA0EQht/JeYJyZ2HnPxCxsRIkKjbZsxByiUnhD0htCrWNnSDEP2EVSXKFQj6aIKSKhdhYamMp6GVTKGRHtthD/MqFuOXOzDPvOzOECR9NWI//BbwF20vvw2GeErQJ4p6Tbh2OUhgpGFTFAltoE+iFmW8ALAK4d/xm8S9IBOhXUyWyaNdJN5d1wWtFzFs2nhm05fqNzm+QCCDrqStW6LnZVskkD+rigabs5OzO5VMMgNgHcKaUSs5l210ZeEUwlwG14vjt25EAnSBr3jlIZQCaAeGOFR6JsMFMBTfTuJA178DJNE4/w76tkSu5aWn314xvGYgjME5Y8TElaI9BBQ0w8Vh3EAZiPcG4Np01zMwqFkAXciVnDeywC2CVmfLakv6PDTDdZc0rM6twbAWxtjDqbH+Kj23hK+QDeLV1EUm2vVIAAAAASUVORK5CYII="
+				};
+			}
+			if (fieldComment) {
+				port.attrs.comment = {
+					text: fieldComment,
+				};
+			}
+			erObject.ports.push(port);
+		});
+		if (entity.body?.length > maxFiledsCount) {
+			maxFiledsCount = entity.body.length;
+		}
+		erWidth = maxFieldCommentLength > 2 ? 160 + (maxFieldCommentLength - 2) * 8 : 160;
+		erObject.width = erWidth;
+		erObject.ports.forEach(port => {
+			port.attrs.portBody = {
+				width: erWidth,
+			};
+		});
+		erList.push(erObject);
+	});
+	jdlObject.enums?.forEach((enumItem: any, index: number) => {
+		/**
+		 * {
+			name: "TestEnum",
+			values: [
+				{
+				comment: "测试A"
+				key: "A",
+				},
+				{
+				key: "B",
+				},
+				{
+				key: "C",
+				},
+			],
+			documentation: null,
+			}
+		 */
+		if (index % 4 === 0) {
+		
+			addX = 20;
+			addY += (maxFiledsCount + 2) * 24;
+			maxFiledsCount = 0;
+		} else {
+			addX += 200 + (erWidth > 160 ? erWidth - 160 : 0);
+		}
+		erWidth = 160;
+		maxFieldCommentLength = 0;
+		let erLabel = '';
+		const documentation = (enumItem.documentation || '').replace(/^[ ]*\*[ ]*/, '').replace(/[\r\n]/g, '');
+		if (documentation) {
+			erLabel = `${enumItem.name}[${documentation}]`;
+		} else {
+			erLabel = enumItem.name;
+		}
+		const erObject = {
+			"id": enumItem.name,
+			"shape": "er-rect",
+			"label": erLabel,
+			"width": erWidth,
+			"height": 24,
+			"ports": [] as any[],
+			"position": {
+				"x": addX,
+				"y": addY
+			},
+		};
+		enumItem.values?.forEach((value: any) => {
+			const enumComment = (value.comment || '').replace(/^[ ]*\*[ ]*/, '').replace(/[\r\n]/g, '');
+			if (enumComment.length > maxFieldCommentLength) {
+				maxFieldCommentLength = enumComment.length;
+			}
+			const port: any = {
+				id: enumItem.name + '-' + value.key,
+				group: "column",
+				attrs: {
+					columnCode: {
+						text: value.key,
+					},
+				}
+			};
+			if (enumComment) {
+				port.attrs.comment = {
+					text: enumComment,
+				};
+			}
+			erObject.ports.push(port);
+		});
+		if (enumItem.values?.length > maxFiledsCount) {
+			maxFiledsCount = enumItem.values.length;
+		}
+		erWidth = maxFieldCommentLength > 2 ? 160 + (maxFieldCommentLength - 2) * 8 : 160;
+		erObject.width = erWidth;
+		erObject.ports.forEach(port => {
+			port.attrs.portBody = {
+				width: erWidth,
+			};
+		});
+		erList.push(erObject);
+	});
+	jdlObject.relationships?.forEach((relationship: any) => {
+		// ManyToOne
+		// relationship.cardinality
+		/** from
+		 * {
+			name: "TestEntity",
+			injectedField: "te(age)",
+			documentation: null,
+			required: false,
+			}
+		 * to
+			{
+			name: "TestEntity2",
+			injectedField: "te1(name)",
+			documentation: null,
+			required: false,
+			}
+		 */
+		const edgeId = `${relationship.from.name}-${relationship.from.injectedField || ''}-${relationship.to.name}-${relationship.to.injectedField || ''}`
+		const edge = {
+			"id": edgeId,
+			"shape": "edge",
+			"source": relationship.from.name,
+			"target": relationship.to.name,
+			"attrs": {
+				"line": {
+					"stroke": "#A2B1C3",
+					"strokeWidth": 2
+				}
+			},
+			"zIndex": 0
+		};
+		erList.push(edge);
+	});
+	return erList;
+}
