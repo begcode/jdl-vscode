@@ -132,6 +132,32 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
+			FilterByTree: {
+				completeItem: {
+					label: {
+						label: 'FilterByTree',
+						detail: '',
+						description: '列表左侧增加过滤树'
+					},
+					insertText: new vscode.SnippetString('FilterByTree(${1})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'列表左侧增加过滤树',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @FilterByTree(department)',
+						'```',
+						'**注意：**: 多个文件时使用-分隔',
+						'**可选值：**: Enum类型字段或者关联关系',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
 			SkipMultiTenant: {
 				completeItem: {
 					label: {
@@ -196,7 +222,7 @@ const hoverData: any = {
 						detail: '',
 						description: '忽略前端部分按钮'
 					},
-					insertText: new vscode.SnippetString('SkipWebButton(${1}|listAdd, listModalEdit, listEdit, listDelete, listDetail|)${0}'),
+					insertText: new vscode.SnippetString('SkipWebButton(${1}|listAdd, listEdit, listDelete, listDetail|)${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -212,7 +238,6 @@ const hoverData: any = {
 					[
 						'#### 可选值：',
 						'- listAdd',
-						'- listModalEdit',
 						'- listEdit',
 						'- listDelete',
 						'- listDetail',
@@ -230,7 +255,7 @@ const hoverData: any = {
 						detail: '',
 						description: '指定列表样式'
 					},
-					insertText: new vscode.SnippetString('ListBy(${1}|table, list|)${0}'),
+					insertText: new vscode.SnippetString('ListBy(${1}|table, list, tableEdit|)${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -246,6 +271,7 @@ const hoverData: any = {
 						'#### 可选值：',
 						'- table',
 						'- list',
+						'- tableEdit',
 					].join('\n'),
 					[
 						'#### 适用范围：',

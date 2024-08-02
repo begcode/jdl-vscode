@@ -3,7 +3,6 @@ import { cstTokens } from './extension';
 import { hoverData, tokenLableComplete } from './hoverHelper';
 import { parseJdl } from './parseJdl';
 import { get } from 'lodash';
-import { log } from 'console';
 
 const annotationValueDetail: Record<string, Record<string, Record<string, string>>> = {
 	AddCustomMethod: {
@@ -60,10 +59,6 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 		listAdd: {
 			'detail': '',
 			'description': '在List中取消Add按钮'
-		},
-		listModalEdit: {
-			'detail': '',
-			'description': '在List中取消Edit按钮'
 		},
 		listEdit: {
 			'detail': '',

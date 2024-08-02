@@ -33,7 +33,7 @@
             " * ${1}",
             " */",
             "entity ${2:Entity} {",
-            "\t${3:fieldName} ${4|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${0} */",
+            "\t${3:fieldName} ${4|String, Integer, Long, BigDecimal, Float, Double, Boolean, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${0} */",
             "}"
         ],
         "description": "创建实体"
@@ -41,7 +41,7 @@
     "New Field": {
         "prefix": "add field",
         "body": [
-            "${1:fieldName} ${2|String, Integer, Long, BigDecimal, Float, Double, Boolean, Date, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${3} */${0}"
+            "${1:fieldName} ${2|String, Integer, Long, BigDecimal, Float, Double, Boolean, LocalDate, ZonedDateTime, Instant, Blob, AnyBlob, ImageBlob, TextBlob |} /** ${3} */${0}"
        	],
         "description": "创建字段"
     },

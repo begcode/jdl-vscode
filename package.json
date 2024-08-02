@@ -30,7 +30,7 @@
 		"build": "npm run -S esbuild-base -- --sourcemap"
 	},
 	"dependencies": {
-		"generator-begcode": "8.6.0",
+		"generator-begcode": "8.6.1",
 		"lodash": "4.17.21"
 	},
 	"devDependencies": {
