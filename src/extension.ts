@@ -54,12 +54,12 @@ export function activate(context: vscode.ExtensionContext) {
 				const line = position.line + 1;
 				const character = position.character + 1;
 				if (Object.keys(jdlCst).length >= 0) {
-					const token = jdlCst.tokens.find((token: any) => {
-						return token.startLine <= line + 1 && token.endLine >= line && token.startColumn <= character && token.endColumn >= character;
+					const tokenFind = jdlCst.tokens.find((jdlToken: any) => {
+						return jdlToken.startLine <= line + 1 && jdlToken.endLine >= line && jdlToken.startColumn <= character && jdlToken.endColumn >= character;
 					});
-					if (token?.tokenType && Object.keys(jdlKeywordTokenTypes).includes(token.tokenType.name)) {
+					if (tokenFind?.tokenType && Object.keys(jdlKeywordTokenTypes).includes(tokenFind.tokenType.name)) {
 						return {
-							contents: [jdlKeywordTokenTypes[token.tokenType.name]]
+							contents: [jdlKeywordTokenTypes[tokenFind.tokenType.name]]
 						};
 					}
 				}
@@ -69,12 +69,12 @@ export function activate(context: vscode.ExtensionContext) {
 					};
 				}
 				const word = document.getText(document.getWordRangeAtPosition(position));
-				const cstToken = cstTokens.find((cstToken: any) => {
-					return cstToken.image === word && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
+				const cstTokenFind = cstTokens.find((cstToken: any) => {
+					return cstToken.image?.includes(word) && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
 				});
-				if (cstToken) {
+				if (cstTokenFind) {
 					return {
-						contents: tokenLableHover(cstToken.label, document.getText())
+						contents: tokenLableHover(cstTokenFind.label, document.getText(), word)
 					};
 				}
 				return {
@@ -97,20 +97,34 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				errors.push(...parseResult.errors || []);
 				if (errors?.length > 0) {
+					log('errors:', errors);
 					const diagnostics = errors.map((error: any) => {
-						const diagnostic: any = {
-							code: '',
-							message: error.message,
-							range: new vscode.Range(new vscode.Position(error.token.startLine - 1, error.token.startColumn - 1), new vscode.Position(error.token.endLine - 1, error.token.endColumn - 1)),
-							severity: vscode.DiagnosticSeverity.Error,
-							source: '',
-						};
+						if (error.token) {
+							const diagnostic: any = {
+								code: '',
+								message: error.message,
+								range: new vscode.Range(new vscode.Position(error.token.startLine - 1, error.token.startColumn - 1), new vscode.Position(error.token.endLine - 1, error.token.endColumn - 1)),
+								severity: vscode.DiagnosticSeverity.Error,
+								source: '',
+							};
+							return diagnostic;
+						} else {
+							const diagnostic: any = {
+								code: '',
+								message: error.message,
+								range: new vscode.Range(new vscode.Position(error.startLine - 1, error.startColumn - 1), new vscode.Position(error.endLine - 1, error.endColumn - 1)),
+								severity: vscode.DiagnosticSeverity.Error,
+								source: '',
+							};
+							return diagnostic;
+						}
+						
 						// if (error.previousToken) {
 						// 	diagnostic.relatedInformation = [
 						// 		new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(error.previousToken.startLine, error.previousToken.startColumn), new vscode.Position(error.previousToken.endLine, error.previousToken.endColumn))), '相关信息')
 						// 	];
 						// }
-						return diagnostic;
+						
 					});
 					collection.set(document.uri, diagnostics);
 				} else {
@@ -180,6 +194,16 @@ export function activate(context: vscode.ExtensionContext) {
 					if (entityToken) {
 						return new vscode.Location(document.uri, new vscode.Position(entityToken.startLine - 1, entityToken.startColumn - 1));
 					}
+				}
+			}
+			if (typeChain === 'binaryOption.entity') {
+				const entityName = labels[1].split(':')[1];
+				const findLabel = 'keyword:entity=>entity:' + entityName;
+				const entityToken = cstTokens.find((cstToken: any) => {
+					return cstToken.label === findLabel;
+				});
+				if (entityToken) {
+					return new vscode.Location(document.uri, new vscode.Position(entityToken.startLine - 1, entityToken.startColumn - 1));
 				}
 			}
 			return undefined;

@@ -57,6 +57,18 @@ export function parseJdl(text: string) {
 								}
 							}
 						});
+						if (binaryOption.children.annotationDeclaration) {
+							binaryOption.children.annotationDeclaration.forEach((annotation: any) => {
+								const annoLabel = binaryOptionLabel + '=>' + 'anno:' + upperFirst(annotation.children.option[0].image);
+								const data: any = {...annotation.children.option[0], label: annoLabel};
+								cstTokens.push(data);
+								if (annotation.children.value) {
+									const valueLabel = binaryOptionLabel + '=>' + 'value:' + annotation.children.value[0].image;
+									const valueData: any = {...annotation.children.value[0], label: valueLabel};
+									cstTokens.push(valueData);
+								}
+							});
+						}
 					}
 				});
 			}
@@ -179,6 +191,25 @@ export function parseJdl(text: string) {
 								const toKeywordLabel = relationshipLabel + '=>' + toKeywordOnly;
 								const toKeywordData: any = {...relationshipBody.children.TO[0], label: toKeywordLabel};
 								cstTokens.push(toKeywordData);
+								if (relationshipBody.children.relationshipOptions) {
+									const relationshipOption = relationshipBody.children.relationshipOptions[0];
+									relationshipOption.children?.relationshipOption?.forEach((option: any) => {
+										const optionLabel = "relationship:relationshipOption" + '=>' + option.children.BUILT_IN_ENTITY[0].image;
+										const optionData: any = {...option.children.BUILT_IN_ENTITY[0], label: optionLabel};
+										cstTokens.push(optionData);
+									});
+								}
+								if (relationshipBody.children.annotationOnSourceSide) {
+									const annotationOnSourceSide = relationshipBody.children.annotationOnSourceSide[0];
+									const annoLabel = relationshipLabel + '=>' + 'anno:' + upperFirst(annotationOnSourceSide.children.option[0].image);
+										const data: any = {...annotationOnSourceSide.children.option[0], label: annoLabel};
+										cstTokens.push(data);
+										if (annotationOnSourceSide.children.value) {
+											const valueLabel = annoLabel + '=>' + 'value:' + annotationOnSourceSide.children.value[0].image;
+											const valueData: any = {...annotationOnSourceSide.children.value[0], label: valueLabel};
+											cstTokens.push(valueData);
+										}
+								}
 								if (relationshipBody.children.from[0]?.children?.injectedField) {
 									const fromInjectedFieldLabel = fromLabel + '=>' + toLabelOnly + '=>' + 'injectedField:' + relationshipBody.children.from[0].children.injectedField[0].image;
 									const fromInjectedFieldData: any = {...relationshipBody.children.from[0].children.injectedField[0], label: fromInjectedFieldLabel};

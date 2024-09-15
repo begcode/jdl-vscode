@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, method } from 'lodash';
 import * as vscode from 'vscode';
 import { parseJdl } from './parseJdl';
 
@@ -99,7 +99,7 @@ const hoverData: any = {
 						'```java',
 						' @ImportData',
 						'```',
-						'**注意：**: 需要存在相应的csv文件',
+						'**注意:** 需要存在相应的csv文件',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -124,7 +124,7 @@ const hoverData: any = {
 						'```java',
 						' @SkipComponent(listPage)',
 						'```',
-						'**注意：**: 多个文件时使用-分隔',
+						'**注意:** 多个文件时使用-分隔',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -149,8 +149,8 @@ const hoverData: any = {
 						'```java',
 						' @FilterByTree(department)',
 						'```',
-						'**注意：**: 多个文件时使用-分隔',
-						'**可选值：**: Enum类型字段或者关联关系',
+						'**注意:** 多个文件时使用-分隔',
+						'**可选值:** Enum类型字段或者关联关系',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -175,7 +175,57 @@ const hoverData: any = {
 						' @SkipMultiTenant',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 仅在设置多租户模式时有效',
+						'**注意:** 仅在设置多租户模式时有效',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			SkipWebsite: {
+				completeItem: {
+					label: {
+						label: 'SkipWebsite',
+						detail: '',
+						description: '忽略Web网站生成'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'忽略Web网站生成',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @SkipWebsite',
+						' entity SysConfig {}',
+						'```',
+						'**注意:** 仅在使用Website便携插件时有效',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			SkipMobile: {
+				completeItem: {
+					label: {
+						label: 'SkipMobile',
+						detail: '',
+						description: '忽略移动端生成'
+					},
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'忽略移动端生成',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @SkipMobile',
+						' entity SysConfig {}',
+						'```',
+						'**注意:** 仅在使用移动端便携插件时有效',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -201,7 +251,7 @@ const hoverData: any = {
 						' @SkipRestApi(dataExport)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 多个接口时使用-分隔',
+						'**注意:** 多个接口时使用-分隔',
 					].join('\n'),
 					[
 						'#### 可选值：',
@@ -233,7 +283,7 @@ const hoverData: any = {
 						' @SkipWebButton(listAdd)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 多个时使用-分隔',
+						'**注意:** 多个时使用-分隔',
 					].join('\n'),
 					[
 						'#### 可选值：',
@@ -402,7 +452,7 @@ const hoverData: any = {
 						' @Filter',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 此功能强烈建议开启',
+						'**注意:** 此功能强烈建议开启',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -429,7 +479,7 @@ const hoverData: any = {
 						' @Service(serviceClass)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 建议使用serviceClass',
+						'**注意:** 建议使用serviceClass',
 					].join('\n'),
 					[
 						'#### 可选值：',
@@ -550,7 +600,7 @@ const hoverData: any = {
 						' @PublicApiBy(open==true)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 仅支持简单的条件表达式',
+						'**注意:** 仅支持简单的条件表达式',
 						`'!=', '>=', '<=', '==', '<>', '>', '<'`,
 					].join('\n'),
 					[
@@ -576,7 +626,7 @@ const hoverData: any = {
 						' @SkipDbChangelog',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 已经具有表结构情况下使用',
+						'**注意:** 已经具有表结构情况下使用',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -601,7 +651,7 @@ const hoverData: any = {
 						' @HasImageField',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 仅用在User实体',
+						'**注意:** 仅用在User实体',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -626,7 +676,7 @@ const hoverData: any = {
 						' @SkipSoftDelete',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 仅在系统启用逻辑删除时有效',
+						'**注意:** 仅在系统启用逻辑删除时有效',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -677,7 +727,7 @@ const hoverData: any = {
 						' @AddCustomMethod(repository-service)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 蓝图中使用, -分隔',
+						'**注意:** 蓝图中使用, -分隔',
 					].join('\n'),
 					[
 						'#### 可选值：',
@@ -716,7 +766,7 @@ const hoverData: any = {
 						' @UpdateAgeById(age)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 内容为更新的字段列表，使用-分隔',
+						'**注意:** 内容为更新的字段列表，使用-分隔',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -742,7 +792,7 @@ const hoverData: any = {
 						' @UpdateAgeByName("name, age")',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 前部分参数为更新条件，后部分参数为更新字段，多个字段使用-分隔',
+						'**注意:** 前部分参数为更新条件，后部分参数为更新字段，多个字段使用-分隔',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -768,7 +818,7 @@ const hoverData: any = {
 						' @RemoveByName(name-disabled)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 多个字段使用-分隔',
+						'**注意:** 多个字段使用-分隔',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -794,7 +844,7 @@ const hoverData: any = {
 						' @SaveWithName(name-disabled-label)',
 						' entity SysConfig {}',
 						'```',
-						'**注意：**: 多个字段使用-分隔',
+						'**注意:** 多个字段使用-分隔',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -957,7 +1007,183 @@ const hoverData: any = {
 						'- JHipster',
 					].join('\n'),
 				]
-			}
+			},
+			EditInContainer: {
+				completeItem: {
+					label: {
+						label: 'EditInContainer',
+						detail: '',
+						description: '编辑表单容器'
+					},
+					insertText: new vscode.SnippetString('EditInContainer(${1|modal, page, drawer|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'编辑表单容器',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @EditInContainer(drawer)',
+						' name String',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- drawer',
+						'- modal',
+						'- page',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				],
+				value: {
+					modal: {
+						contents: ['模态框']
+					},
+					page: {
+						contents: ['页面']
+					},
+					drawer: {
+						contents: ['抽屉']
+					},
+				}
+			},
+			MobileConfig: {
+				completeItem: {
+					label: {
+						label: 'MobileConfig',
+						detail: '',
+						description: '移动端配置'
+					},
+					insertText: new vscode.SnippetString('MobileConfig(${1}|addToHomeMenu, addToUserMenu, addToHomeRecommend, detailWithRecommend|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加字段配置',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @mobileConfig(addToHomeMenu-addToUserMenu)',
+						' entity Product {}',
+						'```'
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- addToHomeMenu',
+						'- addToUserMenu',
+						'- addToHomeRecommend',
+						'- detailWithRecommend',
+						'- listWithHeader',
+						'- listWithStat',
+						'- detailByData',
+						'- addToBottomNav',
+						'- addToHomeRank',
+						'**注意:** 多个使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode 并使用移动端插件',
+					].join('\n'),
+				],
+				value: {
+					addToHomeMenu: {
+						contents: ['添加到首页菜单']
+					},
+					addToUserMenu: {
+						contents: ['添加到用户菜单']
+					},
+					addToHomeRecommend: {
+						contents: ['添加到首页推荐']
+					},
+					detailWithRecommend: {
+						contents: ['详情页带推荐']
+					},
+					listWithHeader: {
+						contents: ['列表页带头部']
+					},
+					listWithStat: {
+						contents: ['列表页带统计']
+					},
+					detailByData: {
+						contents: ['详情页展示数据']
+					},
+					addToBottomNav: {
+						contents: ['添加到底部导航']
+					},
+					addToHomeRank: {
+						contents: ['添加到首页排行']
+					},
+				}
+			},
+			WebsiteConfig: {
+				completeItem: {
+					label: {
+						label: 'WebsiteConfig',
+						detail: '',
+						description: 'Web网站配置'
+					},
+					insertText: new vscode.SnippetString('WebsiteConfig(${1}|addToHomeMenu, addToUserMenu, addToHomeRecommend, detailWithRecommend|)${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'Web网站配置',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebsiteConfig(addToHomeMenu-addToUserMenu)',
+						' entity Product {}',
+						'```'
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- addToHomeMenu',
+						'- addToUserMenu',
+						'- addToHomeRecommend',
+						'- detailWithRecommend',
+						'- listWithHeader',
+						'- listWithStat',
+						'- detailByData',
+						'- addToBottomNav',
+						'- addToHomeRank',
+						'**注意:** 多个使用-分隔',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode 并使用Website插件',
+					].join('\n'),
+				],
+				value: {
+					addToHomeMenu: {
+						contents: ['添加到首页菜单']
+					},
+					addToUserMenu: {
+						contents: ['添加到用户菜单']
+					},
+					addToHomeRecommend: {
+						contents: ['添加到首页推荐']
+					},
+					detailWithRecommend: {
+						contents: ['详情页带推荐']
+					},
+					listWithHeader: {
+						contents: ['列表页带头部']
+					},
+					listWithStat: {
+						contents: ['列表页带统计']
+					},
+					detailByData: {
+						contents: ['详情页展示数据']
+					},
+					addToBottomNav: {
+						contents: ['添加到底部导航']
+					},
+					addToHomeRank: {
+						contents: ['添加到首页排行']
+					},
+				}
+			},
 		},
 		field: {
 			anno: {
@@ -1077,7 +1303,7 @@ const hoverData: any = {
 							'- hideInDetail',
 							'- filter',
 							'- sortable',
-							'**注意：**: 多个使用-分隔',
+							'**注意:** 多个使用-分隔',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1126,7 +1352,7 @@ const hoverData: any = {
 							' @ShowBy(disabled==true)',
 							' name String',
 							'```',
-							'**注意：**: 仅支持简单的条件表达式',
+							'**注意: **仅支持简单的条件表达式',
 							`'!=', '>=', '<=', '==', '<>', '>', '<'`,
 						].join('\n'),
 						[
@@ -1153,7 +1379,34 @@ const hoverData: any = {
 							' @DefaultValue("abc")',
 							' name String',
 							'```',
-							'**注意：**: 涉及特殊字符时需要使用双引号',
+							'**注意:** 涉及特殊字符时需要使用双引号',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				DefaultValueComputed: {
+					completeItem: {
+						label: {
+							label: 'DefaultValueComputed',
+							detail: '',
+							description: '数据库函数支持的字段默认值'
+						},
+						insertText: new vscode.SnippetString('DefaultValueComputed(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'字段默认值',
+						[
+							'#### 使用方法:',
+							'```java',
+							' @DefaultValueComputed("NOW(6)")',
+							' name String',
+							'```',
+							'**注意:** 涉及特殊字符时需要使用双引号',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1322,45 +1575,83 @@ const hoverData: any = {
 						].join('\n'),
 					]
 				},
-				EditInContainer: {
+				OwnerEntityId: {
 					completeItem: {
 						label: {
-							label: 'EditInContainer',
+							label: 'OwnerEntityId',
 							detail: '',
-							description: '编辑表单容器'
+							description: '其他关联实体的ID'
 						},
-						insertText: new vscode.SnippetString('EditInContainer(${1|modal, page, drawer|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
-						'编辑表单容器',
+						'其他关联实体的ID',
 						[
 							'#### 使用方法:',
+							'OwnerEntityName与OwnerEntityId结合使用，形成一种支持多种实体的关联关系',
 							'```java',
-							' @EditInContainer(drawer)',
-							' name String',
+							' @OwnerEntityName',
+							' @fieldConfig(hideInList-hideInForm)',
+							' ownerEntityName String /** 实体名称 */',
+							' @OwnerEntityId',
+							' @fieldConfig(hideInList-hideInForm)',
+							' ownerEntityId Long /** 使用实体ID */',
 							'```',
-						].join('\n'),
-						[
-							'#### 可选值：',
-							'- drawer',
-							'- modal',
-							'- page',
 						].join('\n'),
 						[
 							'#### 适用范围：',
 							'- BegCode',
 						].join('\n'),
+					]
+				},
+				DisplayAs: {
+					completeItem: {
+						label: {
+							label: 'DisplayAs',
+							detail: '',
+							description: '字段内容展示形式'
+						},
+						insertText: new vscode.SnippetString('DisplayAs(${1|avatar, thumb, cover, creator, money|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'字段内容展示形式',
+						[
+							'#### 使用方法:',
+							'```java',
+							' @DisplayAs(cover)',
+							' name String',
+							'```',
+						].join('\n'),
+						[
+							'#### 可选值：',
+							'- avatar - 头像',
+							'- thumb - 缩略图',
+							'- cover - 封面',
+							'- creator - 创建者',
+							'- money - 金额',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- 属实验性注解，仅可能在移动端或Web端发挥作用',
+						].join('\n'),
 					],
 					value: {
-						modal: {
-							contents: ['模态框']
+						avatar: {
+							contents: ['头像']
 						},
-						page: {
-							contents: ['页面']
+						thumb: {
+							contents: ['缩略图']
 						},
-						drawer: {
-							contents: ['抽屉']
+						cover: {
+							contents: ['封面']
+						},
+						creator: {
+							contents: ['创建者']
+						},
+						money: {
+							contents: ['金额']
 						},
 					}
 				},
@@ -1719,7 +2010,7 @@ const hoverData: any = {
 							'```java',
 							' name String pattern(/[a-zA-Z]+/)',
 							'```',
-							'**注意**: 正则表达式需要使用/包裹，并且本行不能再有注释。',
+							'**注意:** 正则表达式需要使用/包裹，并且本行不能再有注释。',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1883,7 +2174,7 @@ const hoverData: any = {
 							' to',
 							' User',
 							'```',
-							'**注意：**: 多个使用-分隔',
+							'**注意:** 多个使用-分隔',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1915,7 +2206,7 @@ const hoverData: any = {
 							' @AnnotationOnDestination(hideInList)',
 							' User',
 							'```',
-							'**注意：**: 多个使用-分隔',
+							'**注意:** 多个使用-分隔',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1943,7 +2234,7 @@ const hoverData: any = {
 							' @OnDelete("SET NULL")',
 							' User',
 							'```',
-							'**注意：**: 多个使用-分隔',
+							'**注意:** 多个使用-分隔',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -1971,7 +2262,7 @@ const hoverData: any = {
 							' @OnUpdate("SET NULL")',
 							' User',
 							'```',
-							'**注意：**: 多个使用-分隔',
+							'**注意:** 多个使用-分隔',
 						].join('\n'),
 						[
 							'#### 适用范围：',
@@ -2000,11 +2291,383 @@ const hoverData: any = {
 			contents: [
 				'一对一关联',
 			]
+		},
+		relationshipOption: {
+			builtInEntity: {
+				contents: [
+					'内置实体关联',
+					'表示实体已经在之前导入到项目中',
+					[
+						'#### 适用范围：',
+						'- JHipster',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+		},
+		AnnotationOnSource: {
+			contents: [
+				'关联关系左侧注解',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			],
+			createInWebsite: {
+				contents: [
+					'在网站中创建',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByWidget: {
+				contents: [
+					'小部件编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			unidirectional: {
+				contents: [
+					'单向关联',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			relateByIdEntity: {
+				contents: [
+					'通过实体名称和ID关联',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			countByPrimaryKey: {
+				contents: [
+					'通过实体名称和主键统计',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+		},
+		AnnotationOnDestination: {
+			contents: [
+				'关联关系右侧注解',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			],
+			editInList: {
+				contents: [
+					'列表中编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			detailInList: {
+				contents: [
+					'列表中查看详情',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			countByPrimaryKey: {
+				contents: [
+					'通过实体名称和主键统计',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editBySelectModal: {
+				contents: [
+					'选择框模态框编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editBySelectDrawer: {
+				contents: [
+					'选择框抽屉编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByTableModal: {
+				contents: [
+					'表格模态框编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByTableDrawer: {
+				contents: [
+					'表格抽屉编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			hideInList: {
+				contents: [
+					'列表中隐藏',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
 		}
+	},
+	binaryOption: {
+		paginate: {
+			method: {
+				pagination: {
+					contents: [
+						'分页',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				'infinite-scroll': {
+					contents: [
+						'无限滚动',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+			},
+			entity: {
+				all: {
+					contents: [
+						'全部使用分页',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				}
+			},
+			contents: [
+				'分页指令',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		dto: {
+			method: {
+				mapstruct: {
+					contents: [
+						'MapStruct转换Dto与Domain',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				no: {
+					contents: [
+						'不使用Dto',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+			},
+			contents: [
+				'DTO指令',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		service: {
+			method: {
+				serviceClass: {
+					contents: [
+						'Service类',
+						'不使用接口实现类',
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+				serviceImpl: {
+					contents: [
+						'使用Service实现类',
+						['增加Service接口类'],
+						[
+							'#### 适用范围：',
+							'- BegCode',
+							'- JHipster',
+						].join('\n'),
+					]
+				},
+			},
+			contents: [
+				'Service指令',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		clientRootFolder: {
+			anno: {
+				I18nValue: {
+					contents: [
+						'国际化值',
+						[
+							'主要涉及BegCode使用clientRootFolder的值做为菜单名称,需要国际化',
+							'#### 使用方法:',
+							'```java',
+							' clientRootFolder * with myfolder @I18nValue("我的文件夹")',
+							' name String',
+							'```',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				}
+			},
+			contents: [
+				'客户端根目录',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		search: {
+			contents: [
+				'全文检索配置',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		microservice: {
+			contents: [
+				'微服务配置',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		angularSuffix: {
+			contents: [
+				'Angular后缀',
+				[
+					'#### 适用范围：',
+					'- JHipster',
+				].join('\n'),
+			]
+		}
+	},
+	unaryOption: {
+		filter: {
+			contents: [
+				'过滤',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		readOnly: {
+			contents: [
+				'只读',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		noFluentMethod: {
+			contents: [
+				'不使用流式方法',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		skipServer: {
+			contents: [
+				'忽略服务端生成',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
+		skipClient: {
+			contents: [
+				'忽略客户端生成',
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
 	}
 };
 
-function tokenLableHover(tokenLabel: any, text: string): vscode.MarkdownString[]| string[] {
+function tokenLableHover(tokenLabel: any, text: string, word: string): vscode.MarkdownString[]| string[] {
 	if (tokenLabel) {
 		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
 		const labels = tokenLabel.split('=>');
@@ -2033,33 +2696,82 @@ function tokenLableHover(tokenLabel: any, text: string): vscode.MarkdownString[]
 					return [];
 				}
 
-			} else if (labels.length === 2 && (labels[labels.length - 1].startsWith('to:') || labels[labels.length - 1].startsWith('from:'))){
-				const entity = labels[1].split(':')[1];
-				const parseResult = parseJdl(text);
-				if (parseResult.jdlObject?.entities) {
-					// 查找实体的名称
-					const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
-					if (entityObj.documentation) {
-						return [
-							entityObj.documentation,
-						];
+			} else if (labels.length === 2){
+				// relationship:ManyToOne=>to:TestEntity2
+				if (labels[labels.length - 1].startsWith('to:') || labels[labels.length - 1].startsWith('from:')) {
+					const entity = labels[1].split(':')[1];
+					const parseResult = parseJdl(text);
+					if (parseResult.jdlObject?.entities) {
+						// 查找实体的名称
+						const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+						if (entityObj.documentation) {
+							return [
+								entityObj.documentation,
+							];
+						}
+					}
+				}
+				if (labels[labels.length - 1].startsWith('anno:')) {
+					const relationship = labels[0].split(':')[0];
+					const annotation = labels[1].split(':')[1];
+					return get(hoverData, `${relationship}.${annotation}.contents`, []);
+				}
+				
+				return [];
+			} else {
+				// "relationship:OneToMany"
+				if (labels.length === 1) {
+					return get(hoverData, labels[0].replace(':', '.') + '.contents', []);
+				}
+				if (labels.length === 3) {
+					const relationship = labels[0].split(':')[0];
+					const annotation = labels[1].split(':')[1];
+					const value = labels[2].split(':')[1];
+					if (labels[1].startsWith('anno:')) {
+						return get(hoverData, `${relationship}.${annotation}.${value === word ? value : word}.contents`, []);
 					}
 				}
 				return [];
-			} else {
-				return [];
 			}
 		}
+		// binaryOption:paginate=>entity:all
 		const labelPath = labels.reduce((prev: any, current: any, index: number, arr: any[]) => {
 			if (index === arr.length - 1 && index > 0) {
 				return prev + '.' + current.replace(':', '.');
 			} else if (index === arr.length - 2 && index > 0 && current.startsWith('anno:')) {
 				return prev + '.' + current.replace(':', '.');
 			} else {
-				return (prev ? (prev + '.') : '') + current.split(':')[0];
+				// binaryOption:paginate=>entity:all
+				// unaryOption:filter
+				if (!prev && (current.startsWith('binaryOption:') || current.startsWith('unaryOption:'))) {
+					return current.replace(':', '.');
+				} else {
+					return (prev ? (prev + '.') : '') + current.split(':')[0];
+				}
 			}
 		
 		}, '');
+		if (labelPath?.startsWith('binaryOption.') || labelPath?.startsWith('unaryOption.')) {
+			const parseField = labelPath.split('.');
+			if (parseField.length === 4) {
+				const entity = parseField[3];
+				const entityToken = parseField[2];
+				const parseResult = parseJdl(text);
+				if (parseResult.jdlObject?.entities && entityToken === 'entity' && entity && entity !== 'all') {
+					// 查找实体名称
+					const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+					if (entityObj?.documentation) {
+						return [
+							entityObj.documentation,
+						];
+					} else {
+						return [];
+					}
+				} else {
+					return [];
+				}
+			}
+		}
 		return get(hoverData, labelPath + '.contents', []);
 	}
 	return [];
@@ -2072,6 +2784,7 @@ function tokenLableComplete(tokenLabel: any, text: string): vscode.MarkdownStrin
 
 		// entity:TestEntity=>field:abc=>type:String
 		// entity:TestEntity=>field:abc=>validation:required
+		// todo binaryOption:paginate=>entity:all
 		const labels: string[] = tokenLabel.split('=>');
 		const typeChain = labels.map(label => label.split(':')[0]).join('.');
 		if (typeChain === 'entity.field.type') {
