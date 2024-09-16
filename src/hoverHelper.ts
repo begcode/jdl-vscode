@@ -2757,18 +2757,20 @@ function tokenLableHover(tokenLabel: any, text: string, word: string): vscode.Ma
 				const entity = parseField[3];
 				const entityToken = parseField[2];
 				const parseResult = parseJdl(text);
-				if (parseResult.jdlObject?.entities && entityToken === 'entity' && entity && entity !== 'all') {
-					// 查找实体名称
-					const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
-					if (entityObj?.documentation) {
-						return [
-							entityObj.documentation,
-						];
+				if (parseResult.jdlObject?.entities && entityToken === 'entity') {
+					if (entity && entity !== 'all') {
+						// 查找实体名称
+						const entityObj = parseResult.jdlObject.entities.find((entityObj: any) => entityObj.name === entity);
+						if (entityObj?.documentation) {
+							return [
+								entityObj.documentation.trim(),
+							];
+						} else {
+							return [];
+						}
 					} else {
 						return [];
 					}
-				} else {
-					return [];
 				}
 			}
 		}
