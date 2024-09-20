@@ -500,7 +500,7 @@ const hoverData: any = {
 						detail: '',
 						description: '设置分页方式'
 					},
-					insertText: new vscode.SnippetString('Paginate(${1|pagination,servinfinite-scroll, no|})${0}'),
+					insertText: new vscode.SnippetString('Paginate(${1|pagination,infinite-scroll,no|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -515,7 +515,7 @@ const hoverData: any = {
 					[
 						'#### 可选值：',
 						'- pagination',
-						'- servinfinite-scroll',
+						'- infinite-scroll',
 						'- no',
 					].join('\n'),
 					[
@@ -911,7 +911,7 @@ const hoverData: any = {
 						detail: '',
 						description: '生成Rest层文件'
 					},
-					insertText: new vscode.SnippetString('@RestLayer(${1|true, false|})${0}'),
+					insertText: new vscode.SnippetString('@RestLayer(${1|true,false|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -2221,7 +2221,7 @@ const hoverData: any = {
 							detail: '',
 							description: '级联删除处理方式'
 						},
-						insertText: new vscode.SnippetString('OnDelete(${1|NO ACTION, RESTRICT, CASCADE, SET NULL,SET DEFAULT|})${0}'),
+						insertText: new vscode.SnippetString('OnDelete(${1|NO ACTION,RESTRICT,CASCADE,SET NULL,SET DEFAULT|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -2249,7 +2249,7 @@ const hoverData: any = {
 							detail: '',
 							description: '级联更新处理方式'
 						},
-						insertText: new vscode.SnippetString('OnUpdate(${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |})${0}'),
+						insertText: new vscode.SnippetString('OnUpdate(${1|NO ACTION,RESTRICT,CASCADE,SET NULL,SET DEFAULT |})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
