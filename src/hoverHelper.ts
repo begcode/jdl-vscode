@@ -114,7 +114,7 @@ const hoverData: any = {
 						detail: '',
 						description: '忽略部分文件生成'
 					},
-					insertText: new vscode.SnippetString('SkipComponent(${1}|listPage, editPage, detailPage, clientService, clientRoute, domain, mapper, controllerTest, serviceClass, restController, repository, queryService|)${0}'),
+					insertText: new vscode.SnippetString('SkipComponent(${1|listPage,editPage,detailPage,clientService,clientRoute,domain,mapper,controllerTest,serviceClass,restController,repository,queryService|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -240,7 +240,7 @@ const hoverData: any = {
 						detail: '',
 						description: '忽略指定API接口'
 					},
-					insertText: new vscode.SnippetString('SkipRestApi(${1}|dataExport, dataImport, create|)${0}'),
+					insertText: new vscode.SnippetString('SkipRestApi(${1|dataExport,dataImport,create|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -272,7 +272,7 @@ const hoverData: any = {
 						detail: '',
 						description: '忽略前端部分按钮'
 					},
-					insertText: new vscode.SnippetString('SkipWebButton(${1}|listAdd, listEdit, listDelete, listDetail|)${0}'),
+					insertText: new vscode.SnippetString('SkipWebButton(${1|listAdd,listEdit,listDelete,listDetail|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -305,7 +305,7 @@ const hoverData: any = {
 						detail: '',
 						description: '指定列表样式'
 					},
-					insertText: new vscode.SnippetString('ListBy(${1}|table, list, tableEdit|)${0}'),
+					insertText: new vscode.SnippetString('ListBy(${1|table,list,tableEdit|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -361,7 +361,7 @@ const hoverData: any = {
 						detail: '',
 						description: '设置DTO'
 					},
-					insertText: new vscode.SnippetString('Dto(${1|mapstruct, no |})${0}'),
+					insertText: new vscode.SnippetString('Dto(${1|mapstruct,no|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -468,7 +468,7 @@ const hoverData: any = {
 						detail: '',
 						description: 'Service实现方式'
 					},
-					insertText: new vscode.SnippetString('Service(${1|serviceClass, serviceImpl|})${0}'),
+					insertText: new vscode.SnippetString('Service(${1|serviceClass,serviceImpl|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -500,7 +500,7 @@ const hoverData: any = {
 						detail: '',
 						description: '设置分页方式'
 					},
-					insertText: new vscode.SnippetString('Paginate(${1|pagination, servinfinite-scroll, no|})${0}'),
+					insertText: new vscode.SnippetString('Paginate(${1|pagination,servinfinite-scroll, no|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -532,7 +532,7 @@ const hoverData: any = {
 						detail: '',
 						description: '使用全文检索'
 					},
-					insertText: new vscode.SnippetString('Search(${1|elasticsearch, no |})${0}'),
+					insertText: new vscode.SnippetString('Search(${1|elasticsearch,no|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -716,7 +716,7 @@ const hoverData: any = {
 						detail: '',
 						description: '在指定代码中增加自定义方法'
 					},
-					insertText: new vscode.SnippetString('AddCustomMethod(${1|repository, service, rest, clientService, queryService, updateComponent, listComponent, clientRoute, editComponent, dto, listRelation, detailTemplate|})${0}'),
+					insertText: new vscode.SnippetString('AddCustomMethod(${1|repository,service,rest,clientService,queryService,updateComponent,listComponent,clientRoute,editComponent,dto,listRelation,detailTemplate|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -859,7 +859,7 @@ const hoverData: any = {
 						detail: '',
 						description: '生成Demain层文件'
 					},
-					insertText: new vscode.SnippetString('@EntityDomainLayer(${1|true, false|})${0}'),
+					insertText: new vscode.SnippetString('@EntityDomainLayer(${1|true,false|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -885,7 +885,7 @@ const hoverData: any = {
 						detail: '',
 						description: '生成Persistence层文件'
 					},
-					insertText: new vscode.SnippetString('@EntityPersistenceLayer(${1|true, false|})${0}'),
+					insertText: new vscode.SnippetString('@EntityPersistenceLayer(${1|true,false|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -989,7 +989,7 @@ const hoverData: any = {
 						detail: '',
 						description: '生成全文检索层文件'
 					},
-					insertText: new vscode.SnippetString('@EntitySearchLayer("${1|true, false|}")${0}'),
+					insertText: new vscode.SnippetString('@EntitySearchLayer("${1|true,false|}")${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -1015,7 +1015,7 @@ const hoverData: any = {
 						detail: '',
 						description: '编辑表单容器'
 					},
-					insertText: new vscode.SnippetString('EditInContainer(${1|modal, page, drawer|})${0}'),
+					insertText: new vscode.SnippetString('EditInContainer(${1|modal,page,drawer|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -1057,7 +1057,7 @@ const hoverData: any = {
 						detail: '',
 						description: '移动端配置'
 					},
-					insertText: new vscode.SnippetString('MobileConfig(${1}|addToHomeMenu, addToUserMenu, addToHomeRecommend, detailWithRecommend|)${0}'),
+					insertText: new vscode.SnippetString('MobileConfig(${1|addToHomeMenu,addToUserMenu,addToHomeRecommend,detailWithRecommend|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -1124,7 +1124,7 @@ const hoverData: any = {
 						detail: '',
 						description: 'Web网站配置'
 					},
-					insertText: new vscode.SnippetString('WebsiteConfig(${1}|addToHomeMenu, addToUserMenu, addToHomeRecommend, detailWithRecommend|)${0}'),
+					insertText: new vscode.SnippetString('WebsiteConfig(${1|addToHomeMenu,addToUserMenu,addToHomeRecommend,detailWithRecommend|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
@@ -1194,7 +1194,7 @@ const hoverData: any = {
 							detail: '',
 							description: '设置字段的前端组件'
 						},
-						insertText: new vscode.SnippetString('EndUsed(${1|fileUrl, iconPicker, imageUrl, videoUrl, audioUrl, editor, codeEditor, select, modalSelect, checkbox, radio, radioButton, rate, slider, switch, textArea, avatar |})${0}'),
+						insertText: new vscode.SnippetString('EndUsed(${1|fileUrl,iconPicker,imageUrl,videoUrl,audioUrl,editor,codeEditor,select,modalSelect,checkbox,radio,radioButton,rate,slider,switch,textArea,avatar|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -1282,7 +1282,7 @@ const hoverData: any = {
 							detail: '',
 							description: '增加字段配置'
 						},
-						insertText: new vscode.SnippetString('FieldConfig(${1}|hideInForm, hideInList, editInList, searchForm, hideInDetail, filter, sortable |)${0}'),
+						insertText: new vscode.SnippetString('FieldConfig(${1|hideInForm,hideInList,editInList,searchForm,hideInDetail,filter,sortable|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -1422,7 +1422,7 @@ const hoverData: any = {
 							detail: '',
 							description: '排序字段'
 						},
-						insertText: new vscode.SnippetString('SortField(${1|asc, desc|})${0}'),
+						insertText: new vscode.SnippetString('SortField(${1|asc,desc|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -1611,7 +1611,7 @@ const hoverData: any = {
 							detail: '',
 							description: '字段内容展示形式'
 						},
-						insertText: new vscode.SnippetString('DisplayAs(${1|avatar, thumb, cover, creator, money|})${0}'),
+						insertText: new vscode.SnippetString('DisplayAs(${1|avatar,thumb,cover,creator,money,link|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -2161,7 +2161,7 @@ const hoverData: any = {
 							detail: '',
 							description: '关联关系左侧注解'
 						},
-						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity, unidirectional, editInForm, editBySelect, editByFormList, editByList, editInList, detailInList, editByTable, countByPrimaryKey, editBySelectModal, editBySelectDrawer, editByTableModal, editByTableDrawer, importData, hideInList|})${0}'),
+						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity,unidirectional,editInForm,editBySelect,editByFormList,editByList,editInList,detailInList,editByTable,countByPrimaryKey,editBySelectModal,editBySelectDrawer,editByTableModal,editByTableDrawer,importData,hideInList|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -2193,7 +2193,7 @@ const hoverData: any = {
 							detail: '',
 							description: '关联关系右侧注解'
 						},
-						insertText: new vscode.SnippetString('AnnotationOnDestination(${1|hideInList, editByTableDrawer, editByTableModal, editBySelectDrawer, editBySelectModal, detailInList, editInList|})${0}'),
+						insertText: new vscode.SnippetString('AnnotationOnDestination(${1|hideInList,editByTableDrawer,editByTableModal,editBySelectDrawer,editBySelectModal,detailInList,editInList|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -2221,7 +2221,7 @@ const hoverData: any = {
 							detail: '',
 							description: '级联删除处理方式'
 						},
-						insertText: new vscode.SnippetString('OnDelete(${1|NO ACTION, RESTRICT, CASCADE, SET NULL, SET DEFAULT |})${0}'),
+						insertText: new vscode.SnippetString('OnDelete(${1|NO ACTION, RESTRICT, CASCADE, SET NULL,SET DEFAULT|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
