@@ -329,6 +329,35 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
+			Features: {
+				completeItem: {
+					label: {
+						label: 'Features',
+						detail: '',
+						description: '增加部分功能'
+					},
+					insertText: new vscode.SnippetString('Features(${1|copy|})${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'增加部分功能',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @Features(copy)',
+						' entity SysConfig {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- copy',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
 			Readonly: {
 				completeItem: {
 					label: {
