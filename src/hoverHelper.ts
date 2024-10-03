@@ -319,9 +319,9 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- table',
-						'- list',
-						'- tableEdit',
+						'- table // 表格',
+						'- list // 列表',
+						'- tableEdit // 左表格右编辑',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -334,13 +334,13 @@ const hoverData: any = {
 					label: {
 						label: 'Features',
 						detail: '',
-						description: '增加部分功能'
+						description: '配置实体部分功能'
 					},
-					insertText: new vscode.SnippetString('Features(${1|copy|})${0}'),
+					insertText: new vscode.SnippetString('Features(${1|copy,createBySelf|})${0}'),
 					kind: vscode.CompletionItemKind.Operator,
 				},
 				contents: [
-					'增加部分功能',
+					'配置实体部分功能',
 					[
 						'#### 使用方法:',
 						'```java',
@@ -350,7 +350,8 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- copy',
+						'- copy // 支持复制功能',
+						'- createBySelf // 不能通过关联关系创建',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -404,8 +405,8 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- mapstruct',
-						'- no',
+						'- mapstruct // 使用MapStruct',
+						'- no // 不使用MapStruct',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -512,8 +513,8 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- serviceClass',
-						'- serviceImpl',
+						'- serviceClass // 不使用Service接口',
+						'- serviceImpl // 使用Service接口',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -543,9 +544,9 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- pagination',
-						'- infinite-scroll',
-						'- no',
+						'- pagination // 分页',
+						'- infinite-scroll // 无限滚动',
+						'- no // 不分页',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -575,8 +576,8 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- elasticsearch',
-						'- no',
+						'- elasticsearch // 使用Elasticsearch',
+						'- no // 不使用全文检索',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -760,15 +761,15 @@ const hoverData: any = {
 					].join('\n'),
 					[
 						'#### 可选值：',
-						'- repository',
-						'- service',
-						'- rest',
-						'- no',
-						'- clientService',
-						'- queryService',
-						'- updateComponent',
-						'- listComponent',
-						'- clientRoute',
+						'- repository // Repository',
+						'- service // Service',
+						'- rest // Rest',
+						'- no ',
+						'- clientService // clientService',
+						'- queryService // queryService',
+						'- updateComponent // updateComponent',
+						'- listComponent // listComponent',
+						'- clientRoute // clientRoute',
 						'- 更多请参考文档',
 					].join('\n'),
 					[
