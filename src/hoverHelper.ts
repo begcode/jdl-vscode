@@ -2333,6 +2333,8 @@ const hoverData: any = {
 					'- editInForm // 表单中编辑',
 					'- editInList // 列表中编辑',
 					'- detailInList // 列表中查看详情',
+					'- showInTab // 通过Tab页展示',
+					'- showInCollapse // 通过折叠面板展示',
 				].join('\n'),
 				[
 					'#### 适用范围：',
@@ -2505,6 +2507,24 @@ const hoverData: any = {
 			detailInList: {
 				contents: [
 					'列表中查看详情',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			showInTab: {
+				contents: [
+					'通过Tab页展示',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			showInCollapse: {
+				contents: [
+					'通过折叠面板展示',
 					[
 						'#### 适用范围：',
 						'- BegCode',

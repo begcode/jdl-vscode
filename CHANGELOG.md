@@ -3,6 +3,7 @@
 ## 0.2.1
 
 - 增加实体注解@Features,当前仅支持一个选项，copy，表示实体支持copy功能的Api接口及实现。
+- 补充AnnotationOnSource注解提示信息
 
 ## 0.2.0
 

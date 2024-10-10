@@ -2,7 +2,7 @@
 	"name": "jdl-begcode",
 	"private": true,
 	"displayName": "JDL BegCode",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"publisher": "begcode",
 	"repository": {
 		"type": "git",
