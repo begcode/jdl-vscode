@@ -2194,23 +2194,6 @@ const hoverData: any = {
 						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity,unidirectional,editInForm,editBySelect,editByFormList,editByList,editInList,detailInList,editByTable,countByPrimaryKey,editBySelectModal,editBySelectDrawer,editByTableModal,editByTableDrawer,importData,hideInList|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
-					contents: [
-						'关联关系左侧注解',
-						[
-							'#### 使用方法:',
-							'```java',
-							' @AnnotationOnSource(hideInList)',
-							' SysConfig{user}',
-							' to',
-							' User',
-							'```',
-							'**注意:** 多个使用-分隔',
-						].join('\n'),
-						[
-							'#### 适用范围：',
-							'- BegCode',
-						].join('\n'),
-					]
 				},
 			}
 		},
@@ -2226,23 +2209,6 @@ const hoverData: any = {
 						insertText: new vscode.SnippetString('AnnotationOnDestination(${1|hideInList,editByTableDrawer,editByTableModal,editBySelectDrawer,editBySelectModal,detailInList,editInList|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
-					contents: [
-						'关联关系右侧注解',
-						[
-							'#### 使用方法:',
-							'```java',
-							' SysConfig{user}',
-							' to',
-							' @AnnotationOnDestination(hideInList)',
-							' User',
-							'```',
-							'**注意:** 多个使用-分隔',
-						].join('\n'),
-						[
-							'#### 适用范围：',
-							'- BegCode',
-						].join('\n'),
-					]
 				},
 				OnDelete: {
 					completeItem: {
@@ -2339,6 +2305,36 @@ const hoverData: any = {
 			contents: [
 				'关联关系左侧注解',
 				[
+					'#### 使用方法:',
+					'```java',
+					' @AnnotationOnSource(hideInList)',
+					' SysConfig{user}',
+					' to',
+					' User',
+					'```',
+					'**注意:** 多个使用-分隔',
+				].join('\n'),
+				[
+					'#### 可选值：',
+					'- unidirectional // 单向关联',
+					'- relateByIdEntity // 通过实体名称和ID关联',
+					'- countByPrimaryKey // 通过实体名称和主键统计',
+					'- editByFormList // 表单列表编辑',
+					'- editBySelect // 下拉框编辑',
+					'- editByList // 列表编辑',
+					'- editByDescList // 列表详情编辑',
+					'- editByTable // 表格编辑',
+					'- editBySelectModal // 选择框模态框编辑',
+					'- editBySelectDrawer // 选择框抽屉编辑',
+					'- editByTableModal // 表格模态框编辑',
+					'- editByTableDrawer // 表格抽屉编辑',
+					'- importData // 导入关联数据',
+					'- hideInList // 列表中隐藏',
+					'- editInForm // 表单中编辑',
+					'- editInList // 列表中编辑',
+					'- detailInList // 列表中查看详情',
+				].join('\n'),
+				[
 					'#### 适用范围：',
 					'- BegCode',
 					'- JHipster',
@@ -2389,10 +2385,146 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
+			editByFormList: {
+				contents: [
+					'表单列表编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByDescList: {
+				contents: [
+					'列表详情编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editBySelect: {
+				contents: [
+					'下拉框编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByList: {
+				contents: [
+					'列表编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByTable: {
+				contents: [
+					'表格编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editBySelectModal: {
+				contents: [
+					'选择框模态框编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editBySelectDrawer: {
+				contents: [
+					'选择框抽屉编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByTableModal: {
+				contents: [
+					'表格模态框编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editByTableDrawer: {
+				contents: [
+					'表格抽屉编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			importData: {
+				contents: [
+					'导入关联数据',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			hideInList: {
+				contents: [
+					'列表中隐藏',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editInForm: {
+				contents: [
+					'表单中编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			editInList: {
+				contents: [
+					'列表中编辑',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			detailInList: {
+				contents: [
+					'列表中查看详情',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
 		},
 		AnnotationOnDestination: {
 			contents: [
 				'关联关系右侧注解',
+				[
+					'#### 使用方法:',
+					'```java',
+					' SysConfig{user}',
+					' to',
+					' @AnnotationOnDestination(hideInList)',
+					' User',
+					'```',
+					'**注意:** 多个使用-分隔',
+				].join('\n'),
 				[
 					'#### 适用范围：',
 					'- BegCode',
