@@ -2335,6 +2335,7 @@ const hoverData: any = {
 					'- detailInList // 列表中查看详情',
 					'- showInTab // 通过Tab页展示',
 					'- showInCollapse // 通过折叠面板展示',
+					'- showInForm // 通过表单展示',
 				].join('\n'),
 				[
 					'#### 适用范围：',
@@ -2525,6 +2526,15 @@ const hoverData: any = {
 			showInCollapse: {
 				contents: [
 					'通过折叠面板展示',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			showInForm: {
+				contents: [
+					'通过表单展示',
 					[
 						'#### 适用范围：',
 						'- BegCode',
