@@ -1224,7 +1224,7 @@ const hoverData: any = {
 							detail: '',
 							description: '设置字段的前端组件'
 						},
-						insertText: new vscode.SnippetString('EndUsed(${1|fileUrl,iconPicker,imageUrl,videoUrl,audioUrl,editor,codeEditor,select,modalSelect,checkbox,radio,radioButton,rate,slider,switch,textArea,avatar|})${0}'),
+						insertText: new vscode.SnippetString('EndUsed(${1|fileUrl,iconPicker,imageUrl,videoUrl,audioUrl,editor,codeEditor,select,modalSelect,checkbox,radio,radioButton,rate,slider,switch,textArea,avatar,qrCode|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 					contents: [
@@ -1303,6 +1303,12 @@ const hoverData: any = {
 						avatar: {
 							'contents': ['头像']
 						},
+						qrCode: {
+							'contents': ['二维码']
+						},
+						barCode: {
+							'contents': ['条形码']
+						}
 					}
 				},
 				FieldConfig: {
