@@ -2,7 +2,7 @@
 	"name": "jdl-begcode",
 	"private": true,
 	"displayName": "JDL BegCode",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"publisher": "begcode",
 	"repository": {
 		"type": "git",
@@ -30,7 +30,7 @@
 		"build": "npm run -S esbuild-base -- --sourcemap"
 	},
 	"dependencies": {
-		"generator-begcode": "8.6.2",
+		"generator-begcode": "8.6.4",
 		"lodash": "4.17.21"
 	},
 	"devDependencies": {

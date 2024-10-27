@@ -1,5 +1,10 @@
 # 更新记录
 
+## 0.2.2
+
+- 增加关系注解@Id和@FilterFieldsOnSourceSide，其中@Id 由JHipster 提供支持，@FilterFieldsOnSourceSide为 BegCode 提供
+- 更新generator-begcode 到 8.6.4版本
+
 ## 0.2.1
 
 - 增加实体注解@Features,当前仅支持一个选项，copy，表示实体支持copy功能的Api接口及实现。

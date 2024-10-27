@@ -2201,6 +2201,28 @@ const hoverData: any = {
 						kind: vscode.CompletionItemKind.Operator,
 					},
 				},
+				FilterFieldsOnSourceSide: {
+					completeItem: {
+						label: {
+							label: 'FilterFieldsOnSourceSide',
+							detail: '',
+							description: `关联关系左侧增加过滤字段，使用'-'分隔`
+						},
+						insertText: new vscode.SnippetString('FilterFieldsOnSourceSide(${1})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+				},
+				Id: {
+					completeItem: {
+						label: {
+							label: 'Id',
+							detail: '',
+							description: `使用实体 Id 关联`
+						},
+						insertText: new vscode.SnippetString('Id'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+				}
 			}
 		},
 		to: {
@@ -2272,6 +2294,17 @@ const hoverData: any = {
 						].join('\n'),
 					]
 				},
+				Id: {
+					completeItem: {
+						label: {
+							label: 'Id',
+							detail: '',
+							description: `使用实体 Id 关联`
+						},
+						insertText: new vscode.SnippetString('Id'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+				}
 			}
 		},
 		ManyToOne: {
