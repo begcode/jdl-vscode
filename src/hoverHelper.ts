@@ -1,6 +1,7 @@
 import { get, method } from 'lodash';
 import * as vscode from 'vscode';
 import { parseJdl } from './parseJdl';
+import { log } from 'console';
 
 const hoverData: any = {
 	entity: {
@@ -322,6 +323,164 @@ const hoverData: any = {
 						'- table // 表格',
 						'- list // 列表',
 						'- tableEdit // 左表格右编辑',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			WebDetailTemplate: {
+				completeItem: {
+					label: {
+						label: 'WebDetailTemplate',
+						detail: '',
+						description: '配置 Web 详情页模板'
+					},
+					insertText: new vscode.SnippetString('WebDetailTemplate("${1|slide-tabs-detail.vue,blog-detail.vue,many-item-detail.vue,data-detail.vue|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'配置 Web 详情页模板',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebDetailTemplate("slide-tabs-detail.vue")',
+						' entity Article {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- slide-tabs-detail.vue // 有图片滑动切换',
+						'- blog-detail.vue // 博客详情页',
+						'- many-item-detail.vue // 多条目详情页',
+						'- data-detail.vue // 数据详情页',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			WebRelationTemplate: {
+				completeItem: {
+					label: {
+						label: 'WebRelationTemplate',
+						detail: '',
+						description: '配置 Web 关联关系模板'
+					},
+					insertText: new vscode.SnippetString('WebRelationTemplate("${1|relation-common-handle.vue,relation-single-column-handle.vue,relation-common-button-handle.vue|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'配置 Web 关联关系模板',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebRelationTemplate("relation-common-handle.vue")',
+						' entity Article {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- relation-common-handle.vue // 通用关联关系',
+						'- relation-single-column-handle.vue // 单列关联关系',
+						'- relation-common-button-handle.vue // 带操作按钮关联关系',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			WebListTemplate: {
+				completeItem: {
+					label: {
+						label: 'WebListTemplate',
+						detail: '',
+						description: '配置 Web 关联关系模板'
+					},
+					insertText: new vscode.SnippetString('WebListTemplate("${1|single-column-list.vue,data-list.vue,common-list.vue,common-list-button.vue|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'配置 Web 关联关系模板',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebListTemplate("common-list.vue")',
+						' entity Article {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- single-column-list.vue // 单列列表',
+						'- data-list.vue // 数据列表',
+						'- common-list.vue // 普通列表',
+						'- common-list-button.vue // 带操作按钮列表',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			WebRecommendTemplate: {
+				completeItem: {
+					label: {
+						label: 'WebListTemplate',
+						detail: '',
+						description: '配置 Web 关联关系模板'
+					},
+					insertText: new vscode.SnippetString('WebRecommendTemplate("${1|recommend-card-hover,recommend-card-lastest,recommend-card,recommend-text|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'配置 Web 关联关系模板',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebRecommendTemplate("recommend-card-hover")',
+						' entity Article {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- recommend-card-hover // 卡片悬停',
+						'- recommend-card-lastest // 最新卡片',
+						'- recommend-card // 卡片推荐',
+						'- recommend-text // 文本推荐',
+					].join('\n'),
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			WebRankTemplate: {
+				completeItem: {
+					label: {
+						label: 'WebListTemplate',
+						detail: '',
+						description: '配置 Web 关联关系模板'
+					},
+					insertText: new vscode.SnippetString('WebRankTemplate("${1|rank-hot.vue,rank.vue,rank-new.vue|}")${0}'),
+					kind: vscode.CompletionItemKind.Operator,
+				},
+				contents: [
+					'配置 Web 关联关系模板',
+					[
+						'#### 使用方法:',
+						'```java',
+						' @WebRankTemplate("rank-hot.vue")',
+						' entity Article {}',
+						'```',
+					].join('\n'),
+					[
+						'#### 可选值：',
+						'- rank.vue // 排行榜',
+						'- rank-hot.vue // 热门排行榜',
+						'- rank-new.vue // 最新排行榜',
 					].join('\n'),
 					[
 						'#### 适用范围：',
@@ -2581,6 +2740,24 @@ const hoverData: any = {
 				]
 			},
 		},
+		required: {
+			contents: [
+				'关联关系不能为空',
+				[
+					'#### 使用方法:',
+					'```java',
+					' SysConfig{user required}',
+					' to',
+					' User',
+					'```',
+				].join('\n'),
+				[
+					'#### 适用范围：',
+					'- BegCode',
+					'- JHipster',
+				].join('\n'),
+			]
+		},
 		AnnotationOnDestination: {
 			contents: [
 				'关联关系右侧注解',
@@ -2902,6 +3079,7 @@ function tokenLableHover(tokenLabel: any, text: string, word: string): vscode.Ma
 	if (tokenLabel) {
 		// entity:GptAssistant=>anno:extendAbstractAuditingEntity
 		const labels = tokenLabel.split('=>');
+		console.log('tokenLabel:::', tokenLabel);
 		if (tokenLabel.startsWith('relationship:')) {
 			if (labels.length === 4 && labels[labels.length - 1].startsWith('injectedFieldParam:')) {
 				const entity = labels[2].split(':')[1];
@@ -2926,10 +3104,14 @@ function tokenLableHover(tokenLabel: any, text: string, word: string): vscode.Ma
 				} else {
 					return [];
 				}
-
 			} else if (labels.length === 2){
 				// relationship:ManyToOne=>to:TestEntity2
 				if (labels[labels.length - 1].startsWith('to:') || labels[labels.length - 1].startsWith('from:')) {
+					if (labels[labels.length - 1] === 'from:required' || labels[labels.length - 1] === 'to:required') {
+						const relationship = labels[0].split(':')[0];
+						const annotation = labels[1].split(':')[1];
+						return get(hoverData, `${relationship}.${annotation}.contents`, []);
+					}
 					const entity = labels[1].split(':')[1];
 					const parseResult = parseJdl(text);
 					if (parseResult.jdlObject?.entities) {
@@ -2946,8 +3128,11 @@ function tokenLableHover(tokenLabel: any, text: string, word: string): vscode.Ma
 					const relationship = labels[0].split(':')[0];
 					const annotation = labels[1].split(':')[1];
 					return get(hoverData, `${relationship}.${annotation}.contents`, []);
+				} else if (labels[labels.length - 1] === 'builtInEntity' && labels[0].endsWith('relationshipOption')) {
+					const relationship = labels[0].split(':')[0];
+					const annotation = labels[1];
+					return get(hoverData, `${relationship}.relationshipOption.${annotation}.contents`, []);
 				}
-				
 				return [];
 			} else {
 				// "relationship:OneToMany"

@@ -70,6 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				const word = document.getText(document.getWordRangeAtPosition(position));
 				const cstTokenFind = cstTokens.find((cstToken: any) => {
+					console.log('cstToken:', cstToken);
 					return cstToken.image?.includes(word) && cstToken.startLine <= line && cstToken.endLine >= line && cstToken.startColumn <= character && cstToken.endColumn >= character;
 				});
 				if (cstTokenFind) {
@@ -163,6 +164,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const labels: string[] = cstToken.label.split('=>');
 			const typeChain = labels.map(label => label.split(':')[0]).join('.');
 			if (['relationship.from','relationship.to'].includes(typeChain)) {
+				log('typeChain:::', typeChain);
 				const entityName = labels[1].split(':')[1];
 				const findLabel = 'keyword:entity=>entity:' + entityName;
 				const entityToken = cstTokens.find((cstToken: any) => {

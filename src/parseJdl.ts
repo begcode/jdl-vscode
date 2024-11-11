@@ -178,7 +178,7 @@ export function parseJdl(text: string) {
 						const relationshipData: any = {...relationship.children.relationshipType[0].children.RELATIONSHIP_TYPE[0], label: relationshipLabel};
 						cstTokens.push(relationshipData);
 						relationship.children?.relationshipBody?.forEach((relationshipBody: any) => {
-							if (relationshipBody.children && relationshipBody.children.from[0]?.children?.NAME && relationshipBody.children.to[0]?.children?.NAME) {
+							if (relationshipBody.children?.from[0]?.children?.NAME && relationshipBody.children?.to[0]?.children?.NAME) {
 								const fromLabelOnly = 'from:' + relationshipBody.children.from[0].children.NAME[0].image;
 								const fromLabel = relationshipLabel + '=>' + fromLabelOnly;
 								const fromData: any = {...relationshipBody.children.from[0].children.NAME[0], label: fromLabel};
@@ -198,6 +198,18 @@ export function parseJdl(text: string) {
 										const optionData: any = {...option.children.BUILT_IN_ENTITY[0], label: optionLabel};
 										cstTokens.push(optionData);
 									});
+								}
+								if (relationshipBody.children?.from[0]?.children?.REQUIRED) {
+									const fromLabelOnly = 'from:' + relationshipBody.children?.from[0]?.children?.REQUIRED[0].image;
+									const fromLabel = relationshipLabel + '=>' + fromLabelOnly;
+									const fromData: any = {...relationshipBody.children?.from[0]?.children?.REQUIRED[0], label: fromLabel};
+									cstTokens.push(fromData);
+								}
+								if (relationshipBody.children?.to[0]?.children?.REQUIRED) {
+									const toLabelOnly = 'from:' + relationshipBody.children?.to[0]?.children?.REQUIRED[0].image;
+									const toLabel = relationshipLabel + '=>' + toLabelOnly;
+									const toData: any = {...relationshipBody.children?.to[0]?.children?.REQUIRED[0], label: toLabel};
+									cstTokens.push(toData);
 								}
 								if (relationshipBody.children.annotationOnSourceSide) {
 									const annotationOnSourceSide = relationshipBody.children.annotationOnSourceSide[0];
