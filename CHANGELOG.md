@@ -4,6 +4,8 @@
 
 - 增加关系注解@Id和@FilterFieldsOnSourceSide，其中@Id 由JHipster 提供支持，@FilterFieldsOnSourceSide为 BegCode 提供
 - 更新generator-begcode 到 8.6.4版本
+- 增加 WebListTemplate/WebDetailTemplate/WebRecommendTemplate/WebRankTemplate/WebRelationTemplate 注解，为 PC Web 应用的生成做准备。
+- 增加builtInEntity 和关联关系中required 关键字的提示
 
 ## 0.2.1
 
