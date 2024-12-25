@@ -47,6 +47,8 @@ const toPngFile = (file: string): string => {
 	} 
 };
 
+let debounceTimeout: any;
+
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.languages.registerHoverProvider('jdl', {
@@ -139,7 +141,22 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 	const diagnosticCollection = vscode.languages.createDiagnosticCollection('jdl');
 	context.subscriptions.push(
-		vscode.workspace.onDidChangeTextDocument(e => updateDiagnostics(e.document, diagnosticCollection))
+		vscode.workspace.onDidChangeTextDocument(event => {
+			clearTimeout(debounceTimeout); // 清除之前的触发
+			debounceTimeout = setTimeout(() => {
+				const editor = vscode.window.activeTextEditor;
+				if (!editor) return;
+		
+				const changes = event.contentChanges;
+				if (changes.length === 0) return;
+				const linePrefix = editor.document.lineAt(editor.selection.active).text.substring(0, editor.selection.active.character);
+				// const text = changes[0].text;
+				// if (text === '.' || text === ':') {
+				// 	vscode.commands.executeCommand('editor.action.triggerSuggest');
+				// }
+				updateDiagnostics(event.document, diagnosticCollection);
+			}, 200); // 延迟 200ms
+		})
 	);
 
 	context.subscriptions.push(

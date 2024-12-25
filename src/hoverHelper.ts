@@ -1583,6 +1583,38 @@ const hoverData: any = {
 						].join('\n'),
 					]
 				},
+				ValueFrom: {
+					completeItem: {
+						label: {
+							label: 'ValueFrom',
+							detail: '',
+							description: '字段值来源'
+						},
+						insertText: new vscode.SnippetString('ValueFrom(${1|currentUser.id,currentUser.login,currentUser.firstName|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'字段默认值',
+						[
+							'#### 使用方法:',
+							'```java',
+							' @ValueFrom(currentUser.id)',
+							' name String',
+							'```',
+							'#### 可选值：',
+							'- currentUser.id',
+							'- currentUser.login',
+							'- currentUser.firstName',
+							'- currentUser.email',
+							'- currentUser.mobile',
+							'- currentUser.imageUrl',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
+				},
 				DefaultValueComputed: {
 					completeItem: {
 						label: {
@@ -2360,16 +2392,53 @@ const hoverData: any = {
 						kind: vscode.CompletionItemKind.Operator,
 					},
 				},
-				FilterFieldsOnSourceSide: {
+				FilterFieldsOnSource: {
 					completeItem: {
 						label: {
-							label: 'FilterFieldsOnSourceSide',
+							label: 'FilterFieldsOnSource',
 							detail: '',
 							description: `关联关系左侧增加过滤字段，使用'-'分隔`
 						},
-						insertText: new vscode.SnippetString('FilterFieldsOnSourceSide(${1})${0}'),
+						insertText: new vscode.SnippetString('FilterFieldsOnSource(${1})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
+				},
+				WebsiteOnSource: {
+					completeItem: {
+						label: {
+							label: 'WebsiteOnSource',
+							detail: '',
+							description: `关系左侧Website相关配置，使用'-'分隔`
+						},
+						insertText: new vscode.SnippetString('WebsiteOnSource(${1|showInForm, hideInDetail|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+				},
+				ValueFrom: {
+					completeItem: {
+						label: {
+							label: 'ValueFrom',
+							detail: '',
+							description: '关系值来源'
+						},
+						insertText: new vscode.SnippetString('ValueFrom(${1|currentUser|})${0}'),
+						kind: vscode.CompletionItemKind.Operator,
+					},
+					contents: [
+						'关系值来源',
+						[
+							'#### 使用方法:',
+							'```java',
+							' @ValueFrom(currentUser)',
+							' name String',
+							'```',
+							'#### 可选值：',
+						].join('\n'),
+						[
+							'#### 适用范围：',
+							'- BegCode',
+						].join('\n'),
+					]
 				},
 				Id: {
 					completeItem: {
@@ -2849,7 +2918,44 @@ const hoverData: any = {
 					].join('\n'),
 				]
 			},
-		}
+		},
+		WebsiteOnSource: {
+			contents: [
+				'关系左侧Website相关配置',
+				[
+					'#### 使用方法:',
+					'```java',
+					' @WebsiteOnSource(hideInDetail)',
+					' SysConfig{user}',
+					' to',
+					' User',
+					'```',
+					'**注意:** 多个使用-分隔',
+				].join('\n'),
+				[
+					'#### 适用范围：',
+					'- BegCode',
+				].join('\n'),
+			],
+			showInForm: {
+				contents: [
+					'在表单中显示',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+			hideInDetail: {
+				contents: [
+					'在详情中隐藏',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+		},
 	},
 	binaryOption: {
 		paginate: {

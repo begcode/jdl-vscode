@@ -1,5 +1,12 @@
 # 更新记录
 
+## 0.2.3
+
+- 更新generator-begcode 到 8.6.5版本
+- 注解@FilterFieldsOnSourceSide简化为@FilterFieldsOnSource
+- 关联关系中增加注解@WebsiteOnSource,主要用来配置Website端
+- 增加注解@ValueFrom,支持 entity 的field 和relationship。可用值@ValueForm(currentUser),当前用户
+
 ## 0.2.2
 
 - 增加关系注解@Id和@FilterFieldsOnSourceSide，其中@Id 由JHipster 提供支持，@FilterFieldsOnSourceSide为 BegCode 提供

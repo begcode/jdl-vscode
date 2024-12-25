@@ -455,7 +455,7 @@ export function getErData(jdlObject: any) {
 			required: false,
 			}
 		 */
-		const edgeId = `${relationship.from.name}-${relationship.from.injectedField || ''}-${relationship.to.name}-${relationship.to.injectedField || ''}`
+		const edgeId = `${relationship.from.name}-${relationship.from.injectedField || ''}-${relationship.to.name}-${relationship.to.injectedField || ''}`;
 		const edge = {
 			"id": edgeId,
 			"shape": "edge",
