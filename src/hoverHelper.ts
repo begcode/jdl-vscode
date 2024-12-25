@@ -2414,31 +2414,16 @@ const hoverData: any = {
 						kind: vscode.CompletionItemKind.Operator,
 					},
 				},
-				ValueFrom: {
+				ValueFromOnSource: {
 					completeItem: {
 						label: {
-							label: 'ValueFrom',
+							label: 'ValueFromOnSource',
 							detail: '',
 							description: '关系值来源'
 						},
-						insertText: new vscode.SnippetString('ValueFrom(${1|currentUser|})${0}'),
+						insertText: new vscode.SnippetString('ValueFromOnSource(${1|currentUser|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
-					contents: [
-						'关系值来源',
-						[
-							'#### 使用方法:',
-							'```java',
-							' @ValueFrom(currentUser)',
-							' name String',
-							'```',
-							'#### 可选值：',
-						].join('\n'),
-						[
-							'#### 适用范围：',
-							'- BegCode',
-						].join('\n'),
-					]
 				},
 				Id: {
 					completeItem: {
@@ -2949,6 +2934,33 @@ const hoverData: any = {
 			hideInDetail: {
 				contents: [
 					'在详情中隐藏',
+					[
+						'#### 适用范围：',
+						'- BegCode',
+					].join('\n'),
+				]
+			},
+		},
+		ValueFromOnSource: {
+			contents: [
+				'关系值来源',
+				[
+					'#### 使用方法:',
+					'```java',
+					' @ValueFromOnSource(currentUser)',
+					' SysConfig{user}',
+					' to',
+					' User',
+					'```',
+				].join('\n'),
+				[
+					'#### 适用范围：',
+					'- BegCode',
+				].join('\n'),
+			],
+			currentUser: {
+				contents: [
+					'值来源于当前用户',
 					[
 						'#### 适用范围：',
 						'- BegCode',
