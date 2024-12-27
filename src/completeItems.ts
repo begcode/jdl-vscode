@@ -142,6 +142,10 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 			'detail': '',
 			'description': '在列表中显示详情'
 		},
+		notExistAdd: {
+			'detail': '',
+			'description': '选择时可以新增'
+		},
 	},
 	AnnotationOnDestination: {
 		editInList: {

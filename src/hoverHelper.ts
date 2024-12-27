@@ -2388,7 +2388,7 @@ const hoverData: any = {
 							detail: '',
 							description: '关联关系左侧注解'
 						},
-						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity,unidirectional,editInForm,editBySelect,editByFormList,editByList,editInList,detailInList,editByTable,countByPrimaryKey,editBySelectModal,editBySelectDrawer,editByTableModal,editByTableDrawer,importData,hideInList|})${0}'),
+						insertText: new vscode.SnippetString('AnnotationOnSource(${1|relateByIdEntity,unidirectional,editInForm,editBySelect,editByFormList,editByList,editInList,detailInList,editByTable,countByPrimaryKey,editBySelectModal,editBySelectDrawer,editByTableModal,editByTableDrawer,importData,hideInList,notExistAdd|})${0}'),
 						kind: vscode.CompletionItemKind.Operator,
 					},
 				},
@@ -2588,6 +2588,7 @@ const hoverData: any = {
 					'- showInTab // 通过Tab页展示',
 					'- showInCollapse // 通过折叠面板展示',
 					'- showInForm // 通过表单展示',
+					'- notExistAdd // 选择时可以新增',
 				].join('\n'),
 				[
 					'#### 适用范围：',
