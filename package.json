@@ -2,8 +2,9 @@
 	"name": "jdl-begcode",
 	"private": true,
 	"displayName": "JDL BegCode",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"publisher": "begcode",
+	"description": "JDL VS Code extension",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/begcode/jdl-vscode"
@@ -30,7 +31,7 @@
 		"build": "npm run -S esbuild-base -- --sourcemap"
 	},
 	"dependencies": {
-		"generator-begcode": "8.6.5",
+		"generator-begcode": "8.6.7",
 		"lodash": "4.17.21"
 	},
 	"devDependencies": {
