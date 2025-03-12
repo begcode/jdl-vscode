@@ -146,6 +146,10 @@ const annotationValueDetail: Record<string, Record<string, Record<string, string
 			'detail': '',
 			'description': '选择时可以新增'
 		},
+		hideInForm: {
+			'detail': '',
+			'description': '在表单中不显示'
+		}
 	},
 	AnnotationOnDestination: {
 		editInList: {

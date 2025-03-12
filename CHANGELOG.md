@@ -4,6 +4,7 @@
 
 - 更新generator-begcode 到 8.6.8版本
 - AnnotationOnSource 增加可选值notExistAdd，选择关联关系时可以新建
+- AnnotationOnSource 增加可选值hideInForm，编辑表单中不显示关系项
 
 ## 0.2.3
 
